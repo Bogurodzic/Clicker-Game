@@ -10,6 +10,7 @@ game.state.add("play", {
         this.game.load.image("forest-lights", "assets/background/forest/parallax-forest-lights.png");
         this.game.load.image("forest-middle", "assets/background/forest/parallax-forest-middle-trees.png");
         this.game.load.image("forest-front", "assets/background/forest/parallax-forest-front-trees.png");
+        this.game.load.image('gold_coin', 'assets/icons/I_GoldCoin.png');
     },
     create: function() {
         var state = this;
@@ -75,6 +76,12 @@ game.state.add("play", {
             strokeThickness: 4
         });
         
+        this.playerGoldText = this.add.text(30, 30, "Gold: " + this.player.gold, {
+            font: "24px Arial Black",
+            fill: "#fff",
+            strokeThickness: 4
+        });
+        
         this.dmgTextPool = this.add.group();
         var dmgText;
               
@@ -96,13 +103,18 @@ game.state.add("play", {
                text.kill(); 
             });
             this.dmgTextPool.add(dmgText);
-        }
+        };
         
-
+        this.coins = this.add.group();
+        this.coins.createMultiple(50, "gold_coin", "", false);
+        this.coins.setAll("inputEnabled", true);
+        this.coins.setAll("goldValue", 1);
+        this.coins.callAll("events.onInputDown.add", "events.onInputDown", onClickCoin, this);
+        
         function onClickMonster(){
             this.currentMonster.damage(this.player.clickDmg);
             this.monsterHealthText.text = this.currentMonster.alive ? this.currentMonster.health + " HP" : "DEAD";
-            console.log(this.currentMonster.health);
+            console.log(this.pointer);
             
             var dmgText = this.dmgTextPool.getFirstExists(false);
             if (dmgText) {
@@ -121,13 +133,33 @@ game.state.add("play", {
             this.currentMonster = this.monsters.getRandom();
             //make sure they are fully healed
             this.currentMonster.revive(this.currentMonster.maxHealth);
+            
+            var coin;
+            //spawn a coin on the ground
+            coin = this.coins.getFirstExists(false);
+            coin.reset(this.game.world.centerX + this.game.rnd.integerInRange(-100, 100), this.game.world.centerY + this.game.rnd.integerInRange(-100, 100));
+            coin.goldValue = 1;
+            this.game.time.events.add(Phaser.Timer.SECOND * 3, onClickCoin, this, coin);
         };
         
         function onRevivedMonster(monster){
             this.monsterNameText.text = this.currentMonster.details.name;
             this.monsterHealthText.text = this.currentMonster.health + " HP";
             this.currentMonster.position.set(this.game.world.centerX + 100, this.game.world.centerY);
-        }
+        };
+        
+        function onClickCoin(coin){
+            //make sure if coin exists
+            if (!coin.alive){
+                return;
+            }
+            //give player the gold
+            this.player.gold += coin.goldValue;
+            //update UI
+            this.playerGoldText.text = "Gold: " + this.player.gold;
+            //remove the coin
+            coin.kill();
+        };
         
 
     },
