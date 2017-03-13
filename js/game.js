@@ -74,7 +74,8 @@ game.state.add("play", {
                 state.player.clickDmg += 1;
             }},
             {icon: "sword1", name: "Auto-Attack", level: 0, cost: 10, purchaseHandler: function(button, player){
-               state.player.dps += 5; 
+                state.player.dps += 5; 
+                state.playerDpsText.text = "Dps: " + state.player.dps;
             }}
         ];
  
@@ -135,7 +136,13 @@ game.state.add("play", {
             strokeThickness: 4
         });
         
-        this.playerGoldText = this.add.text(30, 30, "Gold: " + this.player.gold, {
+        this.playerGoldText = this.add.text(30, 10, "Gold: " + this.player.gold, {
+            font: "24px Arial Black",
+            fill: "#fff",
+            strokeThickness: 4
+        });
+        
+        this.playerDpsText = this.add.text(30,40, "Dps: " + this.player.dps, {
             font: "24px Arial Black",
             fill: "#fff",
             strokeThickness: 4
