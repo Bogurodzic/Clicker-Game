@@ -47,7 +47,8 @@ game.state.add("play", {
         this.player = {
             clickDmg: 1,
             gold: 10,
-            dps: 0
+            dps: 0,
+            criticalChance: 0
         };
         
         
@@ -163,6 +164,30 @@ game.state.add("play", {
             this.dmgTextPool.add(dmgText);
         };
         
+        this.dmgCriticalTextPool = this.add.group();
+        var dmgCritical;
+        
+        for (var j=0; j<50; j++){
+            dmgCritical = this.add.text(0, 0, "1", {
+                font: "64px Arial Black",
+                color: "#CC0000",
+                fill: "#CC0000",
+                strokeThickness: 4
+            });
+            //start out not existing, so we don't draw it yet
+            dmgCritical.exists = false;
+            dmgCritical.tween = game.add.tween(dmgCritical).to({
+                alpha: 0,
+                y: 135,
+                x: this.game.rnd.integerInRange(100, 700)
+            }, 1000, Phaser.Easing.Cubic.Out);
+            
+            dmgCritical.tween.onComplete.add(function(text, tween){
+               text.kill(); 
+            });
+            this.dmgCriticalTextPool.add(dmgCritical);
+        }
+        
         this.coins = this.add.group();
         this.coins.createMultiple(50, "gold_coin", "", false);
         this.coins.setAll("inputEnabled", true);
@@ -187,17 +212,31 @@ game.state.add("play", {
         this.levelUI.addChild(this.levelKillsText)
         
         function onClickMonster(){
-            this.currentMonster.damage(this.player.clickDmg);
-            this.monsterHealthText.text = this.currentMonster.alive ? this.currentMonster.health + " HP" : "DEAD";
-            console.log(this.pointer);
+            var critical = Phaser.Utils.chanceRoll(80);
             
-            var dmgText = this.dmgTextPool.getFirstExists(false);
-            if (dmgText) {
-                dmgText.text = this.player.clickDmg;
-                dmgText.reset(game.input.mousePointer.x, game.input.mousePointer.y);
-                dmgText.alpha = 1;
-                dmgText.tween.start();
-            }
+            //check if click is critical, if not:
+            if (!critical){
+                this.currentMonster.damage(this.player.clickDmg);
+                var dmgText = this.dmgTextPool.getFirstExists(false);
+                if (dmgText) {
+                    dmgText.text = this.player.clickDmg;
+                    dmgText.reset(game.input.mousePointer.x, game.input.mousePointer.y);
+                    dmgText.alpha = 1;
+                    dmgText.tween.start();
+                }; 
+            //if it is critical:
+            } else {
+                this.currentMonster.damage(this.player.clickDmg * 4);
+                var dmgCritical = this.dmgCriticalTextPool.getFirstExists(false);
+                if (dmgCritical) {
+                    dmgCritical.text = this.player.clickDmg * 3;
+                    dmgCritical.reset(game.input.mousePointer.x, game.input.mousePointer.y);
+                    dmgCritical.alpha = 1;
+                    dmgCritical.tween.start();
+                }                
+            };
+
+            this.monsterHealthText.text = this.currentMonster.alive ? this.currentMonster.health + " HP" : "DEAD";
         };
         
         function onKilledMonster(monster){
