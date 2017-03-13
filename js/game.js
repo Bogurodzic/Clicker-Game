@@ -13,9 +13,15 @@ game.state.add("play", {
         this.game.load.image('gold_coin', 'assets/icons/I_GoldCoin.png');
         this.game.load.image("dagger", "assets/icons/W_Dagger002.png");
         this.game.load.image("sword1", "assets/icons/S_Sword01.png");
-        //build panel for upgrade
-        
 
+        //world progression
+        this.level = 1;
+        //how many monsters have we killed during this level
+        this.levelKills = 0;
+        //how many kills are required to advance the level
+        this.levelKillsRequired = 10;
+        
+        
         // build panel for upgrades
         var bmd = this.game.add.bitmapData(250, 500);
         bmd.ctx.fillStyle = "#9a783d";
@@ -165,6 +171,21 @@ game.state.add("play", {
         
         this.dpsTimer = this.game.time.events.loop(100, onDps, this);
         
+        this.levelUI = this.game.add.group();
+        this.levelUI.position.setTo(this.game.world.centerX, 30);
+        this.levelCounterText = this.game.add.text(10, 0, "Level: " + this.level, {
+            font: "24px Arial Black",
+            fill: "#fff",
+            strokeThickness: 4
+        });
+        this.levelUI.addChild(this.levelCounterText);
+        this.levelKillsText = this.game.add.text(0, 40, "Kills: " + this.levelKills + "/" + this.levelKillsRequired, {
+           font: "24px Arial Black",
+            fill: "#fff",
+            strokeThickness: 4
+        });
+        this.levelUI.addChild(this.levelKillsText)
+        
         function onClickMonster(){
             this.currentMonster.damage(this.player.clickDmg);
             this.monsterHealthText.text = this.currentMonster.alive ? this.currentMonster.health + " HP" : "DEAD";
@@ -185,6 +206,8 @@ game.state.add("play", {
             
             //pick a new monster
             this.currentMonster = this.monsters.getRandom();
+            //upgrade the monster based on level
+            this.currentMonster.maxHealth = Math.ceil(this.currentMonster.details.maxHealth + ((this.level - 1) * 10.6));
             //make sure they are fully healed
             this.currentMonster.revive(this.currentMonster.maxHealth);
             
@@ -192,8 +215,16 @@ game.state.add("play", {
             //spawn a coin on the ground
             coin = this.coins.getFirstExists(false);
             coin.reset(this.game.world.centerX + this.game.rnd.integerInRange(-100, 100), this.game.world.centerY + this.game.rnd.integerInRange(-100, 100));
-            coin.goldValue = 1;
+            coin.goldValue = Math.round(this.level * 1.33);
             this.game.time.events.add(Phaser.Timer.SECOND * 3, onClickCoin, this, coin);
+            this.levelKills++;
+            if (this.levelKills >= this.levelKillsRequired) {
+                this.level++;
+                this.levelKills = 0;
+            };
+            
+            this.levelCounterText.text = "Level: " + this.level;
+            this.levelKillsText.text = "Kills: " + this.levelKills + "/" + this.levelKillsRequired;
         };
         
         function onRevivedMonster(monster){
@@ -217,11 +248,16 @@ game.state.add("play", {
         
         function onUpgradeButtonClick(button, pointer){
             console.log(state.player);
+            
+            function getAdjustedCost() {
+                return Math.ceil(button.details.cost + (button.details.level * 1.46));
+            }
 
-            if (state.player.gold - button.details.cost >= 0){
-                state.player.gold -= button.details.cost;
+            if (state.player.gold - getAdjustedCost() >= 0){
+                state.player.gold -= getAdjustedCost();
                 state.playerGoldText.text = "Gold: " + state.player.gold;
                 button.details.level++;
+                button.costText.text = "Cost: " + getAdjustedCost();
                 button.text.text = button.details.name + ": " + button.details.level;
                 button.details.purchaseHandler.call(this, button, this.player);
             }
