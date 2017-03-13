@@ -6,6 +6,10 @@ game.state.add("play", {
         game.load.image("nagaruda", "assets/enemies/nagaruda1.png");
         game.load.image("arcanedrake", "assets/enemies/arcana_drake1.png");
         game.load.image("deceleon", "assets/enemies/deceleon1.png");
+        game.load.image("aerocephal", "assets/enemies/aerocephal1.png");
+        game.load.image("aurum-drakueli", "assets/enemies/aurum-drakueli1.png");
+        game.load.image("bat", "assets/enemies/bat1.png");
+        game.load.image("daemarbora", "assets/enemies/daemarbora1.png");
         this.game.load.image("forest-back", "assets/background/forest/parallax-forest-back-trees.png");
         this.game.load.image("forest-lights", "assets/background/forest/parallax-forest-lights.png");
         this.game.load.image("forest-middle", "assets/background/forest/parallax-forest-middle-trees.png");
@@ -13,6 +17,9 @@ game.state.add("play", {
         this.game.load.image('gold_coin', 'assets/icons/I_GoldCoin.png');
         this.game.load.image("dagger", "assets/icons/W_Dagger002.png");
         this.game.load.image("sword1", "assets/icons/S_Sword01.png");
+        this.game.load.image("swordCritical", "assets/icons/S_Sword07.png");
+        this.game.load.audio("swordClick", "assets/sounds/hits/Swordsmall.wav");
+        this.game.load.audio("monsterHurt", "assets/sounds/hits/Monster_Hurt.wav");
 
         //world progression
         this.level = 1;
@@ -48,7 +55,7 @@ game.state.add("play", {
             clickDmg: 1,
             gold: 10,
             dps: 0,
-            criticalChance: 0
+            criticalChance: 1
         };
         
         
@@ -76,6 +83,9 @@ game.state.add("play", {
             {icon: "sword1", name: "Auto-Attack", level: 0, cost: 10, purchaseHandler: function(button, player){
                 state.player.dps += 5; 
                 state.playerDpsText.text = "Dps: " + state.player.dps;
+            }},
+            {icon: "swordCritical", name: "Crit chance up", level: 0, cost: 25, purchaseHandler: function(button, player){
+                state.player.criticalChance = state.player.criticalChance * 1.05;  
             }}
         ];
  
@@ -91,10 +101,14 @@ game.state.add("play", {
         });
         
         var monsterData = [
+            {name: "Bat", image: "bat", maxHealth: 3},
             {name: "Skeleton", image: "skeleton", maxHealth: 5},
             {name: "Nagaruda", image: "nagaruda", maxHealth: 10},
             {name: "Arcane Drake", image: "arcanedrake", maxHealth: 15},
-            {name: "Deceleon", image: "deceleon", maxHealth: 20}
+            {name: "Deceleon", image: "deceleon", maxHealth: 20},
+            {name: "Aerocephal", image: "aerocephal", maxHealth: 25},
+            {name: "Aurum-drakueli", image: "aurum-drakueli", maxHealth: 45},
+            {name: "Daemarbora", image: "daemarbora", maxHealth: 75}
         ]
         
         this.monsters = this.game.add.group();
@@ -216,10 +230,16 @@ game.state.add("play", {
             fill: "#fff",
             strokeThickness: 4
         });
-        this.levelUI.addChild(this.levelKillsText)
+        this.levelUI.addChild(this.levelKillsText);
         
-        function onClickMonster(){
-            var critical = Phaser.Utils.chanceRoll(80);
+        this.clickSword = game.add.audio("swordClick");
+        this.monsterHurt = game.add.audio("monsterHurt");
+        
+        function onClickMonster(){          
+            state.monsterHurt.stop();
+            state.monsterHurt.play();
+
+            var critical = Phaser.Utils.chanceRoll(this.player.criticalChance);
             
             //check if click is critical, if not:
             if (!critical){
@@ -249,7 +269,6 @@ game.state.add("play", {
         function onKilledMonster(monster){
             //move the monster off-screen once again
             monster.position.set(1000, this.game.world.centerY);
-            
             //pick a new monster
             this.currentMonster = this.monsters.getRandom();
             //upgrade the monster based on level
@@ -294,6 +313,9 @@ game.state.add("play", {
         
         function onUpgradeButtonClick(button, pointer){
             console.log(state.player);
+            
+            state.clickSword.stop();
+            state.clickSword.play();
             
             function getAdjustedCost() {
                 return Math.ceil(button.details.cost + (button.details.level * 1.46));
