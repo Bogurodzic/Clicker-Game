@@ -17,9 +17,12 @@ game.state.add("play", {
         this.game.load.image('gold_coin', 'assets/icons/I_GoldCoin.png');
         this.game.load.image("dagger", "assets/icons/W_Dagger002.png");
         this.game.load.image("sword1", "assets/icons/S_Sword01.png");
+        this.game.load.image("stopMusic", "assets/icons/1music.png");
+        this.game.load.image("stopAudio", "assets/icons/1audio.png");
         this.game.load.image("swordCritical", "assets/icons/S_Sword07.png");
         this.game.load.audio("swordClick", "assets/sounds/hits/Swordsmall.wav");
         this.game.load.audio("monsterHurt", "assets/sounds/hits/Monster_Hurt.wav");
+        this.game.load.audio("music", "assets/sounds/music/medieval_loop.wav")
 
         //world progression
         this.level = 1;
@@ -49,7 +52,11 @@ game.state.add("play", {
 
     },
     create: function() {
-        var state = this; 
+        var state = this;
+        
+        this.music = game.add.audio("music");
+        this.music.loop = true;
+        this.music.play();
         
         this.player = {
             clickDmg: 1,
@@ -100,6 +107,22 @@ game.state.add("play", {
             upgradeButtons.addChild(button);
         });
         
+        this.rightPanel = this.game.add.group();
+        this.rightPanel.position.setTo(700, 20);
+        this.stopMusic = this.rightPanel.addChild(this.game.add.button(0, 0, "stopMusic"));
+        this.stopMusic.events.onInputDown.add(musicToggle, this);
+        this.playingMusic = true;
+        function musicToggle(){
+            if (state.playingMusic === true){
+                state.playingMusic = false;
+                state.music.stop();
+            } else if (state.playingMusic === false){
+                state.playingMusic = true;
+                state.music.play();
+            }
+        };
+        this.stopAudio = this.rightPanel.addChild(this.game.add.button(0, 60, "stopAudio"));
+        
         var monsterData = [
             {name: "Bat", image: "bat", maxHealth: 3},
             {name: "Skeleton", image: "skeleton", maxHealth: 5},
@@ -135,10 +158,10 @@ game.state.add("play", {
         });
         
         this.currentMonster = this.monsters.getRandom();
-        this.currentMonster.position.set(this.game.world.centerX + 120, this.game.world.centerY);
+        this.currentMonster.position.set(this.game.world.centerX + 250, this.game.world.centerY);
         
         this.monsterInfoUI = this.game.add.group();
-        this.monsterInfoUI.position.setTo(this.currentMonster.x - 225, this.currentMonster.y);
+        this.monsterInfoUI.position.setTo(this.currentMonster.x - 255, this.currentMonster.y);
         this.monsterNameText = this.monsterInfoUI.addChild(this.game.add.text(0, 0, this.currentMonster.details.name), {
             font: "48px Arial Black",
             fill: "#fff",
@@ -234,6 +257,7 @@ game.state.add("play", {
         
         this.clickSword = game.add.audio("swordClick");
         this.monsterHurt = game.add.audio("monsterHurt");
+
         
         function onClickMonster(){          
             state.monsterHurt.stop();
@@ -295,7 +319,7 @@ game.state.add("play", {
         function onRevivedMonster(monster){
             this.monsterNameText.text = this.currentMonster.details.name;
             this.monsterHealthText.text = this.currentMonster.health + " HP";
-            this.currentMonster.position.set(this.game.world.centerX + 100, this.game.world.centerY);
+            this.currentMonster.position.set(this.game.world.centerX + 250, this.game.world.centerY);
         };
         
         function onClickCoin(coin){
