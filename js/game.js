@@ -10,6 +10,8 @@ game.state.add("play", {
         game.load.image("aurum-drakueli", "assets/enemies/aurum-drakueli1.png");
         game.load.image("bat", "assets/enemies/bat1.png");
         game.load.image("daemarbora", "assets/enemies/daemarbora1.png");
+        this.game.load.spritesheet("buttonMusic", "assets/buttons/buttonMusic.png", 263, 240);
+        this.game.load.spritesheet("buttonSounds", "assets/buttons/buttonSounds.png", 260, 226);
         this.game.load.image("forest-back", "assets/background/forest/parallax-forest-back-trees.png");
         this.game.load.image("forest-lights", "assets/background/forest/parallax-forest-lights.png");
         this.game.load.image("forest-middle", "assets/background/forest/parallax-forest-middle-trees.png");
@@ -107,21 +109,58 @@ game.state.add("play", {
             upgradeButtons.addChild(button);
         });
         
-        this.rightPanel = this.game.add.group();
+        /*this.rightPanel = this.game.add.group();
         this.rightPanel.position.setTo(700, 20);
         this.stopMusic = this.rightPanel.addChild(this.game.add.button(0, 0, "stopMusic"));
         this.stopMusic.events.onInputDown.add(musicToggle, this);
+        this.playingMusic = true;*/
+        //this.stopAudio = this.rightPanel.addChild(this.game.add.button(0, 60, "stopAudio"));
+        this.buttonMusic = this.game.add.button(720, 10, "buttonMusic", musicToggle, this, 1, 1, 1);
+        this.buttonMusic.scale.setTo(0.25);
         this.playingMusic = true;
+        
         function musicToggle(){
             if (state.playingMusic === true){
                 state.playingMusic = false;
-                state.music.stop();
+                state.music.volume = 0;
+                state.buttonMusic.setFrames(0, 0, 0);
             } else if (state.playingMusic === false){
                 state.playingMusic = true;
-                state.music.play();
+                state.music.volume = 1;
+                state.buttonMusic.setFrames(1, 1, 1);
             }
         };
-        this.stopAudio = this.rightPanel.addChild(this.game.add.button(0, 60, "stopAudio"));
+        
+        this.buttonSounds = this.game.add.button(720, 80, "buttonSounds", toggleSound, this, 1, 1, 1);
+        this.buttonSounds.scale.setTo(0.25);
+        
+        this.clickSword = game.add.audio("swordClick");
+        this.monsterHurt = game.add.audio("monsterHurt");
+        
+        this.fxEnabled = true;
+        this.fxs = [];
+        this.fxs.push(state.clickSword);
+        this.fxs.push(state.monsterHurt);
+        
+        this.playingSounds = true;
+        function toggleSound(){
+            if (state.playingSounds === true){
+                state.fxs.forEach(function(item, index){
+                    state.fxs[index].volume = 0;
+                    state.playingSounds = false;
+                    state.buttonSounds.setFrames(0, 0, 0);
+                });
+            } else if (state.playingSounds === false){
+                state.fxs.forEach(function(item, index){
+                    state.fxs[index].volume = 1;
+                    state.playingSounds = true;
+                    state.buttonSounds.setFrames(1, 1, 1);
+                });
+            }
+            
+        }
+        
+        
         
         var monsterData = [
             {name: "Bat", image: "bat", maxHealth: 3},
@@ -255,8 +294,7 @@ game.state.add("play", {
         });
         this.levelUI.addChild(this.levelKillsText);
         
-        this.clickSword = game.add.audio("swordClick");
-        this.monsterHurt = game.add.audio("monsterHurt");
+
 
         
         function onClickMonster(){          
