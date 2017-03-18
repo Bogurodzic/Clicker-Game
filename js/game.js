@@ -56,17 +56,51 @@ game.state.add("play", {
     create: function() {
         var state = this;
         
+        this.player = {
+            clickDmg: 1,
+            gold: 10,
+            dps: 5,
+            criticalChance: 1
+        };
+        
+        
+        //Idle Module
+        if (localStorage.getItem("t1") && localStorage.getItem("t2")){
+            state.t2 = localStorage.getItem("t2");
+            state.t1 = localStorage.getItem("t2");
+        } else {
+            state.t1;
+            state.t2;           
+        }
+        
+        this.timePassed;
+
+        
+        setInterval(function(){
+            state.t2 = state.t1;
+            localStorage.t2 = state.t2;
+            state.t1 = new Date().getTime();
+            localStorage.t1 = state.t1;
+            state.t2 = localStorage.getItem("t2");
+            state.t1 = localStorage.getItem("t1");
+            state.timePassed = Math.round((state.t1 - state.t2)/1000);
+            
+            console.log(state.timePassed + "s Minęło!");
+            
+            if (state.timePassed >= 3){
+                var dmgPassed = state.timePassed * state.player.dps;
+                var montersKilled = dmgPassed/ (state.currentMonster.details.maxHealth + ((state.level - 1) * 10.6));
+                console.log(Math.round(montersKilled));
+            }
+            
+            
+        }, 1000);
+        
         this.music = game.add.audio("music");
         this.music.loop = true;
         this.music.play();
         
-        this.player = {
-            clickDmg: 1,
-            gold: 10,
-            dps: 0,
-            criticalChance: 1
-        };
-        
+
         
         this.background = this.game.add.group();
         // setup each of our background layers to take the full screen
