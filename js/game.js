@@ -62,9 +62,7 @@ game.state.add("play", {
             dps: 5,
             criticalChance: 1
         };
-        
-        var 5;
-        
+                
         if (localStorage.getItem("playerGoldLocal")){
             state.player.gold =+ localStorage.getItem("playerGoldLocal");
         };
