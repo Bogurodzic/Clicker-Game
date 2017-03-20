@@ -62,10 +62,11 @@ game.state.add("play", {
             dps: 5,
             criticalChance: 1
         };
-                
-        if (localStorage.getItem("playerGoldLocal")){
-            state.player.gold =+ localStorage.getItem("playerGoldLocal");
-        };
+           
+        function test(){
+            console.log(this);
+        }    
+      
         
         
         //Idle Module
@@ -334,7 +335,9 @@ game.state.add("play", {
         this.levelUI.addChild(this.levelKillsText);
         
 
-
+        if (localStorage.getItem("playerGoldLocal")){
+                loadFromLocal();
+        };
         
         function onClickMonster(){          
             state.monsterHurt.stop();
@@ -443,14 +446,37 @@ game.state.add("play", {
             }
         };
         
+        //Save statistics to local storage
         function saveToLocal(){
+            //level stats
+            localStorage.levelLocal = state.level;
+            localStorage.killsLocal = state.levelKills;
+            
+            //player stats
             localStorage.playerGoldLocal = state.player.gold;
+            localStorage.playerDpsLocal = state.player.dps;
+            localStorage.playerCriticalLocal = state.player.criticalChance;
+            localStorage.playerClickLocal = state.player.clickDmg;
             console.log("zapisano dane");
+            
         };
         
+        //Load statistics from local storage
         function loadFromLocal(){
-            state.player.gold = localStorage.getItem("playerGoldLocal");
             console.log("wczytano dane");
+            //level stats
+            state.level = localStorage.getItem("levelLocal");
+            state.levelCounterText.text = "Level: " + state.level;
+            state.levelKills = localStorage.getItem("killsLocal");
+            state.levelKillsText.text = "Kills: " + state.levelKills + "/" + state.levelKillsRequired;
+            
+            //player stats
+            state.player.gold =+ localStorage.getItem("playerGoldLocal");
+            state.playerGoldText.text = "Gold: " + state.player.gold;
+            state.player.dps =+ localStorage.getItem("playerDpsLocal");
+            state.playerDpsText.text = "Dps: " + state.player.dps;
+            state.player.criticalChance =+ localStorage.getItem("playerCriticalLocal");
+            state.player.clickDmg =+ localStorage.getItem("playerClickLocal");
         };
         
 
