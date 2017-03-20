@@ -58,9 +58,15 @@ game.state.add("play", {
         
         this.player = {
             clickDmg: 1,
-            gold: 10,
+            gold: 0,
             dps: 5,
             criticalChance: 1
+        };
+        
+        var 5;
+        
+        if (localStorage.getItem("playerGoldLocal")){
+            state.player.gold =+ localStorage.getItem("playerGoldLocal");
         };
         
         
@@ -312,6 +318,7 @@ game.state.add("play", {
         this.coins.callAll("events.onInputDown.add", "events.onInputDown", onClickCoin, this);
         
         this.dpsTimer = this.game.time.events.loop(100, onDps, this);
+        this.saveDataLocal = this.game.time.events.loop(1000, saveToLocal, this);
         
         this.levelUI = this.game.add.group();
         this.levelUI.position.setTo(this.game.world.centerX, 30);
@@ -436,7 +443,17 @@ game.state.add("play", {
                     this.monsterHealthText.text = this.currentMonster.alive ? Math.round(this.currentMonster.health) + " HP" : "DEAD";
                 }
             }
-        }
+        };
+        
+        function saveToLocal(){
+            localStorage.playerGoldLocal = state.player.gold;
+            console.log("zapisano dane");
+        };
+        
+        function loadFromLocal(){
+            state.player.gold = localStorage.getItem("playerGoldLocal");
+            console.log("wczytano dane");
+        };
         
 
     },
