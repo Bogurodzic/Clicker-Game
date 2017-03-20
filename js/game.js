@@ -75,7 +75,7 @@ game.state.add("play", {
         
         this.timePassed;
 
-        
+        //check how many seconds passed since last visit
         setInterval(function(){
             state.t2 = state.t1;
             localStorage.t2 = state.t2;
@@ -87,10 +87,15 @@ game.state.add("play", {
             
             console.log(state.timePassed + "s Minęło!");
             
+            //If player was away for at least 3s, calculate how long time passed, how much he earned and add it to his current gold
             if (state.timePassed >= 3){
                 var dmgPassed = state.timePassed * state.player.dps;
                 var montersKilled = dmgPassed/ (state.currentMonster.details.maxHealth + ((state.level - 1) * 10.6));
-                console.log(Math.round(montersKilled));
+                console.log(Math.floor(montersKilled) + " potworów zabitych");
+                var goldGained = Math.floor(montersKilled) * state.level;
+                console.log(goldGained + " złota zdobyto");
+                state.player.gold = state.player.gold + goldGained;
+                state.playerGoldText.text = "Gold: " + state.player.gold;
             }
             
             
@@ -143,12 +148,7 @@ game.state.add("play", {
             upgradeButtons.addChild(button);
         });
         
-        /*this.rightPanel = this.game.add.group();
-        this.rightPanel.position.setTo(700, 20);
-        this.stopMusic = this.rightPanel.addChild(this.game.add.button(0, 0, "stopMusic"));
-        this.stopMusic.events.onInputDown.add(musicToggle, this);
-        this.playingMusic = true;*/
-        //this.stopAudio = this.rightPanel.addChild(this.game.add.button(0, 60, "stopAudio"));
+
         this.buttonMusic = this.game.add.button(720, 10, "buttonMusic", musicToggle, this, 1, 1, 1);
         this.buttonMusic.scale.setTo(0.25);
         this.playingMusic = true;
