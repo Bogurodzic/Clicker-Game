@@ -1,6 +1,7 @@
 # Clicker Game
 Finally, I have started my work on proper version of the game, previous version you can find on "test" branch of this respository.
 
+Live version: [[link]](http://www.kamiljarzab.pl/Projekty/Viking%20Clicker/)
 
 
 # Clicker Game - Old Version
