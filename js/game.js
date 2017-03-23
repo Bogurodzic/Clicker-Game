@@ -1,4 +1,4 @@
-var game = new Phaser.Game(800, 600, Phaser.Auto, "gameWindow");
+var game = new Phaser.Game(708, 511, Phaser.Auto, "gameWindow");
 
 game.state.add("load", loadState);
 game.state.add("menu", menuState);

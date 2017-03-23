@@ -7,9 +7,15 @@ var loadState = {
         });
         this.loadingLabel.anchor.setTo(0.5);
         
+        this.game.load.image("button", "assets/ui/icons/button.png");
+        this.game.load.image("ui-frame", "assets/ui/UI.png");
+        
     },
     
     create: function() {
-        game.state.start("menu");
+        
+        setTimeout(function(){
+            game.state.start("menu");
+        }, 2500);
     }
 };
