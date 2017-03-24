@@ -2,6 +2,8 @@ var menuState = {
     create: function() {
         var self = this;
         
+        this.background = game.add.tileSprite(0, 0, 708, 511, "background-winter");
+        
         this.buttonsList = [
             {text: "Play", press: startGame},
             {text: "Options", press: gameOptions},
@@ -18,7 +20,7 @@ var menuState = {
             menuButton.anchor.setTo(0.5);
             menuButton.inputEnabled = true;
             menuButton.events.onInputDown.add(data.press);
-            menuButton.menuButtonText = menuButton.addChild(this.game.add.text(0, 0, data.text));
+            menuButton.menuButtonText = menuButton.addChild(this.game.add.text(0, 2.5, data.text));
             menuButton.menuButtonText.anchor.setTo(0.5);
             self.menuButtons.addChild(menuButton);
         });
@@ -35,5 +37,9 @@ var menuState = {
             
         };
         
+    },
+    update: function() {
+        this.background.tilePosition.x -= 0.2;
+
     }
 }
