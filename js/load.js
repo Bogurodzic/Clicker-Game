@@ -13,6 +13,7 @@ var loadState = {
         this.game.load.image("background-cave", "assets/background/cave.png");
         this.game.load.image("button", "assets/ui/icons/button.png");
         this.game.load.image("ui-frame", "assets/ui/UI.png");
+        this.game.load.image("bone", "assets/monsters/BONE.png");
         
     },
     

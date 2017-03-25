@@ -20,7 +20,9 @@ var menuState = {
             menuButton.anchor.setTo(0.5);
             menuButton.inputEnabled = true;
             menuButton.events.onInputDown.add(data.press);
-            menuButton.menuButtonText = menuButton.addChild(this.game.add.text(0, 2.5, data.text));
+            menuButton.menuButtonText = menuButton.addChild(this.game.add.text(0, 2.5, data.text, { 
+                font: "25px 'Jim Nightshade', cursive",
+                fill: "#fff"}));
             menuButton.menuButtonText.anchor.setTo(0.5);
             self.menuButtons.addChild(menuButton);
         });
