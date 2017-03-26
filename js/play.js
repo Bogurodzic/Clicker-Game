@@ -19,7 +19,31 @@ var playState = {
                 font: "15px 'Jim Nightshade', cursive",
                 fill: "#fff"});
         
-        monster = this.game.add.sprite(350,270,"bone");
+        //icons
+        this.iconInventory = this.game.add.sprite(30,120,"icon-inventory");
+        this.iconInventory.scale.setTo(0.3);
+        this.iconInventory.inputEnabled = true;
+        this.iconInventory.events.onInputDown.add(toggleInventory, this);
+        
+        this.monster = this.game.add.sprite(350,270,"bone");
+        
+        
+        this.inventory = this.game.add.sprite(-1000, -1000, "inventory");
+        this.inventory.anchor.setTo(0.5);
+        this.inventory.scale.setTo(0.95);
+        
+        var inventoryVisible = false;
+        function toggleInventory() {
+            if (inventoryVisible === false){
+                this.inventory.x = this.game.world.centerX;
+                this.inventory.y = this.game.world.centerY;
+                inventoryVisible = true;
+            } else if (inventoryVisible === true){
+                this.inventory.x = -1000;
+                this.inventory.y = -1000;
+                inventoryVisible = false;
+            };
+        };
     },
     
     update: function() {
