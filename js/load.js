@@ -16,6 +16,7 @@ var loadState = {
         this.game.load.image("icon-inventory", "assets/ui/icons/inventory.png");
         this.game.load.image("inventory", "assets/ui/inventory.png");
         this.game.load.image("bone", "assets/monsters/BONE.png");
+        this.game.load.image("orc", "assets/monsters/ORC.png");
         
     },
     
