@@ -5,13 +5,26 @@ var playState = {
         this.player = {
             maxHp: 100,
             currentHp: 100,
-            clickDamage: 1
+            clickDamage: 1,
+            dps: 0,
+            gold: 0
         };
+        
+        this.level = {
+            currentLevel: 1,
+            currentMonster: 0,
+            requiredKilledMonsters: 10
+        }
                 
         this.background = game.add.tileSprite(0, 0, 708, 511, "background-winter");
         
         this.uiFrame = this.game.add.image(0, 0, "ui-frame");
         this.uiFrame.scale.setTo(1.2);
+        
+        //place monster counter
+        this.monsterCounter = this.game.add.text(400, 38, this.level.currentMonster, { 
+                font: "15px 'Jim Nightshade', cursive",
+                fill: "#fff"});
         
         //this.monsters = this.game.add.group();
         this.hpText = this.game.add.text(36, 38, this.player.currentHp, { 
@@ -21,17 +34,22 @@ var playState = {
         //monster list
         this.monstersList = [
             {monsterName: "Skeleton", monsterKey: "bone", maxHp: 10},
-            {monsterName: "Orc", monsterKey: "orc", maxHp: 10}
+            {monsterName: "Orc", monsterKey: "orc", maxHp: 10},
+            {monsterName: "Dragon", monsterKey: "dragon", maxHp: 10}
         ];
         this.monsters = this.game.add.group();
         
         //create monsters and put them into the monsters group
         var monster;
         for(var i = 0; i < this.monstersList.length; i++) {
-            monster = state.monsters.create(1000, 305, state.monstersList[i].monsterKey);
+            monster = state.monsters.create(1000, 310, state.monstersList[i].monsterKey);
             monster.anchor.setTo(0.5);
             monster.details = state.monstersList[i];
             monster.health = monster.maxHealth = state.monstersList[i].maxHp;
+            
+            monster.healthText = game.add.text(1000, 420, monster.maxHealth, { 
+                font: "35px 'Jim Nightshade', cursive",
+                fill: "red"});
             
             //enable input, so we can click it
             monster.inputEnabled = true;
@@ -40,9 +58,10 @@ var playState = {
             monster.events.onRevived.add(onRevivedMonster, state);
         }
         
+        //random current monster and set it into the game
         this.currentMonster = this.monsters.getRandom();
         this.currentMonster.position.setTo(450, 315);
-        
+        this.currentMonster.healthText.x = 450;
         //icons
         this.iconInventory = this.game.add.sprite(30,120,"icon-inventory");
         this.iconInventory.scale.setTo(0.3);
@@ -73,17 +92,26 @@ var playState = {
         };
         
         function onClickMonster(monster) {
+            //deals damage to monster equal to player dmg
             monster.damage(state.player.clickDamage);
+            //update hp text
+            state.currentMonster.healthText.text = state.currentMonster.health;
             console.log(monster.health);
         };
         
         function onKilledMonster(monster) {
+            //after being killed move sprite and text outside
             monster.position.setTo(1000, 375);
+            monster.healthText.position.x = 1000;
+            
             state.currentMonster = state.monsters.getRandom();
+            //place text once again on proper place and revive monster
+            state.currentMonster.healthText.x = 450;
             state.currentMonster.revive(state.currentMonster.maxHealth);
         };
         
         function onRevivedMonster(monster) {
+            //set position in game
             monster.position.setTo(450, 315);
         };
     },
