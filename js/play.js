@@ -22,8 +22,8 @@ var playState = {
         this.uiFrame.scale.setTo(1.2);
         
         //place monster counter
-        this.monsterCounter = this.game.add.text(400, 38, this.level.currentMonster, { 
-                font: "15px 'Jim Nightshade', cursive",
+        this.monsterCounter = this.game.add.text(480, 0, this.level.currentMonster, { 
+                font: "25px 'Jim Nightshade', cursive",
                 fill: "#fff"});
         
         //this.monsters = this.game.add.group();
@@ -103,6 +103,10 @@ var playState = {
             //after being killed move sprite and text outside
             monster.position.setTo(1000, 375);
             monster.healthText.position.x = 1000;
+            
+            //update monster counter
+            state.level.currentMonster += 1;
+            state.monsterCounter.text = state.level.currentMonster;
             
             state.currentMonster = state.monsters.getRandom();
             //place text once again on proper place and revive monster
