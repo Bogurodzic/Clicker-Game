@@ -36,8 +36,8 @@ var playState = {
             //enable input, so we can click it
             monster.inputEnabled = true;
             monster.events.onInputDown.add(onClickMonster, state);
-            //monster.events.onKilled.add(onKilledMonster, state);
-            //monster.events.onRevived.add(onRevivedMonster, state);
+            monster.events.onKilled.add(onKilledMonster, state);
+            monster.events.onRevived.add(onRevivedMonster, state);
         }
         
         this.currentMonster = this.monsters.getRandom();
@@ -75,7 +75,17 @@ var playState = {
         function onClickMonster(monster) {
             monster.damage(state.player.clickDamage);
             console.log(monster.health);
-        }
+        };
+        
+        function onKilledMonster(monster) {
+            monster.position.setTo(1000, 375);
+            state.currentMonster = state.monsters.getRandom();
+            state.currentMonster.revive(state.currentMonster.maxHealth);
+        };
+        
+        function onRevivedMonster(monster) {
+            monster.position.setTo(450, 315);
+        };
     },
     
     update: function() {
