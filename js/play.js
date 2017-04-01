@@ -30,7 +30,11 @@ var playState = {
         this.hpText = this.game.add.text(36, 38, this.player.currentHp, { 
                 font: "15px 'Jim Nightshade', cursive",
                 fill: "#fff"});
-        
+
+        /////////////
+        //MONSTERS///
+        /////////////  
+
         //monster list
         this.monstersList = [
             {monsterName: "Skeleton", monsterKey: "bone", maxHp: 10},
@@ -72,6 +76,16 @@ var playState = {
         this.inventory = this.game.add.sprite(-1000, -1000, "inventory");
         this.inventory.anchor.setTo(0.5);
         this.inventory.scale.setTo(0.95);
+
+
+        /////////////
+        ////GOLD/////
+        /////////////
+
+        this.gold = this.game.add.sprite(300, 300, "gold");
+        this.gold.animations.add("spin", [0, 1, 2, 3, 4, 5, 6, 7]);
+        this.gold.animations.play("spin", 20, true);
+
         
         /////////////
         //FUNCTIONS//
