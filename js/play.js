@@ -20,6 +20,25 @@ var playState = {
         
         this.uiFrame = this.game.add.image(0, 0, "ui-frame");
         this.uiFrame.scale.setTo(1.2);
+
+        /////////////
+        ////GOLD/////
+        /////////////
+
+        this.gold = this.game.add.sprite(300, 300, "gold");
+        this.gold.scale.setTo(1.4);
+        this.gold.animations.add("spin", [0, 1, 2, 3, 4, 5, 6, 7]);
+        this.gold.animations.play("spin", 20, true);
+
+        this.gold.inputEnabled = true;
+        this.gold.events.onInputDown.add(onClickGold, state);
+
+        this.goldText = this.game.add.text(203, 0, this.player.gold, { 
+                font: "25px 'Jim Nightshade', cursive",
+                fill: "white"});
+
+
+
         
         //place monster counter
         this.monsterCounter = this.game.add.text(480, 0, this.level.currentMonster, { 
@@ -77,15 +96,6 @@ var playState = {
         this.inventory.anchor.setTo(0.5);
         this.inventory.scale.setTo(0.95);
 
-
-        /////////////
-        ////GOLD/////
-        /////////////
-
-        this.gold = this.game.add.sprite(300, 300, "gold");
-        this.gold.animations.add("spin", [0, 1, 2, 3, 4, 5, 6, 7]);
-        this.gold.animations.play("spin", 20, true);
-
         
         /////////////
         //FUNCTIONS//
@@ -132,6 +142,13 @@ var playState = {
             //set position in game
             monster.position.setTo(450, 315);
         };
+
+        function onClickGold(gold){
+            gold.kill();
+            state.player.gold += 1;
+            state.goldText.text = state.player.gold;
+            console.log(state.player.gold);
+        }
     },
     
     update: function() {
