@@ -1,7 +1,7 @@
 var playState = {
     create: function() {
         var state = this;
-        
+
         this.player = {
             maxHp: 100,
             currentHp: 100,
@@ -9,23 +9,21 @@ var playState = {
             dps: 0,
             gold: 0
         };
-        
+
         this.level = {
             currentLevel: 1,
             currentMonster: 0,
             requiredKilledMonsters: 10
         }
-                
+
         this.background = game.add.tileSprite(0, 0, 708, 511, "background-winter");
-        
+
         this.uiFrame = this.game.add.image(0, 0, "ui-frame");
         this.uiFrame.scale.setTo(1.2);
 
-        /////////////
-        ////GOLD/////
-        /////////////
 
-        this.gold = this.game.add.sprite(300, 300, "gold");
+
+        /*this.gold = this.game.add.sprite(300, 300, "gold");
         this.gold.scale.setTo(1.4);
         this.gold.animations.add("spin", [0, 1, 2, 3, 4, 5, 6, 7]);
         this.gold.animations.play("spin", 20, true);
@@ -33,26 +31,25 @@ var playState = {
         this.gold.inputEnabled = true;
         this.gold.events.onInputDown.add(onClickGold, state);
 
-        this.goldText = this.game.add.text(203, 0, this.player.gold, { 
-                font: "25px 'Jim Nightshade', cursive",
-                fill: "white"});
+ */
 
 
 
-        
+
         //place monster counter
-        this.monsterCounter = this.game.add.text(480, 0, this.level.currentMonster, { 
+        this.monsterCounter = this.game.add.text(465, 23, this.level.currentMonster, {
                 font: "25px 'Jim Nightshade', cursive",
                 fill: "#fff"});
-        
+        this.monsterCounter.anchor.setTo(0.5);
+
         //this.monsters = this.game.add.group();
-        this.hpText = this.game.add.text(36, 38, this.player.currentHp, { 
+        this.hpText = this.game.add.text(36, 38, this.player.currentHp, {
                 font: "15px 'Jim Nightshade', cursive",
                 fill: "#fff"});
 
         /////////////
         //MONSTERS///
-        /////////////  
+        /////////////
 
         //monster list
         this.monstersList = [
@@ -61,7 +58,7 @@ var playState = {
             {monsterName: "Dragon", monsterKey: "dragon", maxHp: 10}
         ];
         this.monsters = this.game.add.group();
-        
+
         //create monsters and put them into the monsters group
         var monster;
         for(var i = 0; i < this.monstersList.length; i++) {
@@ -69,18 +66,18 @@ var playState = {
             monster.anchor.setTo(0.5);
             monster.details = state.monstersList[i];
             monster.health = monster.maxHealth = state.monstersList[i].maxHp;
-            
-            monster.healthText = game.add.text(1000, 420, monster.maxHealth, { 
+
+            monster.healthText = game.add.text(1000, 420, monster.maxHealth, {
                 font: "35px 'Jim Nightshade', cursive",
                 fill: "red"});
-            
+
             //enable input, so we can click it
             monster.inputEnabled = true;
             monster.events.onInputDown.add(onClickMonster, state);
             monster.events.onKilled.add(onKilledMonster, state);
             monster.events.onRevived.add(onRevivedMonster, state);
         }
-        
+
         //random current monster and set it into the game
         this.currentMonster = this.monsters.getRandom();
         this.currentMonster.position.setTo(450, 315);
@@ -90,17 +87,34 @@ var playState = {
         this.iconInventory.scale.setTo(0.3);
         this.iconInventory.inputEnabled = true;
         this.iconInventory.events.onInputDown.add(toggleInventory, this);
-                
+
+        /////////////
+        ////GOLD/////
+        /////////////
+
+        this.golds = this.game.add.group();
+        this.golds.createMultiple(50, "gold", "", false);
+        this.golds.setAll("scale.setTo", 1.4);
+        this.golds.setAll("inputEnabled", true);
+        this.golds.setAll("value", 1);
+        this.golds.callAll("events.onInputDown.add", "events.onInputDown", onClickGold, this);
+
+        this.goldText = this.game.add.text(207, 23, this.player.gold, {
+                font: "25px 'Jim Nightshade', cursive",
+                fill: "white"});
+        this.goldText.anchor.setTo(0.5);
+
         //ading inventory
         this.inventory = this.game.add.sprite(-1000, -1000, "inventory");
         this.inventory.anchor.setTo(0.5);
         this.inventory.scale.setTo(0.95);
 
-        
+
+
         /////////////
         //FUNCTIONS//
         /////////////
-        
+
         //open or close inventory
         var inventoryVisible = false;
         function toggleInventory() {
@@ -114,7 +128,7 @@ var playState = {
                 inventoryVisible = false;
             };
         };
-        
+
         function onClickMonster(monster) {
             //deals damage to monster equal to player dmg
             monster.damage(state.player.clickDamage);
@@ -122,22 +136,30 @@ var playState = {
             state.currentMonster.healthText.text = state.currentMonster.health;
             console.log(monster.health);
         };
-        
+
         function onKilledMonster(monster) {
             //after being killed move sprite and text outside
             monster.position.setTo(1000, 375);
             monster.healthText.position.x = 1000;
-            
+
             //update monster counter
             state.level.currentMonster += 1;
             state.monsterCounter.text = state.level.currentMonster;
-            
+
             state.currentMonster = state.monsters.getRandom();
             //place text once again on proper place and revive monster
             state.currentMonster.healthText.x = 450;
             state.currentMonster.revive(state.currentMonster.maxHealth);
+
+            var coin;
+            //spawn a coin on the ground
+            coin = state.golds.getFirstExists(false);
+            coin.reset(450 + this.game.rnd.integerInRange(-80, 80), 300 + this.game.rnd.integerInRange(-80, 80));
+            coin.animations.add("spin", [0, 1, 2, 3, 4, 5, 6, 7]);
+            coin.animations.play("spin", 20, true);
+
         };
-        
+
         function onRevivedMonster(monster) {
             //set position in game
             monster.position.setTo(450, 315);
@@ -150,7 +172,7 @@ var playState = {
             console.log(state.player.gold);
         }
     },
-    
+
     update: function() {
         //this.background.tilePosition.x -= 0.2;
     }
