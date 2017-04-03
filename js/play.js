@@ -154,9 +154,12 @@ var playState = {
             var coin;
             //spawn a coin on the ground
             coin = state.golds.getFirstExists(false);
-            coin.reset(450 + this.game.rnd.integerInRange(-80, 80), 300 + this.game.rnd.integerInRange(-80, 80));
+            coin.reset(450 + this.game.rnd.integerInRange(-60, 60), 360 + this.game.rnd.integerInRange(-15, 15));
             coin.animations.add("spin", [0, 1, 2, 3, 4, 5, 6, 7]);
             coin.animations.play("spin", 20, true);
+            setTimeout(function(){
+                onClickGold.call(state, coin);
+            }, 3000);
 
         };
 
@@ -166,6 +169,10 @@ var playState = {
         };
 
         function onClickGold(gold){
+            if (!gold.alive){
+              return;
+            }
+
             gold.kill();
             state.player.gold += 1;
             state.goldText.text = state.player.gold;
