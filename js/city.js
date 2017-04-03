@@ -1,4 +1,4 @@
-var loadState = {
+var cityState = {
     preload: function() {
 
         this.loadingLabel = game.add.text(game.world.centerX, game.world.centerY, "loading", {

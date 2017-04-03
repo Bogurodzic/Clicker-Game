@@ -21,21 +21,6 @@ var playState = {
         this.uiFrame = this.game.add.image(0, 0, "ui-frame");
         this.uiFrame.scale.setTo(1.2);
 
-
-
-        /*this.gold = this.game.add.sprite(300, 300, "gold");
-        this.gold.scale.setTo(1.4);
-        this.gold.animations.add("spin", [0, 1, 2, 3, 4, 5, 6, 7]);
-        this.gold.animations.play("spin", 20, true);
-
-        this.gold.inputEnabled = true;
-        this.gold.events.onInputDown.add(onClickGold, state);
-
- */
-
-
-
-
         //place monster counter
         this.monsterCounter = this.game.add.text(465, 23, this.level.currentMonster, {
                 font: "25px 'Jim Nightshade', cursive",
@@ -87,6 +72,10 @@ var playState = {
         this.iconInventory.scale.setTo(0.3);
         this.iconInventory.inputEnabled = true;
         this.iconInventory.events.onInputDown.add(toggleInventory, this);
+
+        this.iconCity = this.game.add.sprite(30, 150, "icon-city");
+        this.iconCity.scale.setTo(0.3);
+        this.iconCity.inputEnabled = true;
 
         /////////////
         ////GOLD/////
