@@ -59,6 +59,12 @@ var playState = {
             monster.healthText = game.add.text(1000, 420, monster.maxHealth, {
                 font: "35px 'Jim Nightshade', cursive",
                 fill: "red"});
+            monster.healthText.anchor.setTo(0.5);
+            monster.nameText = game.add.text(1000, 220, monster.details.monsterName, {
+                font: "35px 'Jim Nightshade', cursive",
+                fill: "red"});
+            monster.nameText.anchor.setTo(0.5);
+
 
             //enable input, so we can click it
             monster.inputEnabled = true;
@@ -71,6 +77,7 @@ var playState = {
         this.currentMonster = this.monsters.getRandom();
         this.currentMonster.position.setTo(450, 315);
         this.currentMonster.healthText.x = 450;
+        this.currentMonster.nameText.x = 445;
         //icons
         this.iconInventory = this.game.add.sprite(30,210,"icon-inventory");
         this.iconInventory.scale.setTo(0.3);
@@ -143,6 +150,7 @@ var playState = {
             state.currentMonster = state.monsters.getRandom();
             //place text once again on proper place and revive monster
             state.currentMonster.healthText.x = 450;
+            state.currentMonster.nameText.x = 445;
             state.currentMonster.revive(state.currentMonster.maxHealth);
 
             var coin;
