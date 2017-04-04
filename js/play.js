@@ -72,7 +72,7 @@ var playState = {
         this.currentMonster.position.setTo(450, 315);
         this.currentMonster.healthText.x = 450;
         //icons
-        this.iconInventory = this.game.add.sprite(30,120,"icon-inventory");
+        this.iconInventory = this.game.add.sprite(30,210,"icon-inventory");
         this.iconInventory.scale.setTo(0.3);
         this.iconInventory.inputEnabled = true;
         this.iconInventory.events.onInputDown.add(toggleInventory, this);
@@ -80,6 +80,7 @@ var playState = {
         this.iconCity = this.game.add.sprite(30, 150, "icon-city");
         this.iconCity.scale.setTo(0.3);
         this.iconCity.inputEnabled = true;
+        this.iconCity.events.onInputDown.add(goToCity, this);
 
         /////////////
         ////GOLD/////
@@ -170,6 +171,10 @@ var playState = {
             state.player.gold += 1;
             state.goldText.text = state.player.gold;
             console.log(state.player.gold);
+        };
+
+        function goToCity() {
+          game.state.start("city");
         }
     },
 
