@@ -40,7 +40,11 @@ var playState = {
         this.monstersList = [
             {monsterName: "Skeleton", monsterKey: "bone", maxHp: 10},
             {monsterName: "Orc", monsterKey: "orc", maxHp: 10},
-            {monsterName: "Dragon", monsterKey: "dragon", maxHp: 10}
+            {monsterName: "Fire Dragon", monsterKey: "dragon", maxHp: 10},
+            {monsterName: "Air Dragon", monsterKey: "dragon-air", maxHp: 10},
+            {monsterName: "Dark Dragon", monsterKey: "dragon-dark", maxHp: 10},
+            {monsterName: "Rock Dragon", monsterKey: "dragon-rock", maxHp: 10},
+            {monsterName: "Sapphire Dragon", monsterKey: "dragon-sapphire", maxHp: 10},
         ];
         this.monsters = this.game.add.group();
 

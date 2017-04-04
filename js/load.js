@@ -19,6 +19,10 @@ var loadState = {
         this.game.load.image("bone", "assets/monsters/BONE.png");
         this.game.load.image("orc", "assets/monsters/ORC.png");
         this.game.load.image("dragon", "assets/monsters/DRAGON.png");
+        this.game.load.image("dragon-air", "assets/monsters/DRAGONAIR.png");
+        this.game.load.image("dragon-dark", "assets/monsters/DARKDRAGON.png");
+        this.game.load.image("dragon-rock", "assets/monsters/ROCKDRAGON.png");
+        this.game.load.image("dragon-sapphire", "assets/monsters/SAPPHIREDRAGON.png");
         this.game.load.spritesheet("gold", "assets/gold/coins.png", 16, 16);
 
     },
