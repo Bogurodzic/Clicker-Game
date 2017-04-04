@@ -142,6 +142,7 @@ var playState = {
             //after being killed move sprite and text outside
             monster.position.setTo(1000, 375);
             monster.healthText.position.x = 1000;
+            monster.nameText.position.x = 1000;
 
             //update monster counter
             state.level.currentMonster += 1;
