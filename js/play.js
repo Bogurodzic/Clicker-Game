@@ -16,6 +16,8 @@ var playState = {
             requiredKilledMonsters: 10
         }
 
+
+
         this.background = game.add.tileSprite(0, 0, 708, 511, "background-winter");
 
         this.uiFrame = this.game.add.image(0, 0, "ui-frame");
@@ -184,6 +186,19 @@ var playState = {
 
         function goToCity() {
           game.state.start("city");
+        };
+
+        function saveToLocalStorage() {
+          //save world info
+          localStorage.level = state.level.currentLevel;
+          localStorage.killedMonsters = state.level.currentMonster;
+
+          //save basic player stats
+          localStorage.maxHp = state.player.maxHp;
+          localStorage.currentHp = state.player.currentHp;
+          localStorage.clickDamage = state.player.clickDamage;
+          localStorage.dps = state.player.dps
+          localStorage.gold = state.player.gold;
         }
     },
 
