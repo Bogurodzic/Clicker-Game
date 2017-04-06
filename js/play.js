@@ -199,6 +199,23 @@ var playState = {
           localStorage.clickDamage = state.player.clickDamage;
           localStorage.dps = state.player.dps
           localStorage.gold = state.player.gold;
+
+          console.log("Saved");
+        };
+
+        function loadFromLocalStorage() {
+          //load world info
+          state.level.currentLevel = localStorage.getItem("level");
+          state.level.currentMonster = localStorage.getItem("killedMonsters");
+
+          //load basic player stats
+          state.player.maxHp = localStorage.getItem("maxHp");
+          state.player.currentHp = localStorage.getItem("currentHp");
+          state.player.clickDamage = localStorage.getItem("clickDamage");
+          state.player.dps = localStorage.getItem("dps");
+          state.player.gold = localStorage.getItem("gold");
+
+          console.log("loaded");
         }
     },
 
