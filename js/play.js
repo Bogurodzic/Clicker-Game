@@ -141,31 +141,43 @@ var playState = {
         };
 
         function onKilledMonster(monster) {
-            //after being killed move sprite and text outside
-            monster.position.setTo(1000, 375);
-            monster.healthText.position.x = 1000;
-            monster.nameText.position.x = 1000;
+            moveOutMonster(monster);
+            countMonster();
+            getNewMonster();
+            dropCoin();
+        };
 
-            //update monster counter
-            state.level.currentMonster += 1;
-            state.monsterCounter.text = state.level.currentMonster;
+        function moveOutMonster(monster){
+          //after being killed move sprite and text outside
+          monster.position.setTo(1000, 375);
+          monster.healthText.position.x = 1000;
+          monster.nameText.position.x = 1000;
+        };
 
-            state.currentMonster = state.monsters.getRandom();
-            //place text once again on proper place and revive monster
-            state.currentMonster.healthText.x = 450;
-            state.currentMonster.nameText.x = 445;
-            state.currentMonster.revive(state.currentMonster.maxHealth);
+        function countMonster(){
+          //update monster counter
+          state.level.currentMonster += 1;
+          state.monsterCounter.text = state.level.currentMonster;
+        }
 
-            var coin;
-            //spawn a coin on the ground
-            coin = state.golds.getFirstExists(false);
-            coin.reset(450 + this.game.rnd.integerInRange(-60, 60), 360 + this.game.rnd.integerInRange(-15, 15));
-            coin.animations.add("spin", [0, 1, 2, 3, 4, 5, 6, 7]);
-            coin.animations.play("spin", 20, true);
-            setTimeout(function(){
-                onClickGold.call(state, coin);
-            }, 3000);
+        function getNewMonster(){
+          state.currentMonster = state.monsters.getRandom();
+          //place text once again on proper place and revive monster
+          state.currentMonster.healthText.x = 450;
+          state.currentMonster.nameText.x = 445;
+          state.currentMonster.revive(state.currentMonster.maxHealth);
+        };
 
+        function dropCoin(){
+          var coin;
+          //spawn a coin on the ground
+          coin = state.golds.getFirstExists(false);
+          coin.reset(450 + this.game.rnd.integerInRange(-60, 60), 360 + this.game.rnd.integerInRange(-15, 15));
+          coin.animations.add("spin", [0, 1, 2, 3, 4, 5, 6, 7]);
+          coin.animations.play("spin", 20, true);
+          setTimeout(function(){
+              onClickGold.call(state, coin);
+          }, 3000);
         };
 
         function onRevivedMonster(monster) {
