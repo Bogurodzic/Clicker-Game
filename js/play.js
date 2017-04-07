@@ -7,6 +7,7 @@ var playState = {
             currentHp: 100,
             clickDamage: 1,
             dps: 0,
+            criticalChance: 0.7,
             gold: 0
         };
 
@@ -134,10 +135,20 @@ var playState = {
 
         function onClickMonster(monster) {
             //deals damage to monster equal to player dmg
-            monster.damage(state.player.clickDamage);
+            isCritical(monster);
             //update hp text
             state.currentMonster.healthText.text = state.currentMonster.health;
             console.log(monster.health);
+        };
+
+        function isCritical(monster){
+          var chance = game.rnd.integerInRange(0, 100);
+          if(chance > state.player.criticalChance * 100){
+            monster.damage(state.player.clickDamage * 3);
+            console.log("siadł krytyk");
+          } else {
+            monster.damage(state.player.clickDamage);
+          }
         };
 
         function onKilledMonster(monster) {
@@ -193,7 +204,6 @@ var playState = {
             gold.kill();
             state.player.gold += 1;
             state.goldText.text = state.player.gold;
-            console.log(state.player.gold);
         };
 
         function goToCity() {
