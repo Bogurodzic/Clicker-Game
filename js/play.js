@@ -185,6 +185,7 @@ var playState = {
         };
 
         function goToCity() {
+          saveToLocalStorage();
           game.state.start("city");
         };
 
