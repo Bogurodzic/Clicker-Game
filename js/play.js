@@ -113,6 +113,23 @@ var playState = {
         this.inventory.anchor.setTo(0.5);
         this.inventory.scale.setTo(0.95);
 
+        this.runes = this.inventory.addChild(this.game.add.group());
+
+        this.runesList = [
+          {runeName: "Rune 1", runeKey: "rune1"},
+          {runeName: "Rune 2", runeKey: "rune2"},
+          {runeName: "Rune 3", runeKey: "rune3"}
+        ];
+
+        var rune;
+        this.runesList.forEach(function(data, index){
+          rune = state.runes.create(127, -35 - (-60 * index), data.runeKey);
+        });
+
+        this.inventory.runes = this.inventory.addChild(this.game.add.sprite(127, -35, "rune1"));
+
+
+
 
 
         /////////////

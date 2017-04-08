@@ -25,7 +25,9 @@ var loadState = {
         this.game.load.image("dragon-rock", "assets/monsters/ROCKDRAGON.png");
         this.game.load.image("dragon-sapphire", "assets/monsters/SAPPHIREDRAGON.png");
         this.game.load.spritesheet("gold", "assets/gold/coins.png", 16, 16);
-
+        this.game.load.image("rune1", "assets/runesspells/rune1.png");
+        this.game.load.image("rune2", "assets/runesspells/rune2.png");
+        this.game.load.image("rune3", "assets/runesspells/rune3.png");
     },
 
     create: function() {
