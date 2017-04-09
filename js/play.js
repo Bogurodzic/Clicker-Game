@@ -123,7 +123,7 @@ var playState = {
 
         var rune;
         this.runesList.forEach(function(data, index){
-          rune = state.runes.create(127, -35 - (-60 * index), data.runeKey);
+          rune = state.runes.create(127, -35 - (-58 * index), data.runeKey);
         });
 
         this.inventory.runes = this.inventory.addChild(this.game.add.sprite(127, -35, "rune1"));
