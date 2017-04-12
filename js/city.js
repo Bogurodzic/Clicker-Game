@@ -11,6 +11,8 @@ var cityState = {
           gold: 0
       };
 
+      console.log(this);
+
       this.background = this.game.add.tileSprite(0, 0, 708, 511, "background-day");
 
       this.uiFrame = this.game.add.image(0, 0, "ui-frame");

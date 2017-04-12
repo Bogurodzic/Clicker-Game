@@ -116,17 +116,26 @@ var playState = {
         this.runes = this.inventory.addChild(this.game.add.group());
 
         this.runesList = [
-          {runeName: "Rune 1", runeKey: "rune1"},
-          {runeName: "Rune 2", runeKey: "rune2"},
-          {runeName: "Rune 3", runeKey: "rune3"}
+          {runeName: "Rune 1", runeKey: "rune1", runeHandler: function(rune){
+            rune.x = 10;
+          }},
+          {runeName: "Rune 2", runeKey: "rune2", runeHandler: function(rune){
+            rune.x = 10;
+          }},
+          {runeName: "Rune 3", runeKey: "rune3", runeHandler: function(rune){
+            rune.x = 10;
+          }}
         ];
 
         var rune;
         this.runesList.forEach(function(data, index){
           rune = state.runes.create(127, -35 - (-58 * index), data.runeKey);
+          rune.details = data;
+          rune.inputEnabled = true;
+
+          rune.events.onInputDown.add(runeToggle, this);
         });
 
-        this.inventory.runes = this.inventory.addChild(this.game.add.sprite(127, -35, "rune1"));
 
 
 
@@ -137,6 +146,10 @@ var playState = {
         /////////////
 
         //open or close inventory
+        function runeToggle(rune){
+          rune.details.runeHandler.call(this, rune);
+        };
+
         var inventoryVisible = false;
         function toggleInventory() {
             if (inventoryVisible === false){
