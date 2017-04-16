@@ -6,7 +6,7 @@ var playState = {
             maxHp: 100,
             currentHp: 100,
             clickDamage: 1,
-            dps: 0,
+            dps: 5,
             criticalChance: 0.7,
             gold: 0
         };
@@ -113,6 +113,40 @@ var playState = {
         this.inventory.anchor.setTo(0.5);
         this.inventory.scale.setTo(0.95);
 
+        /////////////
+        //equipment//
+        /////////////
+        this.playerEquipment = {
+          weapon: "",
+          shield: "",
+          armor: "",
+          helmet: "",
+          legs: "",
+          boots: ""
+        }
+
+        this.equipmentList = {
+          weapons: [{name: "sword", icon: "icon-sword", level: 1}]
+        }
+
+        this.equipment = this.inventory.addChild(this.game.add.group());
+
+        this.playerEquipment.weapon = this.equipmentList.weapons[0];
+
+        renderEquipment();
+
+        function renderEquipment(){
+          renderWeapon();
+        }
+
+        function renderWeapon(){
+          if(state.weapon){
+            state.weapon.destroy();
+          }
+          state.weapon = state.equipment.addChild(state.game.add.sprite(-100, -50, state.playerEquipment.weapon.icon));
+          state.weapon.scale.setTo(0.5);
+        };
+
         this.runes = this.inventory.addChild(this.game.add.group());
 
         this.runesList = [
@@ -136,20 +170,22 @@ var playState = {
           rune.events.onInputDown.add(runeToggle, this);
         });
 
+        //////////////
+        //GAME//LOOPS/
+        //////////////
 
-
-
+        this.dpsTimer =this.game.time.events.loop(100, onDps, this);
 
 
         /////////////
         //FUNCTIONS//
         /////////////
 
-        //open or close inventory
         function runeToggle(rune){
           rune.details.runeHandler.call(this, rune);
         };
 
+        //open or close inventory
         var inventoryVisible = false;
         function toggleInventory() {
             if (inventoryVisible === false){
@@ -163,21 +199,29 @@ var playState = {
             };
         };
 
-        function onClickMonster(monster) {
-            //deals damage to monster equal to player dmg
-            isCritical(monster);
-            //update hp text
-            state.currentMonster.healthText.text = state.currentMonster.health;
-            console.log(monster.health);
+        function onDps(){
+          isCritical(state.currentMonster, state.player.clickDamage/10);
+          renderMonsterHealth();
         };
 
-        function isCritical(monster){
+        function onClickMonster(monster) {
+            //deals damage to monster equal to player dmg
+            isCritical(monster, state.player.clickDamage);
+            //update hp text
+            renderMonsterHealth();
+        };
+
+        function renderMonsterHealth(){
+          state.currentMonster.healthText.text = Math.round(state.currentMonster.health);
+        }
+
+        function isCritical(monster, damage){
           var chance = game.rnd.integerInRange(0, 100);
           if(chance > state.player.criticalChance * 100){
-            monster.damage(state.player.clickDamage * 3);
+            monster.damage(damage * 3);
             console.log("siadł krytyk");
           } else {
-            monster.damage(state.player.clickDamage);
+            monster.damage(damage);
           }
         };
 
