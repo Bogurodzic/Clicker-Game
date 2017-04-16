@@ -17,7 +17,11 @@ var playState = {
             requiredKilledMonsters: 10
         }
 
-
+        var infoWindow = this.game.add.bitmapData(100, 100);
+        infoWindow.ctx.beginPath();
+        infoWindow.ctx.rect(0, 0, 100, 100);
+        infoWindow.ctx.fillStyle = "#ff0000";
+        infoWindow.ctx.fill();
 
         this.background = game.add.tileSprite(0, 0, 708, 511, "background-winter");
 
@@ -146,15 +150,26 @@ var playState = {
           if(state.weapon){
             state.weapon.destroy();
           }
-          state.weapon = state.equipment.addChild(state.game.add.sprite(-100, -50, state.playerEquipment.weapon.icon));
+          state.weapon = state.equipment.addChild(state.game.add.sprite(-115, 0, state.playerEquipment.weapon.icon));
           state.weapon.scale.setTo(0.5);
           state.weapon.inputEnabled = true;
           state.weapon.events.onInputDown.add(changeWeapon, state);
+          state.weapon.events.onInputOver.add(infoWindowOver, state);
+          state.weapon.events.onInputOut.add(infoWindowOut, state);
         };
 
         function changeWeapon(){
           state.playerEquipment.weapon = this.equipmentList.weapons[1];
           renderWeapon();
+        }
+
+        var info;
+        function infoWindowOver(){
+          info = this.game.add.sprite(50, 50, infoWindow);
+        };
+
+        function infoWindowOut(){
+          info.destroy();
         }
 
         this.runes = this.inventory.addChild(this.game.add.group());
