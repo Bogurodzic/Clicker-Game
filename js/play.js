@@ -126,7 +126,10 @@ var playState = {
         }
 
         this.equipmentList = {
-          weapons: [{name: "sword", icon: "icon-sword", level: 1}]
+          weapons: [
+            {name: "sword", icon: "icon-sword", level: 1},
+            {name: "hammer", icon: "icon-hammer", level: 1}
+          ]
         }
 
         this.equipment = this.inventory.addChild(this.game.add.group());
@@ -145,7 +148,14 @@ var playState = {
           }
           state.weapon = state.equipment.addChild(state.game.add.sprite(-100, -50, state.playerEquipment.weapon.icon));
           state.weapon.scale.setTo(0.5);
+          state.weapon.inputEnabled = true;
+          state.weapon.events.onInputDown.add(changeWeapon, state);
         };
+
+        function changeWeapon(){
+          state.playerEquipment.weapon = this.equipmentList.weapons[1];
+          renderWeapon();
+        }
 
         this.runes = this.inventory.addChild(this.game.add.group());
 
