@@ -3,14 +3,7 @@ var playState = {
         var state = this;
 
 
-        game.player = {
-            maxHp: 100,
-            currentHp: 100,
-            clickDamage: 1,
-            dps: 5,
-            criticalChance: 0.7,
-            gold: 0
-        };
+
 
         this.level = {
             currentLevel: 1,
@@ -87,7 +80,7 @@ var playState = {
         this.iconInventory = this.game.add.sprite(30,210,"icon-inventory");
         this.iconInventory.scale.setTo(0.3);
         this.iconInventory.inputEnabled = true;
-        this.iconInventory.events.onInputDown.add(toggleInventory, this);
+        this.iconInventory.events.onInputDown.add(game.toggleInventory, this);
 
         this.iconCity = this.game.add.sprite(30, 150, "icon-city");
         this.iconCity.scale.setTo(0.3);
@@ -172,7 +165,7 @@ var playState = {
         var y = 0;
 
         function infoWindowOpen(){
-          infoWindoWSize(this.infoText);
+          //infoWindoWSize(this.infoText);
           var infoWindow = state.game.add.bitmapData(50, 15);
           infoWindow.ctx.beginPath();
           infoWindow.ctx.rect(0, 0, 50, 15);
@@ -246,18 +239,7 @@ var playState = {
         };
 
         //open or close inventory
-        var inventoryVisible = false;
-        function toggleInventory() {
-            if (inventoryVisible === false){
-                this.inventory.x = this.game.world.centerX;
-                this.inventory.y = this.game.world.centerY;
-                inventoryVisible = true;
-            } else if (inventoryVisible === true){
-                this.inventory.x = -1000;
-                this.inventory.y = -1000;
-                inventoryVisible = false;
-            };
-        };
+
 
         function onDps(){
           isCritical(state.currentMonster, game.player.clickDamage/10);
@@ -340,10 +322,11 @@ var playState = {
         };
 
         function goToCity() {
-          saveToLocalStorage();
+          //saveToLocalStorage();
           game.state.start("city");
         };
 
+        /*
         function saveToLocalStorage() {
           //save world info
           localStorage.level = state.level.currentLevel;
@@ -372,7 +355,7 @@ var playState = {
           game.player.gold = localStorage.getItem("gold");
 
           console.log("loaded");
-        }
+        } */
     },
 
     update: function() {

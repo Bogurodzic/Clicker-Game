@@ -3,14 +3,16 @@ var cityState = {
 
       var state = this;
 
-      console.log(game.player);
-
-      console.log(this);
 
       this.background = this.game.add.tileSprite(0, 0, 708, 511, "background-day");
 
       this.uiFrame = this.game.add.image(0, 0, "ui-frame");
       this.uiFrame.scale.setTo(1.2);
+
+      this.goldText = this.game.add.text(207, 23, game.player.gold, {
+              font: "25px 'Jim Nightshade', cursive",
+              fill: "white"});
+      this.goldText.anchor.setTo(0.5);
 
       //icons
       this.iconInventory = this.game.add.sprite(30,210,"icon-inventory");
