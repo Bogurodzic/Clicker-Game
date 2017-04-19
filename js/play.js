@@ -15,13 +15,21 @@ var playState = {
             currentLevel: 1,
             currentMonster: 0,
             requiredKilledMonsters: 10
-        }
+        };
 
-        var infoWindow = this.game.add.bitmapData(100, 100);
-        infoWindow.ctx.beginPath();
-        infoWindow.ctx.rect(0, 0, 100, 100);
-        infoWindow.ctx.fillStyle = "#ff0000";
-        infoWindow.ctx.fill();
+        var x = 0;
+        var y = 0;
+
+
+        document.addEventListener('mousemove', onMouseMove, false)
+
+      function onMouseMove(e){
+          x = e.clientX;
+          y = e.clientY;
+          console.log(x);
+          console.log(y);
+      };
+
 
         this.background = game.add.tileSprite(0, 0, 708, 511, "background-winter");
 
@@ -154,7 +162,11 @@ var playState = {
           state.weapon.scale.setTo(0.5);
           state.weapon.inputEnabled = true;
           state.weapon.events.onInputDown.add(changeWeapon, state);
-          state.weapon.events.onInputOver.add(infoWindowOver, state);
+          state.weapon.events.onInputOver.add(infoWindowOver, {
+            sizeA: 100,
+            sizeB: 50,
+            infoText: "XD"
+          });
           state.weapon.events.onInputOut.add(infoWindowOut, state);
         };
 
@@ -164,8 +176,16 @@ var playState = {
         }
 
         var info;
-        function infoWindowOver(){
-          info = this.game.add.sprite(50, 50, infoWindow);
+        function infoWindowOver(sizeA, sizeB, positionX, positionY, infoText){
+          var infoWindow = state.game.add.bitmapData(this.sizeA, 50);
+          infoWindow.ctx.beginPath();
+          infoWindow.ctx.rect(0, 0, 50, 50);
+          infoWindow.ctx.fillStyle = "brown";
+          infoWindow.ctx.fill();
+          console.log("info window x:" + x);
+          console.log("info window y: " + y);
+          info = game.add.sprite(x, x, infoWindow);
+          //infoText = info.addChild(state.game.add.text(50,50, "XD"));
         };
 
         function infoWindowOut(){
@@ -200,6 +220,12 @@ var playState = {
         //////////////
 
         this.dpsTimer =this.game.time.events.loop(100, onDps, this);
+
+
+
+
+
+
 
 
         /////////////
@@ -343,5 +369,8 @@ var playState = {
 
     update: function() {
         //this.background.tilePosition.x -= 0.2;
+
+
+
     }
 }
