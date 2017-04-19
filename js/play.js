@@ -17,18 +17,7 @@ var playState = {
             requiredKilledMonsters: 10
         };
 
-        var x = 0;
-        var y = 0;
 
-
-        document.addEventListener('mousemove', onMouseMove, false)
-
-      function onMouseMove(e){
-          x = e.clientX;
-          y = e.clientY;
-          console.log(x);
-          console.log(y);
-      };
 
 
         this.background = game.add.tileSprite(0, 0, 708, 511, "background-winter");
@@ -176,15 +165,24 @@ var playState = {
         }
 
         var info;
+        var x = 0;
+        var y = 0;
         function infoWindowOver(sizeA, sizeB, positionX, positionY, infoText){
           var infoWindow = state.game.add.bitmapData(this.sizeA, 50);
           infoWindow.ctx.beginPath();
           infoWindow.ctx.rect(0, 0, 50, 50);
           infoWindow.ctx.fillStyle = "brown";
           infoWindow.ctx.fill();
-          console.log("info window x:" + x);
-          console.log("info window y: " + y);
-          info = game.add.sprite(x, x, infoWindow);
+
+          document.addEventListener('mousemove', onMouseMove, false);
+
+          function onMouseMove(e){
+              x = e.clientX;
+              y = e.clientY - 45;
+              info.position.setTo(x, y);
+          };
+
+          info = game.add.sprite(x, y, infoWindow);
           //infoText = info.addChild(state.game.add.text(50,50, "XD"));
         };
 
@@ -270,7 +268,6 @@ var playState = {
           var chance = game.rnd.integerInRange(0, 100);
           if(chance > state.player.criticalChance * 100){
             monster.damage(damage * 3);
-            console.log("siadł krytyk");
           } else {
             monster.damage(damage);
           }
