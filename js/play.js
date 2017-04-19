@@ -145,7 +145,7 @@ var playState = {
           state.weapon.scale.setTo(0.5);
           state.weapon.inputEnabled = true;
           state.weapon.events.onInputDown.add(changeWeapon, state);
-          state.weapon.events.onInputOver.add(infoWindowOpen, {
+          state.weapon.events.onInputOver.add(game.infoWindowOpen, {
             infoText: "XD"
           });
           state.weapon.events.onInputOut.add(infoWindowClose, state);
@@ -160,31 +160,9 @@ var playState = {
         //InfoWindow///
         //////////////
 
-        var info;
-        var x = 0;
-        var y = 0;
 
-        function infoWindowOpen(){
-          //infoWindoWSize(this.infoText);
-          var infoWindow = state.game.add.bitmapData(50, 15);
-          infoWindow.ctx.beginPath();
-          infoWindow.ctx.rect(0, 0, 50, 15);
-          infoWindow.ctx.fillStyle = "brown";
-          infoWindow.ctx.fill();
 
-          document.addEventListener('mousemove', onMouseMove, false);
 
-          function onMouseMove(e){
-              x = e.clientX;
-              y = e.clientY -20;
-              info.position.setTo(x, y);
-          };
-
-          info = game.add.sprite(x, y, infoWindow);
-          infoText = info.addChild(state.game.add.text(0, 0, "XD", {
-              font: "15px 'Jim Nightshade', cursive",
-              fill: "black"}));
-        };
 
         function infoWindowSize(text){
 
