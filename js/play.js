@@ -2,7 +2,8 @@ var playState = {
     create: function() {
         var state = this;
 
-        this.player = {
+
+        game.player = {
             maxHp: 100,
             currentHp: 100,
             clickDamage: 1,
@@ -32,7 +33,7 @@ var playState = {
         this.monsterCounter.anchor.setTo(0.5);
 
         //this.monsters = this.game.add.group();
-        this.hpText = this.game.add.text(36, 38, this.player.currentHp, {
+        this.hpText = this.game.add.text(36, 38, game.player.currentHp, {
                 font: "15px 'Jim Nightshade', cursive",
                 fill: "#fff"});
 
@@ -104,7 +105,7 @@ var playState = {
         this.golds.setAll("value", 1);
         this.golds.callAll("events.onInputDown.add", "events.onInputDown", onClickGold, this);
 
-        this.goldText = this.game.add.text(207, 23, this.player.gold, {
+        this.goldText = this.game.add.text(207, 23, game.player.gold, {
                 font: "25px 'Jim Nightshade', cursive",
                 fill: "white"});
         this.goldText.anchor.setTo(0.5);
@@ -151,26 +152,30 @@ var playState = {
           state.weapon.scale.setTo(0.5);
           state.weapon.inputEnabled = true;
           state.weapon.events.onInputDown.add(changeWeapon, state);
-          state.weapon.events.onInputOver.add(infoWindowOver, {
-            sizeA: 100,
-            sizeB: 50,
+          state.weapon.events.onInputOver.add(infoWindowOpen, {
             infoText: "XD"
           });
-          state.weapon.events.onInputOut.add(infoWindowOut, state);
+          state.weapon.events.onInputOut.add(infoWindowClose, state);
         };
 
         function changeWeapon(){
           state.playerEquipment.weapon = this.equipmentList.weapons[1];
           renderWeapon();
-        }
+        };
+
+        ///////////////
+        //InfoWindow///
+        //////////////
 
         var info;
         var x = 0;
         var y = 0;
-        function infoWindowOver(sizeA, sizeB, positionX, positionY, infoText){
-          var infoWindow = state.game.add.bitmapData(this.sizeA, 50);
+
+        function infoWindowOpen(){
+          infoWindoWSize(this.infoText);
+          var infoWindow = state.game.add.bitmapData(50, 15);
           infoWindow.ctx.beginPath();
-          infoWindow.ctx.rect(0, 0, 50, 50);
+          infoWindow.ctx.rect(0, 0, 50, 15);
           infoWindow.ctx.fillStyle = "brown";
           infoWindow.ctx.fill();
 
@@ -178,15 +183,21 @@ var playState = {
 
           function onMouseMove(e){
               x = e.clientX;
-              y = e.clientY - 45;
+              y = e.clientY -20;
               info.position.setTo(x, y);
           };
 
           info = game.add.sprite(x, y, infoWindow);
-          //infoText = info.addChild(state.game.add.text(50,50, "XD"));
+          infoText = info.addChild(state.game.add.text(0, 0, "XD", {
+              font: "15px 'Jim Nightshade', cursive",
+              fill: "black"}));
         };
 
-        function infoWindowOut(){
+        function infoWindowSize(text){
+
+        }
+
+        function infoWindowClose(){
           info.destroy();
         }
 
@@ -249,13 +260,13 @@ var playState = {
         };
 
         function onDps(){
-          isCritical(state.currentMonster, state.player.clickDamage/10);
+          isCritical(state.currentMonster, game.player.clickDamage/10);
           renderMonsterHealth();
         };
 
         function onClickMonster(monster) {
             //deals damage to monster equal to player dmg
-            isCritical(monster, state.player.clickDamage);
+            isCritical(monster, game.player.clickDamage);
             //update hp text
             renderMonsterHealth();
         };
@@ -266,7 +277,7 @@ var playState = {
 
         function isCritical(monster, damage){
           var chance = game.rnd.integerInRange(0, 100);
-          if(chance > state.player.criticalChance * 100){
+          if(chance > game.player.criticalChance * 100){
             monster.damage(damage * 3);
           } else {
             monster.damage(damage);
@@ -324,8 +335,8 @@ var playState = {
             }
 
             gold.kill();
-            state.player.gold += 1;
-            state.goldText.text = state.player.gold;
+            game.player.gold += 1;
+            state.goldText.text = game.player.gold;
         };
 
         function goToCity() {
@@ -339,11 +350,11 @@ var playState = {
           localStorage.killedMonsters = state.level.currentMonster;
 
           //save basic player stats
-          localStorage.maxHp = state.player.maxHp;
-          localStorage.currentHp = state.player.currentHp;
-          localStorage.clickDamage = state.player.clickDamage;
-          localStorage.dps = state.player.dps
-          localStorage.gold = state.player.gold;
+          localStorage.maxHp = game.player.maxHp;
+          localStorage.currentHp = game.player.currentHp;
+          localStorage.clickDamage = game.player.clickDamage;
+          localStorage.dps = game.player.dps
+          localStorage.gold = game.player.gold;
 
           console.log("Saved");
         };
@@ -354,11 +365,11 @@ var playState = {
           state.level.currentMonster = localStorage.getItem("killedMonsters");
 
           //load basic player stats
-          state.player.maxHp = localStorage.getItem("maxHp");
-          state.player.currentHp = localStorage.getItem("currentHp");
-          state.player.clickDamage = localStorage.getItem("clickDamage");
-          state.player.dps = localStorage.getItem("dps");
-          state.player.gold = localStorage.getItem("gold");
+          game.player.maxHp = localStorage.getItem("maxHp");
+          game.player.currentHp = localStorage.getItem("currentHp");
+          game.player.clickDamage = localStorage.getItem("clickDamage");
+          game.player.dps = localStorage.getItem("dps");
+          game.player.gold = localStorage.getItem("gold");
 
           console.log("loaded");
         }
