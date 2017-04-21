@@ -2,17 +2,11 @@ var playState = {
     create: function() {
         var state = this;
 
-
-
-
         this.level = {
             currentLevel: 1,
             currentMonster: 0,
             requiredKilledMonsters: 10
         };
-
-
-
 
         this.background = game.add.tileSprite(0, 0, 708, 511, "background-winter");
 
@@ -25,10 +19,8 @@ var playState = {
                 fill: "#fff"});
         this.monsterCounter.anchor.setTo(0.5);
 
-        //this.monsters = this.game.add.group();
-        this.hpText = this.game.add.text(36, 38, game.player.currentHp, {
-                font: "15px 'Jim Nightshade', cursive",
-                fill: "#fff"});
+
+        game.renderHP();
 
         /////////////
         //MONSTERS///
@@ -98,10 +90,6 @@ var playState = {
         this.golds.setAll("value", 1);
         this.golds.callAll("events.onInputDown.add", "events.onInputDown", onClickGold, this);
 
-        this.goldText = this.game.add.text(207, 23, game.player.gold, {
-                font: "25px 'Jim Nightshade', cursive",
-                fill: "white"});
-        this.goldText.anchor.setTo(0.5);
 
         //ading inventory
         this.inventory = this.game.add.sprite(-1000, -1000, "inventory");
@@ -145,9 +133,7 @@ var playState = {
           state.weapon.scale.setTo(0.5);
           state.weapon.inputEnabled = true;
           state.weapon.events.onInputDown.add(changeWeapon, state);
-          state.weapon.events.onInputOver.add(game.infoWindowOpen, {
-            infoText: "XD"
-          });
+          state.weapon.events.onInputOver.add(game.infoWindow.render, game.infoWindow);
           state.weapon.events.onInputOut.add(infoWindowClose, state);
         };
 
@@ -164,9 +150,7 @@ var playState = {
 
 
 
-        function infoWindowSize(text){
 
-        }
 
         function infoWindowClose(){
           info.destroy();
