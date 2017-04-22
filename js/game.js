@@ -49,15 +49,14 @@ game.toggleInventory = function() {
 var info;
 var x = 0;
 var y = 0;
+var panelWidth = 500;
+var panelHeight = 500;
 
 game.infoWindow = {
 
-  info: "",
-  x: 0,
-  y: 0,
-
   render: function(){
     this.checkMouse();
+    this.sizeX();
     this.open();
   },
 
@@ -77,14 +76,32 @@ game.infoWindow = {
   catchMouse: function(e){
     x = e.clientX;
     y = e.clientY -20;
-    info.position.setTo(x, y);
+    info.position.setTo(game.infoWindow.sizeX(), game.infoWindow.sizeY());
   },
 
   open: function(){
-    info = game.add.sprite(x, y, this.make());
+    info = game.add.sprite(this.sizeX(), this.sizeY(), this.make());
     infoText = info.addChild(game.add.text(0, 0, this.infoText, {
         font: "15px 'Jim Nightshade', cursive",
         fill: "black"}));
+  },
+
+  sizeX: function(){
+    if ((game.width - x - panelWidth) < 0){
+      console.log("nie miesci sie! X");
+      return game.width - panelWidth - 20;
+    } else {
+      return x;
+    }
+  },
+
+  sizeY: function(){
+    if((game.height - y - panelHeight) <0){
+      console.log("nie miesci sie! Y");
+      return game.height - panelHeight - 20;
+    } else {
+      return y;
+    }
   }
 }
 game.infoWindowOpen = function(){

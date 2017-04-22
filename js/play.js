@@ -21,6 +21,7 @@ var playState = {
 
 
         game.renderHP();
+        game.renderGold();
 
         /////////////
         //MONSTERS///
@@ -280,7 +281,7 @@ var playState = {
 
             gold.kill();
             game.player.gold += 1;
-            state.goldText.text = game.player.gold;
+            game.goldText.text = game.player.gold;
         };
 
         function goToCity() {
