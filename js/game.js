@@ -47,14 +47,21 @@ game.toggleInventory = function() {
 
 
 var info;
-var x = 0;
-var y = 0;
-var panelWidth = 500;
-var panelHeight = 500;
+
+var panelWidth = 50;
+var panelHeight = 50;
 
 game.infoWindow = {
 
-  render: function(){
+  x: 0,
+  y: 0,
+
+  calculateText: function(data){
+    console.log(this);
+  },
+
+  render: function(data){
+    //this.calculateText(data);
     this.checkMouse();
     this.sizeX();
     this.open();
@@ -74,33 +81,34 @@ game.infoWindow = {
   },
 
   catchMouse: function(e){
-    x = e.clientX;
-    y = e.clientY -20;
+    game.infoWindow.x = e.clientX;
+    game.infoWindow.y = e.clientY -20;
     info.position.setTo(game.infoWindow.sizeX(), game.infoWindow.sizeY());
   },
 
   open: function(){
     info = game.add.sprite(this.sizeX(), this.sizeY(), this.make());
+    console.log(this);
     infoText = info.addChild(game.add.text(0, 0, this.infoText, {
         font: "15px 'Jim Nightshade', cursive",
         fill: "black"}));
   },
 
   sizeX: function(){
-    if ((game.width - x - panelWidth) < 0){
-      console.log("nie miesci sie! X");
+    if ((game.width - this.x - panelWidth) < 0){
+      //console.log("nie miesci sie! X");
       return game.width - panelWidth - 20;
     } else {
-      return x;
+      return this.x;
     }
   },
 
   sizeY: function(){
-    if((game.height - y - panelHeight) <0){
-      console.log("nie miesci sie! Y");
+    if((game.height - this.y - panelHeight) <0){
+      //console.log("nie miesci sie! Y");
       return game.height - panelHeight - 20;
     } else {
-      return y;
+      return this.y;
     }
   }
 }
