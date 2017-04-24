@@ -53,21 +53,45 @@ var panelHeight = 50;
 
 game.infoWindow = {
 
-  x: 0,
-  y: 0,
-
-  calculateText: function(data){
-    console.log(this);
-  },
 
   render: function(data){
     //this.calculateText(data);
     this.checkMouse();
-    this.sizeX();
     this.open();
   },
 
-  make: function(){
+  details: {
+    x: 0,
+    y: 0,
+  },
+
+  changeDetails: function(details, cords){
+    if(details === "x"){
+      this.details.x = cords;
+    } else if (details === "y") {
+      this.details.y = cords;
+    }
+  },
+
+  checkMouse: function(){
+    document.addEventListener("mousemove", this.catchMouse, false);
+  },
+
+  catchMouse: function(e){
+    game.infoWindow.changeDetails("x", e.clientX);
+    game.infoWindow.changeDetails("y", e.clientY -20);
+    info.position.setTo(game.infoWindow.windowSize.x(), game.infoWindow.windowSize.y());
+  },
+
+  open: function(){
+    info = game.add.sprite(this.windowSize.x(), this.windowSize.y(), this.createBitmap());
+    console.log(this);
+    infoText = info.addChild(game.add.text(0, 0, this.infoText, {
+        font: "15px 'Jim Nightshade', cursive",
+        fill: "black"}));
+  },
+
+  createBitmap: function(){
     var infoWindow = game.add.bitmapData(50, 15);
     infoWindow.ctx.beginPath();
     infoWindow.ctx.rect(0, 0, 50, 15);
@@ -76,41 +100,30 @@ game.infoWindow = {
     return infoWindow;
   },
 
-  checkMouse: function(){
-    document.addEventListener("mousemove", this.catchMouse, false);
-  },
+  windowSize: {
+    x: function(){
+        if ((game.width - game.infoWindow.details.x - panelWidth) < 0){
+          //console.log("nie miesci sie! X");
+          return game.width - panelWidth - 20;
+        } else {
+          return game.infoWindow.details.x;
+        }
+    },
 
-  catchMouse: function(e){
-    game.infoWindow.x = e.clientX;
-    game.infoWindow.y = e.clientY -20;
-    info.position.setTo(game.infoWindow.sizeX(), game.infoWindow.sizeY());
-  },
-
-  open: function(){
-    info = game.add.sprite(this.sizeX(), this.sizeY(), this.make());
-    console.log(this);
-    infoText = info.addChild(game.add.text(0, 0, this.infoText, {
-        font: "15px 'Jim Nightshade', cursive",
-        fill: "black"}));
-  },
-
-  sizeX: function(){
-    if ((game.width - this.x - panelWidth) < 0){
-      //console.log("nie miesci sie! X");
-      return game.width - panelWidth - 20;
-    } else {
-      return this.x;
+    y: function(){
+      if((game.height - game.infoWindow.details.y - panelHeight) <0){
+        //console.log("nie miesci sie! Y");
+        return game.height - panelHeight - 20;
+      } else {
+        return game.infoWindow.details.y;
+      }
     }
   },
 
-  sizeY: function(){
-    if((game.height - this.y - panelHeight) <0){
-      //console.log("nie miesci sie! Y");
-      return game.height - panelHeight - 20;
-    } else {
-      return this.y;
-    }
-  }
+
+
+
+
 }
 game.infoWindowOpen = function(){
   //infoWindoWSize(this.infoText);
