@@ -55,7 +55,8 @@ game.infoWindow = {
 
 
   render: function(data){
-    //this.calculateText(data);
+    this.loadText(data);
+    this.createText();
     this.checkMouse();
     this.open();
   },
@@ -63,6 +64,19 @@ game.infoWindow = {
   details: {
     x: 0,
     y: 0,
+    text: ""
+  },
+
+  loadText: function(text){
+    this.details.text = text;
+  },
+
+  deleteText: function(){
+    this.details.text = "";
+  },
+
+  addText: function(textToAdd){
+    this.details.text += textToAdd;
   },
 
   changeDetails: function(details, cords){
@@ -80,13 +94,12 @@ game.infoWindow = {
   catchMouse: function(e){
     game.infoWindow.changeDetails("x", e.clientX);
     game.infoWindow.changeDetails("y", e.clientY -20);
-    info.position.setTo(game.infoWindow.windowSize.x(), game.infoWindow.windowSize.y());
+    info.position.setTo(game.infoWindow.windowPosition.x(), game.infoWindow.windowPosition.y());
   },
 
   open: function(){
-    info = game.add.sprite(this.windowSize.x(), this.windowSize.y(), this.createBitmap());
-    console.log(this);
-    infoText = info.addChild(game.add.text(0, 0, this.infoText, {
+    info = game.add.sprite(this.windowPosition.x(), this.windowPosition.y(), this.createBitmap());
+    infoText = info.addChild(game.add.text(0, 0, this.details.text, {
         font: "15px 'Jim Nightshade', cursive",
         fill: "black"}));
   },
@@ -100,7 +113,37 @@ game.infoWindow = {
     return infoWindow;
   },
 
-  windowSize: {
+  windowSizeX: function(){
+    textLength: this.getTextLength()
+  },
+
+  splitText: function(text){
+    this.deleteText();
+    var textToAdd = "";
+    text.forEach(function(data, index){
+      if(textToAdd.length < 10){
+        textToAdd += data;
+        textToAdd += " ";
+        console.log(textToAdd);
+      } else {
+        textToAdd += "\n";
+        game.infoWindow.addText(textToAdd);
+        textToAdd = " ";
+      }
+    });
+
+    if(textToAdd.length > 0){
+      this.addText(textToAdd);
+    }
+    console.log(this.details.text);
+  },
+
+  createText: function(){
+    var text = this.details.text.split(" ");
+    this.splitText(text);
+  },
+
+  windowPosition: {
     x: function(){
         if ((game.width - game.infoWindow.details.x - panelWidth) < 0){
           //console.log("nie miesci sie! X");
@@ -120,35 +163,6 @@ game.infoWindow = {
     }
   },
 
-
-
-
-
-}
-game.infoWindowOpen = function(){
-  //infoWindoWSize(this.infoText);
-  var infoWindow = game.add.bitmapData(50, 15);
-  infoWindow.ctx.beginPath();
-  infoWindow.ctx.rect(0, 0, 50, 15);
-  infoWindow.ctx.fillStyle = "brown";
-  infoWindow.ctx.fill();
-
-  document.addEventListener('mousemove', onMouseMove, false);
-
-  function onMouseMove(e){
-      x = e.clientX;
-      y = e.clientY -20;
-      info.position.setTo(x, y);
-  };
-
-  info = game.add.sprite(x, y, infoWindow);
-  infoText = info.addChild(game.add.text(0, 0, this.infoText, {
-      font: "15px 'Jim Nightshade', cursive",
-      fill: "black"}));
-};
-
-function infoWindowSize(text){
-  let textSize = text.length;
 
 }
 

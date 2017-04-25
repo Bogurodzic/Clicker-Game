@@ -134,7 +134,9 @@ var playState = {
           state.weapon.scale.setTo(0.5);
           state.weapon.inputEnabled = true;
           state.weapon.events.onInputDown.add(changeWeapon, state);
-          state.weapon.events.onInputOver.add(game.infoWindow.render, game.infoWindow);
+          state.weapon.events.onInputOver.add(function(){
+            game.infoWindow.render("To jest jakis randomowy tekst w chuj i w dupe jeza");
+          }, game.infoWindow);
           state.weapon.events.onInputOut.add(infoWindowClose, state);
         };
 
