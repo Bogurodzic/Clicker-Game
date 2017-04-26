@@ -135,7 +135,7 @@ var playState = {
           state.weapon.inputEnabled = true;
           state.weapon.events.onInputDown.add(changeWeapon, state);
           state.weapon.events.onInputOver.add(function(){
-            game.infoWindow.render("To jest jakis randomowy tekst w chuj i w dupe jeza");
+            game.infoWindow.render("Random random Lore Ipsum random random lore ispsususususm");
           }, game.infoWindow);
           state.weapon.events.onInputOut.add(infoWindowClose, state);
         };

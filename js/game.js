@@ -48,17 +48,40 @@ game.toggleInventory = function() {
 
 var info;
 
-var panelWidth = 50;
-var panelHeight = 50;
-
 game.infoWindow = {
 
 
   render: function(data){
     this.loadText(data);
     this.createText();
+    this.panel.changeWidth(150);
     this.checkMouse();
     this.open();
+  },
+
+  panel: {
+    width: 0,
+    height: 0,
+
+    resetSize: function(){
+      this.resetWidth();
+      this.resetHeight();
+    },
+
+    resetWidth: function(){
+      this.width = 0;
+    },
+
+    resetHeight: function(){
+      this.height = 0;
+    },
+
+    changeWidth: function(size){
+      this.width += size;
+    },
+    changeHeight: function(size){
+      this.height += size;
+    }
   },
 
   details: {
@@ -99,15 +122,15 @@ game.infoWindow = {
 
   open: function(){
     info = game.add.sprite(this.windowPosition.x(), this.windowPosition.y(), this.createBitmap());
-    infoText = info.addChild(game.add.text(0, 0, this.details.text, {
+    infoText = info.addChild(game.add.text(2, 2, this.details.text, {
         font: "15px 'Jim Nightshade', cursive",
         fill: "black"}));
   },
 
   createBitmap: function(){
-    var infoWindow = game.add.bitmapData(50, 15);
+    var infoWindow = game.add.bitmapData(this.panel.width, this.panel.height);
     infoWindow.ctx.beginPath();
-    infoWindow.ctx.rect(0, 0, 50, 15);
+    infoWindow.ctx.rect(0, 0, this.panel.width, this.panel.height);
     infoWindow.ctx.fillStyle = "brown";
     infoWindow.ctx.fill();
     return infoWindow;
@@ -118,10 +141,12 @@ game.infoWindow = {
   },
 
   splitText: function(text){
+    this.panel.resetSize();
     this.deleteText();
     var textToAdd = "";
+
     text.forEach(function(data, index){
-      if(textToAdd.length < 10){
+      if(textToAdd.length < 20){
         textToAdd += data;
         textToAdd += " ";
         console.log(textToAdd);
@@ -129,11 +154,13 @@ game.infoWindow = {
         textToAdd += "\n";
         game.infoWindow.addText(textToAdd);
         textToAdd = " ";
+        game.infoWindow.panel.changeHeight(22);
       }
     });
 
     if(textToAdd.length > 0){
       this.addText(textToAdd);
+      game.infoWindow.panel.changeHeight(22);
     }
     console.log(this.details.text);
   },
@@ -145,18 +172,18 @@ game.infoWindow = {
 
   windowPosition: {
     x: function(){
-        if ((game.width - game.infoWindow.details.x - panelWidth) < 0){
+        if ((game.width - game.infoWindow.details.x - game.infoWindow.panel.width) < 0){
           //console.log("nie miesci sie! X");
-          return game.width - panelWidth - 20;
+          return game.width - game.infoWindow.panel.width - 20;
         } else {
           return game.infoWindow.details.x;
         }
     },
 
     y: function(){
-      if((game.height - game.infoWindow.details.y - panelHeight) <0){
+      if((game.height - game.infoWindow.details.y - game.infoWindow.panel.height) <0){
         //console.log("nie miesci sie! Y");
-        return game.height - panelHeight - 20;
+        return game.height - game.infoWindow.panel.height - 20;
       } else {
         return game.infoWindow.details.y;
       }
