@@ -28,47 +28,95 @@ var playState = {
         /////////////
 
         //monster list
-        this.monstersList = [
-            {monsterName: "Skeleton", monsterKey: "bone", maxHp: 10},
-            {monsterName: "Orc", monsterKey: "orc", maxHp: 10},
-            {monsterName: "Fire Dragon", monsterKey: "dragon", maxHp: 10},
-            {monsterName: "Air Dragon", monsterKey: "dragon-air", maxHp: 10},
-            {monsterName: "Dark Dragon", monsterKey: "dragon-dark", maxHp: 10},
-            {monsterName: "Rock Dragon", monsterKey: "dragon-rock", maxHp: 10},
-            {monsterName: "Sapphire Dragon", monsterKey: "dragon-sapphire", maxHp: 10},
-        ];
-        this.monsters = this.game.add.group();
+        this.monster = {
 
-        //create monsters and put them into the monsters group
-        var monster;
-        for(var i = 0; i < this.monstersList.length; i++) {
-            monster = state.monsters.create(1000, 310, state.monstersList[i].monsterKey);
-            monster.anchor.setTo(0.5);
-            monster.details = state.monstersList[i];
-            monster.health = monster.maxHealth = state.monstersList[i].maxHp;
+          monster: null,
+          currentMonster: null,
 
-            monster.healthText = game.add.text(1000, 420, monster.maxHealth, {
-                font: "35px 'Jim Nightshade', cursive",
-                fill: "red"});
-            monster.healthText.anchor.setTo(0.5);
-            monster.nameText = game.add.text(1000, 220, monster.details.monsterName, {
-                font: "35px 'Jim Nightshade', cursive",
-                fill: "red"});
-            monster.nameText.anchor.setTo(0.5);
+          placeMonster: function(){
+            this.createMonsters();
+            this.setCurrentMonster();
+          },
+
+          monstersList: [
+              {monsterName: "Skeleton", monsterKey: "bone", maxHp: 10},
+              {monsterName: "Orc", monsterKey: "orc", maxHp: 10},
+              {monsterName: "Fire Dragon", monsterKey: "dragon", maxHp: 10},
+              {monsterName: "Air Dragon", monsterKey: "dragon-air", maxHp: 10},
+              {monsterName: "Dark Dragon", monsterKey: "dragon-dark", maxHp: 10},
+              {monsterName: "Rock Dragon", monsterKey: "dragon-rock", maxHp: 10},
+              {monsterName: "Sapphire Dragon", monsterKey: "dragon-sapphire", maxHp: 10},
+          ],
+
+          monsters: game.add.group(),
+
+          createMonsters: function(){
+            for(var i = 0; i < this.monstersList.length; i++) {
+              console.log(this);
+                monster = this.monsters.create(1000, 310, this.monstersList[i].monsterKey);
+                monster.anchor.setTo(0.5);
+                monster.details = this.monstersList[i];
+                monster.health = monster.maxHealth = this.monstersList[i].maxHp;
+
+                monster.healthText = game.add.text(1000, 420, monster.maxHealth, {
+                    font: "35px 'Jim Nightshade', cursive",
+                    fill: "red"});
+                monster.healthText.anchor.setTo(0.5);
+                monster.nameText = game.add.text(1000, 220, monster.details.monsterName, {
+                    font: "35px 'Jim Nightshade', cursive",
+                    fill: "red"});
+                monster.nameText.anchor.setTo(0.5);
 
 
-            //enable input, so we can click it
-            monster.inputEnabled = true;
-            monster.events.onInputDown.add(onClickMonster, state);
-            monster.events.onKilled.add(onKilledMonster, state);
-            monster.events.onRevived.add(onRevivedMonster, state);
+                //enable input, so we can click it
+                monster.inputEnabled = true;
+                monster.events.onInputDown.add(this.onClick, state);
+                monster.events.onKilled.add(this.onKilledMonster, state);
+                monster.events.onRevived.add(onRevivedMonster, state);
+            }
+          },
+
+          setCurrentMonster: function(){
+            this.currentMonster = this.monsters.getRandom();
+            this.currentMonster.position.setTo(450, 315);
+            this.currentMonster.healthText.x = 450;
+            this.currentMonster.nameText.x = 445;
+          },
+
+          onDps: function(){
+            this.monster.isCritical(this.monster.currentMonster, game.player.clickDamage/10);
+            renderMonsterHealth();
+          },
+
+          onClick: function(){
+            this.monster.isCritical(this.monster.currentMonster, game.player.clickDamage);
+            renderMonsterHealth();
+          },
+
+          isCritical: function(monster, damage){
+            var chance = game.rnd.integerInRange(0, 100);
+            if(chance > game.player.criticalChance * 100){
+              monster.damage(damage * 3);
+            } else {
+              monster.damage(damage);
+            }
+          },
+
+          onKilledMonster: function(monster) {
+              moveOutMonster(monster);
+              countMonster();
+              getNewMonster();
+              dropCoin();
+          },
+
         }
 
+        this.monster.placeMonster();
+        //create monsters and put them into the monsters group
+
+
         //random current monster and set it into the game
-        this.currentMonster = this.monsters.getRandom();
-        this.currentMonster.position.setTo(450, 315);
-        this.currentMonster.healthText.x = 450;
-        this.currentMonster.nameText.x = 445;
+
         //icons
         this.iconInventory = this.game.add.sprite(30,210,"icon-inventory");
         this.iconInventory.scale.setTo(0.3);
@@ -137,7 +185,7 @@ var playState = {
           state.weapon.events.onInputOver.add(function(){
             game.infoWindow.render("Random random Lore Ipsum random random lore ispsususususm");
           }, game.infoWindow);
-          state.weapon.events.onInputOut.add(infoWindowClose, state);
+          state.weapon.events.onInputOut.add(game.infoWindow.close, state);
         };
 
         function changeWeapon(){
@@ -155,9 +203,7 @@ var playState = {
 
 
 
-        function infoWindowClose(){
-          info.destroy();
-        }
+
 
         this.runes = this.inventory.addChild(this.game.add.group());
 
@@ -186,7 +232,7 @@ var playState = {
         //GAME//LOOPS/
         //////////////
 
-        this.dpsTimer =this.game.time.events.loop(100, onDps, this);
+        this.dpsTimer =this.game.time.events.loop(100, this.monster.onDps, this);
 
 
 
@@ -206,37 +252,17 @@ var playState = {
         //open or close inventory
 
 
-        function onDps(){
-          isCritical(state.currentMonster, game.player.clickDamage/10);
-          renderMonsterHealth();
-        };
 
-        function onClickMonster(monster) {
-            //deals damage to monster equal to player dmg
-            isCritical(monster, game.player.clickDamage);
-            //update hp text
-            renderMonsterHealth();
-        };
+
+
 
         function renderMonsterHealth(){
-          state.currentMonster.healthText.text = Math.round(state.currentMonster.health);
+          state.monster.currentMonster.healthText.text = Math.round(state.monster.currentMonster.health);
         }
 
-        function isCritical(monster, damage){
-          var chance = game.rnd.integerInRange(0, 100);
-          if(chance > game.player.criticalChance * 100){
-            monster.damage(damage * 3);
-          } else {
-            monster.damage(damage);
-          }
-        };
 
-        function onKilledMonster(monster) {
-            moveOutMonster(monster);
-            countMonster();
-            getNewMonster();
-            dropCoin();
-        };
+
+
 
         function moveOutMonster(monster){
           //after being killed move sprite and text outside
@@ -252,11 +278,11 @@ var playState = {
         }
 
         function getNewMonster(){
-          state.currentMonster = state.monsters.getRandom();
+          state.monster.currentMonster = state.monster.monsters.getRandom();
           //place text once again on proper place and revive monster
-          state.currentMonster.healthText.x = 450;
-          state.currentMonster.nameText.x = 445;
-          state.currentMonster.revive(state.currentMonster.maxHealth);
+          state.monster.currentMonster.healthText.x = 450;
+          state.monster.currentMonster.nameText.x = 445;
+          state.monster.currentMonster.revive(state.monster.currentMonster.maxHealth);
         };
 
         function dropCoin(){

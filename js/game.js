@@ -162,7 +162,7 @@ game.infoWindow = {
       this.addText(textToAdd);
       game.infoWindow.panel.changeHeight(22);
     }
-    console.log(this.details.text);
+    
   },
 
   createText: function(){
@@ -173,7 +173,6 @@ game.infoWindow = {
   windowPosition: {
     x: function(){
         if ((game.width - game.infoWindow.details.x - game.infoWindow.panel.width) < 0){
-          //console.log("nie miesci sie! X");
           return game.width - game.infoWindow.panel.width - 20;
         } else {
           return game.infoWindow.details.x;
@@ -182,7 +181,6 @@ game.infoWindow = {
 
     y: function(){
       if((game.height - game.infoWindow.details.y - game.infoWindow.panel.height) <0){
-        //console.log("nie miesci sie! Y");
         return game.height - game.infoWindow.panel.height - 20;
       } else {
         return game.infoWindow.details.y;
@@ -190,7 +188,9 @@ game.infoWindow = {
     }
   },
 
-
+  close: function(){
+    info.destroy();
+  }
 }
 
 game.state.add("load", loadState);
