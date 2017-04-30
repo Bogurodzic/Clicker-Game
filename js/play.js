@@ -2,26 +2,17 @@ var playState = {
     create: function() {
         var state = this;
 
-        this.level = {
-            currentLevel: 1,
-            currentMonster: 0,
-            requiredKilledMonsters: 10
-        };
-
         this.background = game.add.tileSprite(0, 0, 708, 511, "background-winter");
 
         this.uiFrame = this.game.add.image(0, 0, "ui-frame");
         this.uiFrame.scale.setTo(1.2);
 
         //place monster counter
-        this.monsterCounter = this.game.add.text(465, 23, this.level.currentMonster, {
-                font: "25px 'Jim Nightshade', cursive",
-                fill: "#fff"});
-        this.monsterCounter.anchor.setTo(0.5);
 
 
-        game.renderHP();
-        game.renderGold();
+
+        game.ui.renderAll();
+        //game.renderGold();
 
         /////////////
         //MONSTERS///
@@ -29,6 +20,8 @@ var playState = {
 
         //monster list
         this.monster = {
+
+          self: state.monster,
 
           monster: null,
           currentMonster: null,
@@ -52,7 +45,6 @@ var playState = {
 
           createMonsters: function(){
             for(var i = 0; i < this.monstersList.length; i++) {
-              console.log(this);
                 monster = this.monsters.create(1000, 310, this.monstersList[i].monsterKey);
                 monster.anchor.setTo(0.5);
                 monster.details = this.monstersList[i];
@@ -85,12 +77,12 @@ var playState = {
 
           onDps: function(){
             this.monster.isCritical(this.monster.currentMonster, game.player.clickDamage/10);
-            renderMonsterHealth();
+            this.monster.renderMonsterHealth();
           },
 
           onClick: function(){
             this.monster.isCritical(this.monster.currentMonster, game.player.clickDamage);
-            renderMonsterHealth();
+            this.monster.renderMonsterHealth();
           },
 
           isCritical: function(monster, damage){
@@ -103,19 +95,41 @@ var playState = {
           },
 
           onKilledMonster: function(monster) {
-              moveOutMonster(monster);
-              countMonster();
-              getNewMonster();
+              state.monster.moveOutMonster(monster);
+              state.monster.countMonster();
+              state.monster.getNewMonster();
               dropCoin();
           },
+
+          renderMonsterHealth: function(){
+            this.currentMonster.healthText.text = Math.round(this.currentMonster.health);
+          },
+
+          moveOutMonster: function(monster){
+            //after being killed move sprite and text outside
+            monster.position.setTo(1000, 375);
+            monster.healthText.position.x = 1000;
+            monster.nameText.position.x = 1000;
+          },
+
+          countMonster: function(){
+            //update monster counter
+            game.level.currentMonster += 1;
+            game.monsterCounter.text = game.level.currentMonster;
+          },
+
+          getNewMonster: function(){
+            this.currentMonster = state.monster.monsters.getRandom();
+            //place text once again on proper place and revive monster
+            this.currentMonster.healthText.x = 450;
+            this.currentMonster.nameText.x = 445;
+            this.currentMonster.revive(state.monster.currentMonster.maxHealth);
+          },
+
 
         }
 
         this.monster.placeMonster();
-        //create monsters and put them into the monsters group
-
-
-        //random current monster and set it into the game
 
         //icons
         this.iconInventory = this.game.add.sprite(30,210,"icon-inventory");
@@ -256,34 +270,6 @@ var playState = {
 
 
 
-        function renderMonsterHealth(){
-          state.monster.currentMonster.healthText.text = Math.round(state.monster.currentMonster.health);
-        }
-
-
-
-
-
-        function moveOutMonster(monster){
-          //after being killed move sprite and text outside
-          monster.position.setTo(1000, 375);
-          monster.healthText.position.x = 1000;
-          monster.nameText.position.x = 1000;
-        };
-
-        function countMonster(){
-          //update monster counter
-          state.level.currentMonster += 1;
-          state.monsterCounter.text = state.level.currentMonster;
-        }
-
-        function getNewMonster(){
-          state.monster.currentMonster = state.monster.monsters.getRandom();
-          //place text once again on proper place and revive monster
-          state.monster.currentMonster.healthText.x = 450;
-          state.monster.currentMonster.nameText.x = 445;
-          state.monster.currentMonster.revive(state.monster.currentMonster.maxHealth);
-        };
 
         function dropCoin(){
           var coin;

@@ -13,23 +13,47 @@ game.player = {
     gold: 0
 };
 
+game.level = {
+  currentLevel: 1,
+  currentMonster: 0,
+  requiredKilledMonsters: 10
+}
+
 
 /////////////
 //FUNCTIONS//
 /////////////
 
-game.renderHP = function(){
-    game.hpText = game.add.text(36, 38, game.player.currentHp, {
-      font: "15px 'Jim Nightshade', cursive",
-      fill: "#fff"});
-  };
+game.ui = {
+  renderAll: function(){
+    this.hp();
+    this.gold();
+    this.monsterCounter();
+  },
 
-game.renderGold = function(){
-  game.goldText = game.add.text(207, 23, game.player.gold, {
-          font: "25px 'Jim Nightshade', cursive",
-          fill: "white"});
-  game.goldText.anchor.setTo(0.5);
-};
+  hp: function(){
+      game.hpText = game.add.text(36, 38, game.player.currentHp, {
+        font: "15px 'Jim Nightshade', cursive",
+        fill: "#fff"});
+  },
+
+  gold: function(){
+    game.goldText = game.add.text(207, 23, game.player.gold, {
+            font: "25px 'Jim Nightshade', cursive",
+            fill: "white"});
+    game.goldText.anchor.setTo(0.5);
+  },
+
+  monsterCounter: function(){
+    game.monsterCounter = game.add.text(465, 23, game.level.currentMonster, {
+            font: "25px 'Jim Nightshade', cursive",
+            fill: "#fff"});
+    game.monsterCounter.anchor.setTo(0.5);
+  },
+}
+
+
+
 
 
 var inventoryVisible = false;
@@ -162,7 +186,7 @@ game.infoWindow = {
       this.addText(textToAdd);
       game.infoWindow.panel.changeHeight(22);
     }
-    
+
   },
 
   createText: function(){
