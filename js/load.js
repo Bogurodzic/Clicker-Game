@@ -29,6 +29,8 @@ var loadState = {
         this.game.load.image("rune1", "assets/runesspells/rune1.png");
         this.game.load.image("rune2", "assets/runesspells/rune2.png");
         this.game.load.image("rune3", "assets/runesspells/rune3.png");
+        this.game.load.image("merchant", "assets/sprites/merchant.png");
+        this.game.load.image("panel", "assets/ui/panel.png");
     },
 
     create: function() {

@@ -22,6 +22,27 @@ var cityState = {
       this.iconCity.inputEnabled = true;
       this.iconCity.events.onInputDown.add(goToFight, this);
 
+      this.merchant = {
+
+        create: function(){
+            this.createSprite();
+            this.createPanel();
+        },
+
+        createSprite: function(){
+          this.merchantSprite = game.add.sprite(450, 250, "merchant");
+        },
+
+        createPanel: function(){
+          this.merchantPanel = game.add.sprite(0, 0, "panel");
+          this.merchantPanel.anchor.setTo(0.5);
+          this.merchantPanel.x = game.world.centerX;
+          this.merchantPanel.y = game.world.centerY;
+        }
+      }
+
+      this.merchant.create();
+
 
       function goToFight() {
         game.state.start("play");
