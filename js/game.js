@@ -133,13 +133,13 @@ game.runes = {
   },
 
   runesList: [
-    {runeName: "Rune 1", runeKey: "rune1", runeHandler: function(rune){
+    {runeName: "Rune 1", runeKey: "rune1", description: "Wind Rune", runeHandler: function(rune){
       rune.x = 10;
     }},
-    {runeName: "Rune 2", runeKey: "rune2", runeHandler: function(rune){
+    {runeName: "Rune 2", runeKey: "rune2", description: "Earth Rune", runeHandler: function(rune){
       rune.x = 10;
     }},
-    {runeName: "Rune 3", runeKey: "rune3", runeHandler: function(rune){
+    {runeName: "Rune 3", runeKey: "rune3", description: "Blood Rune", runeHandler: function(rune){
       rune.x = 10;
     }}
   ],
@@ -152,6 +152,10 @@ game.runes = {
       rune.inputEnabled = true;
 
       rune.events.onInputDown.add(game.runes.runeToggle, rune);
+      rune.events.onInputOver.add(function(){
+        game.infoWindow.render(data.description);
+      }, game.infoWindow);
+      rune.events.onInputOut.add(game.infoWindow.close, this);
     });
   },
 
