@@ -178,51 +178,9 @@ var playState = {
         game.equipment.create();
         game.equipment.changeWeapon();
         game.equipment.renderWeapon();
-        /////////////
-        //equipment//
-        /////////////
+        game.runes.create();
+        game.runes.renderRunes();
 
-      /*
-
-
-
-      
-        this.runes = this.inventory.addChild(this.game.add.group());
-
-        this.runesList = [
-          {runeName: "Rune 1", runeKey: "rune1", runeHandler: function(rune){
-            rune.x = 10;
-          }},
-          {runeName: "Rune 2", runeKey: "rune2", runeHandler: function(rune){
-            rune.x = 10;
-          }},
-          {runeName: "Rune 3", runeKey: "rune3", runeHandler: function(rune){
-            rune.x = 10;
-          }}
-        ];
-
-        var rune;
-        this.runesList.forEach(function(data, index){
-          rune = state.runes.create(127, -35 - (-58 * index), data.runeKey);
-          rune.details = data;
-          rune.inputEnabled = true;
-
-          rune.events.onInputDown.add(runeToggle, this);
-        });
-
-        //////////////
-        //GAME//LOOPS/
-        //////////////
-
-        this.dpsTimer =this.game.time.events.loop(100, this.monster.onDps, this);
-
-        /////////////
-        //FUNCTIONS//
-        /////////////
-
-        function runeToggle(rune){
-          rune.details.runeHandler.call(this, rune);
-        }; */
 
         function goToCity() {
           //saveToLocalStorage();
@@ -259,6 +217,8 @@ var playState = {
 
           console.log("loaded");
         } */
+
+        this.dpsTimer =this.game.time.events.loop(100, this.monster.onDps, this);
     },
 
     update: function() {

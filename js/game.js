@@ -68,7 +68,6 @@ game.inventory = {
 
   toggleInventory: function(){
     if(this.inventoryVisibility === false){
-      console.log(this);
         this.inventoryPanel.x = game.world.centerX;
         this.inventoryPanel.y = game.world.centerY;
         this.inventoryVisibility = true;
@@ -128,7 +127,39 @@ game.equipment = {
   },
 }
 
+game.runes = {
+  create: function(){
+    this.runePanel = game.inventory.inventoryPanel.addChild(game.add.group());
+  },
 
+  runesList: [
+    {runeName: "Rune 1", runeKey: "rune1", runeHandler: function(rune){
+      rune.x = 10;
+    }},
+    {runeName: "Rune 2", runeKey: "rune2", runeHandler: function(rune){
+      rune.x = 10;
+    }},
+    {runeName: "Rune 3", runeKey: "rune3", runeHandler: function(rune){
+      rune.x = 10;
+    }}
+  ],
+
+  renderRunes: function(){
+    var rune;
+    this.runesList.forEach(function(data, index){
+      rune = game.runes.runePanel.create(127, -35 - (-58 * index), data.runeKey);
+      rune.details = data;
+      rune.inputEnabled = true;
+
+      rune.events.onInputDown.add(game.runes.runeToggle, rune);
+    });
+  },
+
+  runeToggle: function(rune){
+    rune.details.runeHandler.call(this, rune);
+  }
+
+}
 
 
 
