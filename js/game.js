@@ -1,8 +1,6 @@
 var game = new Phaser.Game(708, 511, Phaser.Auto, "gameWindow");
 
-////////////
-//OBJECTS//
-///////////
+
 
 game.player = {
     maxHp: 100,
@@ -20,15 +18,19 @@ game.level = {
 }
 
 
-/////////////
-//FUNCTIONS//
-/////////////
+
 
 game.ui = {
   renderAll: function(){
+    this.frame();
     this.hp();
     this.gold();
     this.monsterCounter();
+  },
+
+  frame: function(){
+    game.uiFrame = game.add.image(0, 0, "ui-frame");
+    game.uiFrame.scale.setTo(1.2);
   },
 
   hp: function(){
@@ -54,20 +56,80 @@ game.ui = {
 
 
 
+game.inventory = {
+  inventoryPanel: undefined,
+  inventoryVisibility: false,
 
+  create: function(){
+    this.inventoryPanel = game.add.sprite(-1000, -1000, "inventory");
+    this.inventoryPanel.anchor.setTo(0.5);
+    this.inventoryPanel.scale.setTo(0.95);
+  },
 
-var inventoryVisible = false;
-game.toggleInventory = function() {
-    if (inventoryVisible === false){
-        this.inventory.x = this.game.world.centerX;
-        this.inventory.y = this.game.world.centerY;
-        inventoryVisible = true;
-    } else if (inventoryVisible === true){
-        this.inventory.x = -1000;
-        this.inventory.y = -1000;
-        inventoryVisible = false;
+  toggleInventory: function(){
+    if(this.inventoryVisibility === false){
+      console.log(this);
+        this.inventoryPanel.x = game.world.centerX;
+        this.inventoryPanel.y = game.world.centerY;
+        this.inventoryVisibility = true;
+    } else if (this.inventoryVisibility === true){
+        this.inventoryPanel.x = -1000;
+        this.inventoryPanel.y = -1000;
+        this.inventoryVisibility = false;
     };
-};
+  }
+
+}
+
+game.equipment = {
+  equipmentPanel: undefined,
+
+  equipmentList: {
+    weapons: [
+      {name: "sword", icon: "icon-sword", level: 1},
+      {name: "hammer", icon: "icon-hammer", level: 1}
+    ]
+  },
+
+  playerEquipment: {
+    weapon: undefined,
+    shield: undefined,
+    armor: undefined,
+    helmet: undefined,
+    legs: undefined,
+    boots: undefined
+  },
+
+  changeWeapon: function(){
+    this.playerEquipment.weapon = this.equipmentList.weapons[0];
+  },
+
+  renderEquipment: function() {
+    renderWeapon();
+  },
+
+  renderWeapon: function() {
+    if(this.weapon){
+      this.playerEquipment.weapon.destroy
+    };
+    this.weapon = this.equipmentPanel.addChild(game.add.sprite(-115, 0, this.playerEquipment.weapon.icon));
+    this.weapon.scale.setTo(0.5);
+    this.weapon.inputEnabled = true;
+    //this.weapon.events.onInputDown.add(,this);
+    this.weapon.events.onInputOver.add(function(){
+      game.infoWindow.render(game.equipment.playerEquipment.weapon.name);
+    }, game.infoWindow);
+    this.weapon.events.onInputOut.add(game.infoWindow.close, this);
+
+  },
+
+  create: function(){
+    this.equipmentPanel = game.inventory.inventoryPanel.addChild(game.add.group());
+  },
+}
+
+
+
 
 
 var info;
@@ -216,6 +278,7 @@ game.infoWindow = {
     info.destroy();
   }
 }
+
 
 game.state.add("load", loadState);
 game.state.add("menu", menuState);

@@ -4,15 +4,6 @@ var playState = {
 
         this.background = game.add.tileSprite(0, 0, 708, 511, "background-winter");
 
-        this.uiFrame = this.game.add.image(0, 0, "ui-frame");
-        this.uiFrame.scale.setTo(1.2);
-
-        //place monster counter
-
-
-
-        game.ui.renderAll();
-        //game.renderGold();
 
         /////////////
         //MONSTERS///
@@ -64,7 +55,7 @@ var playState = {
                 monster.inputEnabled = true;
                 monster.events.onInputDown.add(this.onClick, state);
                 monster.events.onKilled.add(this.onKilledMonster, state);
-                monster.events.onRevived.add(onRevivedMonster, state);
+                monster.events.onRevived.add(this.onRevivedMonster, state);
             }
           },
 
@@ -98,7 +89,7 @@ var playState = {
               state.monster.moveOutMonster(monster);
               state.monster.countMonster();
               state.monster.getNewMonster();
-              dropCoin();
+              state.gold.dropCoin();
           },
 
           renderMonsterHealth: function(){
@@ -126,99 +117,76 @@ var playState = {
             this.currentMonster.revive(state.monster.currentMonster.maxHealth);
           },
 
+          onRevivedMonster: function(monster) {
+              //set position in game
+              monster.position.setTo(450, 315);
+          },
 
         }
 
-        this.monster.placeMonster();
+        this.gold = {
+          golds: undefined,
+
+          dropCoin: function(){
+            var coin;
+            //spawn a coin on the ground
+            coin = this.golds.getFirstExists(false);
+            coin.reset(450 + game.rnd.integerInRange(-60, 60), 360 + game.rnd.integerInRange(-15, 15));
+            coin.animations.add("spin", [0, 1, 2, 3, 4, 5, 6, 7]);
+            coin.animations.play("spin", 20, true);
+            setTimeout(function(){
+                state.gold.onClickGold.call(this, coin);
+            }, 3000);
+          },
+
+          onClickGold: function(gold){
+              if (!gold.alive){
+                return;
+              }
+
+              gold.kill();
+              game.player.gold += 1;
+              game.goldText.text = game.player.gold;
+          },
+
+          create: function(){
+            this.golds = game.add.group();
+            this.golds.createMultiple(50, "gold", "", false);
+            this.golds.setAll("scale.setTo", 1.4);
+            this.golds.setAll("inputEnabled", true);
+            this.golds.setAll("value", 1);
+            this.golds.callAll("events.onInputDown.add", "events.onInputDown", state.gold.onClickGold, this);
+          }
+        }
+
 
         //icons
         this.iconInventory = this.game.add.sprite(30,210,"icon-inventory");
         this.iconInventory.scale.setTo(0.3);
         this.iconInventory.inputEnabled = true;
-        this.iconInventory.events.onInputDown.add(game.toggleInventory, this);
+        this.iconInventory.events.onInputDown.add(game.inventory.toggleInventory, game.inventory);
 
         this.iconCity = this.game.add.sprite(30, 150, "icon-city");
         this.iconCity.scale.setTo(0.3);
         this.iconCity.inputEnabled = true;
         this.iconCity.events.onInputDown.add(goToCity, this);
 
-        /////////////
-        ////GOLD/////
-        /////////////
-
-        this.golds = this.game.add.group();
-        this.golds.createMultiple(50, "gold", "", false);
-        this.golds.setAll("scale.setTo", 1.4);
-        this.golds.setAll("inputEnabled", true);
-        this.golds.setAll("value", 1);
-        this.golds.callAll("events.onInputDown.add", "events.onInputDown", onClickGold, this);
-
-
-        //ading inventory
-        this.inventory = this.game.add.sprite(-1000, -1000, "inventory");
-        this.inventory.anchor.setTo(0.5);
-        this.inventory.scale.setTo(0.95);
-
+        game.ui.renderAll();
+        this.monster.placeMonster();
+        this.gold.create();
+        game.inventory.create();
+        game.equipment.create();
+        game.equipment.changeWeapon();
+        game.equipment.renderWeapon();
         /////////////
         //equipment//
         /////////////
-        this.playerEquipment = {
-          weapon: "",
-          shield: "",
-          armor: "",
-          helmet: "",
-          legs: "",
-          boots: ""
-        }
 
-        this.equipmentList = {
-          weapons: [
-            {name: "sword", icon: "icon-sword", level: 1},
-            {name: "hammer", icon: "icon-hammer", level: 1}
-          ]
-        }
-
-        this.equipment = this.inventory.addChild(this.game.add.group());
-
-        this.playerEquipment.weapon = this.equipmentList.weapons[0];
-
-        renderEquipment();
-
-        function renderEquipment(){
-          renderWeapon();
-        }
-
-        function renderWeapon(){
-          if(state.weapon){
-            state.weapon.destroy();
-          }
-          state.weapon = state.equipment.addChild(state.game.add.sprite(-115, 0, state.playerEquipment.weapon.icon));
-          state.weapon.scale.setTo(0.5);
-          state.weapon.inputEnabled = true;
-          state.weapon.events.onInputDown.add(changeWeapon, state);
-          state.weapon.events.onInputOver.add(function(){
-            game.infoWindow.render("Random random Lore Ipsum random random lore ispsususususm");
-          }, game.infoWindow);
-          state.weapon.events.onInputOut.add(game.infoWindow.close, state);
-        };
-
-        function changeWeapon(){
-          state.playerEquipment.weapon = this.equipmentList.weapons[1];
-          renderWeapon();
-        };
-
-        ///////////////
-        //InfoWindow///
-        //////////////
+      /*
 
 
 
-
-
-
-
-
-
+      
         this.runes = this.inventory.addChild(this.game.add.group());
 
         this.runesList = [
@@ -248,55 +216,13 @@ var playState = {
 
         this.dpsTimer =this.game.time.events.loop(100, this.monster.onDps, this);
 
-
-
-
-
-
-
-
         /////////////
         //FUNCTIONS//
         /////////////
 
         function runeToggle(rune){
           rune.details.runeHandler.call(this, rune);
-        };
-
-        //open or close inventory
-
-
-
-
-
-
-
-        function dropCoin(){
-          var coin;
-          //spawn a coin on the ground
-          coin = state.golds.getFirstExists(false);
-          coin.reset(450 + this.game.rnd.integerInRange(-60, 60), 360 + this.game.rnd.integerInRange(-15, 15));
-          coin.animations.add("spin", [0, 1, 2, 3, 4, 5, 6, 7]);
-          coin.animations.play("spin", 20, true);
-          setTimeout(function(){
-              onClickGold.call(state, coin);
-          }, 3000);
-        };
-
-        function onRevivedMonster(monster) {
-            //set position in game
-            monster.position.setTo(450, 315);
-        };
-
-        function onClickGold(gold){
-            if (!gold.alive){
-              return;
-            }
-
-            gold.kill();
-            game.player.gold += 1;
-            game.goldText.text = game.player.gold;
-        };
+        }; */
 
         function goToCity() {
           //saveToLocalStorage();
@@ -336,9 +262,6 @@ var playState = {
     },
 
     update: function() {
-        //this.background.tilePosition.x -= 0.2;
-
-
 
     }
 }
