@@ -22,7 +22,7 @@ var cityState = {
       this.iconCity.inputEnabled = true;
       this.iconCity.events.onInputDown.add(goToFight, this);
 
-      this.merchant = {
+      /*this.merchant = {
 
         create: function(){
             this.createSprite();
@@ -39,8 +39,36 @@ var cityState = {
           this.merchantPanel.x = game.world.centerX;
           this.merchantPanel.y = game.world.centerY;
         }
+      }*/
+
+
+      class Npc {
+        constructor(x, y, key) {
+          this.x = x;
+          this.y = y;
+          this.key = key;
+        }
+
+        create(){
+          this.createSprite();
+          this.addListeners();
+        }
+
+        createSprite(){
+          this.sprite = game.add.sprite(this.x, this.y, this.key);
+        }
+
+        addListeners(){
+          this.sprite.inputEnabled = true;
+          //this.sprite.events.onInputDown.add(this.con, this);
+        }
+
       }
 
+      class Merchant extends Npc {
+
+      }
+      this.merchant = new Merchant(450, 250, "merchant");
       this.merchant.create();
 
 
