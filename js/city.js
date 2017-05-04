@@ -40,7 +40,43 @@ var cityState = {
           this.merchantPanel.y = game.world.centerY;
         }
       }*/
+      class Modal {
+        constructor(x, y, width, height){
+          this.x = x;
+          this.y = y;
+          this.width = width;
+          this.height = height;
 
+          this.visible = false;
+        }
+
+        createBitmap(){
+          var bitmap = game.add.bitmapData(this.width, this.height);
+          bitmap.ctx.beginPath();
+          bitmap.ctx.rect(this.x, this.y, this.width, this.height);
+          bitmap.ctx.fillStyle = "brown";
+          bitmap.ctx.fill();
+          return bitmap;
+        }
+
+        createSprite(){
+          this.modalSprite = game.add.sprite(this.x, this.y, this.createBitmap());
+        }
+
+        delete(){
+          if(this.modalSprite){
+            this.modalSprite.destroy();
+          }
+        }
+
+        changeSize(width, height){
+          this.delete();
+          this.width = width;
+          this.height = height;
+          this.createSprite();
+        }
+
+      }
 
       class Npc {
         constructor(x, y, key) {
@@ -60,17 +96,28 @@ var cityState = {
 
         addListeners(){
           this.sprite.inputEnabled = true;
-          //this.sprite.events.onInputDown.add(this.con, this);
         }
 
       }
 
       class Merchant extends Npc {
+        addListeners(){
+          this.sprite.inputEnabled = true;
+          //this.sprite.events.onInputDown.add(, this);
+        }
 
+        /*addModal(x, y, width, height){
+          this.modal = new Modal(x, y, width, height);
+          console.log(this.modal);
+          this.modal.createSprite.call(this.modal);
+        }*/
       }
+
+
       this.merchant = new Merchant(450, 250, "merchant");
       this.merchant.create();
 
+      //this.merchant.addModal(100, 100, 100, 100);
 
       function goToFight() {
         game.state.start("play");
