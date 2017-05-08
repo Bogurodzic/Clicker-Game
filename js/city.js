@@ -124,11 +124,32 @@ var cityState = {
 
       }
 
+      class Merchant extends Npc {
+        createWeapons(){
+          self = this;
+          this.weapons = this.modal.modalSprite.addChild(game.add.group());
+          [].forEach.call(game.equipment.equipmentList.weapons, function(data, index){
+            let weapon = self.weapons.create(0, 0 + (40 * index), data.icon);
+            let text = self.weapons.addChild(game.add.text(40, 0 + (40 * index), "asd\nlevel: " + data.level, {
+                font: "22px 'Jim Nightshade'",
+                fill: "black"}));
+            text.lineSpacing = -10;
+            weapon.scale.setTo(0.3);
+            weapon.inputEnabled = true;
+            weapon.events.onInputOver.add(function(){
+              game.infoWindow.render(data.name);
+            }, game.infoWindow);
+            weapon.events.onInputOut.add(game.infoWindow.close, this);
+          });
+
+        }
+      }
 
 
-      this.merchant = new Npc(450, 250, "merchant");
+      this.merchant = new Merchant(450, 250, "merchant");
       this.merchant.create();
-      this.merchant.addModal(100, 100, 100, 100);
+      this.merchant.addModal(525, 200, 100, 100);
+      this.merchant.createWeapons();
 
       this.king = new Npc(200, 250, "king");
       this.king.create();
