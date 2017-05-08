@@ -76,6 +76,21 @@ var cityState = {
           this.createSprite();
         }
 
+        changePosition(x, y){
+          this.modalSprite.x = x;
+          this.modalSprite.y = y;
+        }
+
+        toggle(){
+          if(this.visible){
+            this.changePosition(1000, 1000);
+            this.visible = false;
+          } else if (!this.visible) {
+            this.changePosition(this.x, this.y);
+            this.visible = true;
+          }
+        }
+
       }
 
       class Npc {
@@ -96,25 +111,22 @@ var cityState = {
 
         addListeners(){
           this.sprite.inputEnabled = true;
+          if(this.modal){
+            this.sprite.events.onInputDown.add(this.modal.toggle, this.modal);
+          }
         }
 
         addModal(x, y, width, height){
           this.modal = new Modal(x, y, width, height);
           this.modal.createSprite.call(this.modal);
+          this.addListeners();
         }
-      }
-
-      class Merchant extends Npc {
-        addListeners(){
-          this.sprite.inputEnabled = true;
-          //this.sprite.events.onInputDown.add(, this);
-        }
-
 
       }
 
 
-      this.merchant = new Merchant(450, 250, "merchant");
+
+      this.merchant = new Npc(450, 250, "merchant");
       this.merchant.create();
 
 
