@@ -53,7 +53,7 @@ var cityState = {
         createBitmap(){
           var bitmap = game.add.bitmapData(this.width, this.height);
           bitmap.ctx.beginPath();
-          bitmap.ctx.rect(this.x, this.y, this.width, this.height);
+          bitmap.ctx.rect(0, 0, this.width, this.height);
           bitmap.ctx.fillStyle = "brown";
           bitmap.ctx.fill();
           return bitmap;
@@ -98,6 +98,10 @@ var cityState = {
           this.sprite.inputEnabled = true;
         }
 
+        addModal(x, y, width, height){
+          this.modal = new Modal(x, y, width, height);
+          this.modal.createSprite.call(this.modal);
+        }
       }
 
       class Merchant extends Npc {
@@ -106,18 +110,15 @@ var cityState = {
           //this.sprite.events.onInputDown.add(, this);
         }
 
-        /*addModal(x, y, width, height){
-          this.modal = new Modal(x, y, width, height);
-          console.log(this.modal);
-          this.modal.createSprite.call(this.modal);
-        }*/
+
       }
 
 
       this.merchant = new Merchant(450, 250, "merchant");
       this.merchant.create();
 
-      //this.merchant.addModal(100, 100, 100, 100);
+
+      this.merchant.addModal(100, 100, 100, 100);
 
       function goToFight() {
         game.state.start("play");
