@@ -60,7 +60,7 @@ var cityState = {
         }
 
         createSprite(){
-          this.modalSprite = game.add.sprite(this.x, this.y, this.createBitmap());
+          this.modalSprite = game.add.sprite(1000, 1000, this.createBitmap());
         }
 
         delete(){
@@ -128,9 +128,13 @@ var cityState = {
 
       this.merchant = new Npc(450, 250, "merchant");
       this.merchant.create();
-
-
       this.merchant.addModal(100, 100, 100, 100);
+
+      this.king = new Npc(200, 250, "king");
+      this.king.create();
+      this.king.addModal(300, 300, 100, 100);
+
+
 
       function goToFight() {
         game.state.start("play");
