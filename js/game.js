@@ -8,7 +8,7 @@ game.player = {
     clickDamage: 1,
     dps: 5,
     criticalChance: 0.7,
-    gold: 0
+    gold: 50
 };
 
 game.level = {
@@ -46,6 +46,10 @@ game.ui = {
     game.goldText.anchor.setTo(0.5);
   },
 
+  updateGold: function(){
+    game.goldText.text = game.player.gold;
+  },
+
   monsterCounter: function(){
     game.monsterCounter = game.add.text(465, 23, game.level.currentMonster, {
             font: "25px 'Jim Nightshade', cursive",
@@ -79,14 +83,14 @@ game.inventory = {
   }
 
 }
-
 game.equipment = {
   equipmentPanel: undefined,
 
+
   equipmentList: {
     weapons: [
-      {name: "sword", icon: "icon-sword", level: 1},
-      {name: "hammer", icon: "icon-hammer", level: 1}
+      {name: "sword", icon: "icon-sword", level: 1, cost: 10, isBought: false},
+      {name: "hammer", icon: "icon-hammer", level: 1, cost: 100, isBought: false}
     ]
   },
 
@@ -270,7 +274,6 @@ game.infoWindow = {
       if(textToAdd.length < 20){
         textToAdd += data;
         textToAdd += " ";
-        console.log(textToAdd);
       } else {
         textToAdd += "\n";
         game.infoWindow.addText(textToAdd);

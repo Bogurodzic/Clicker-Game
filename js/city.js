@@ -130,8 +130,8 @@ var cityState = {
           this.weapons = this.modal.modalSprite.addChild(game.add.group());
           [].forEach.call(game.equipment.equipmentList.weapons, function(data, index){
             let weapon = self.weapons.create(0, 0 + (40 * index), data.icon);
-            let text = self.weapons.addChild(game.add.text(40, 0 + (40 * index), "asd\nlevel: " + data.level, {
-                font: "22px 'Jim Nightshade'",
+            let text = self.weapons.addChild(game.add.text(40, 0 + (40 * index), "cost: "+ data.cost + "\nlevel: " + data.level, {
+                font: "21px 'Jim Nightshade'",
                 fill: "black"}));
             text.lineSpacing = -10;
             weapon.scale.setTo(0.3);
@@ -140,9 +140,23 @@ var cityState = {
               game.infoWindow.render(data.name);
             }, game.infoWindow);
             weapon.events.onInputOut.add(game.infoWindow.close, this);
+            weapon.events.onInputDown.add(self.updateWeapon, data);
           });
 
+
         }
+
+        updateWeapon(weapon){
+          if((game.player.gold - this.cost) >= 0 ){
+            game.player.gold -= this.cost;
+            game.ui.updateGold();
+            this.level++;
+            console.log(game.player.gold);
+          } else {
+            console.log("you dont have enough money");
+          }
+        }
+
       }
 
 

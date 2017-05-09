@@ -146,6 +146,7 @@ var playState = {
 
               gold.kill();
               game.player.gold += 1;
+              game.ui.updateGold();
               game.goldText.text = game.player.gold;
           },
 
