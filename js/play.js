@@ -177,9 +177,10 @@ var playState = {
         this.gold.create();
         game.inventory.create();
         game.equipment.create();
-        game.equipment.changeWeapon();
-        game.equipment.renderWeapon();
-        game.equipment.renderShield();
+        game.equipment.changeItem("weapon", game.equipment.equipmentList.weapons[0]);
+        game.equipment.changeItem("shield", game.equipment.equipmentList.shields[0]);
+        game.equipment.renderItem("weapon", -115, 0);
+        game.equipment.renderItem("shield", 45, 0);
         game.runes.create();
         game.runes.renderRunes();
 

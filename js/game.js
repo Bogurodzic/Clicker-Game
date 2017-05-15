@@ -83,6 +83,7 @@ game.inventory = {
   }
 
 }
+
 game.equipment = {
   equipmentPanel: undefined,
 
@@ -107,28 +108,27 @@ game.equipment = {
     boots: undefined
   },
 
-  changeWeapon: function(){
-    this.playerEquipment.weapon = this.equipmentList.weapons[0];
-    this.playerEquipment.shield = this.equipmentList.shields[0];
+  changeItem: function(equipment, item){
+    this.playerEquipment[equipment] = item;
   },
 
   renderEquipment: function() {
     renderWeapon();
   },
 
-  renderWeapon: function() {
-    if(this.weapon){
-      this.playerEquipment.weapon.destroy;
-    };
-    this.weapon = this.equipmentPanel.addChild(game.add.sprite(-115, 0, this.playerEquipment.weapon.icon));
-    this.weapon.scale.setTo(0.5);
-    this.weapon.inputEnabled = true;
-    //this.weapon.events.onInputDown.add(,this);
-    this.weapon.events.onInputOver.add(function(){
-      game.infoWindow.render(game.equipment.playerEquipment.weapon.name);
-    }, game.infoWindow);
-    this.weapon.events.onInputOut.add(game.infoWindow.close, this);
 
+
+  renderItem: function(item, x, y){
+    if(this[item]){
+      this.playerEquipment[item].destroy;
+    };
+    this[item] = this.equipmentPanel.addChild(game.add.sprite(x, y, this.playerEquipment[item].icon));
+    this[item].scale.setTo(0.5);
+    this[item].inputEnabled = true;
+    this[item].events.onInputOver.add(function(){
+      game.infoWindow.render(game.equipment.playerEquipment[item].name);
+    }, game.infoWindow);
+    this[item].events.onInputOut.add(game.infoWindow.close, this);
   },
 
   renderShield: function() {

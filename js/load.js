@@ -18,7 +18,9 @@ var loadState = {
         this.game.load.image("icon-sword", "assets/ui/icons/sword.png");
         this.game.load.image("icon-hammer", "assets/ui/icons/hammer.png");
         this.game.load.image("icon-shield-wooden", "assets/ui/icons/shield-wooden.png");
-        this.game.load.image("icon-shield-common", "assets/ui/icons/shield-common.png");
+        this.game.load.image("icon-helmet", "assets/ui/icons/helmet.png");
+        this.game.load.image("icon-armor", "assets/ui/icons/armor.png");
+        this.game.load.image("icon-boots", "assets/ui/icons/boots.png");
         this.game.load.image("inventory", "assets/ui/inventory.png");
         this.game.load.image("bone", "assets/monsters/BONE.png");
         this.game.load.image("orc", "assets/monsters/ORC.png");
