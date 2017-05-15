@@ -147,7 +147,7 @@ var cityState = {
 
         updateItem(item){
           if((game.player.gold - this.cost) >= 0 ){
-            game.player.gold -= this.cost;
+            game.player.gold -= Math.round(this.cost);
             game.ui.updateGold();
             this.level++;
             this.cost = self.calculateUpgradeCost(this.cost, this.level);
