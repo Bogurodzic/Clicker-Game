@@ -96,6 +96,15 @@ game.equipment = {
     shields: [
       {name: "wooden shield", icon: "icon-shield-wooden", level: 1, cost: 10, isBought: false},
       {name: "common shiled", icon: "icon-shield-common", level: 1, cost: 10, isBought: false}
+    ],
+    armors: [
+      {name: "armor", icon: "icon-armor", level: 1, cost: 10, isBought: false}
+    ],
+    helmets: [
+      {name: "helmet", icon: "icon-helmet", level: 1, cost: 10, isBought: false}
+    ],
+    boots: [
+      {name: "boots", icon: "icon-boots", level: 1, cost: 10, isBought: false}
     ]
   },
 
