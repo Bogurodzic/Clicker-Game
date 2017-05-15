@@ -179,6 +179,7 @@ var playState = {
         game.equipment.create();
         game.equipment.changeWeapon();
         game.equipment.renderWeapon();
+        game.equipment.renderShield();
         game.runes.create();
         game.runes.renderRunes();
 

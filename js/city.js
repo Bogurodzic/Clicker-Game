@@ -151,10 +151,15 @@ var cityState = {
             game.player.gold -= this.cost;
             game.ui.updateGold();
             this.level++;
-            console.log(game.player.gold);
+            this.cost = self.calculateUpgradeCost(this.cost, this.level);
+
           } else {
             console.log("you dont have enough money");
           }
+        }
+
+        calculateUpgradeCost(cost, level){
+          return cost * level * 1.66;
         }
 
       }

@@ -91,6 +91,10 @@ game.equipment = {
     weapons: [
       {name: "sword", icon: "icon-sword", level: 1, cost: 10, isBought: false},
       {name: "hammer", icon: "icon-hammer", level: 1, cost: 100, isBought: false}
+    ],
+    shields: [
+      {name: "wooden shield", icon: "icon-shield-wooden", level: 1, cost: 10, isBought: false},
+      {name: "common shiled", icon: "icon-shield-common", level: 1, cost: 10, isBought: false}
     ]
   },
 
@@ -105,6 +109,7 @@ game.equipment = {
 
   changeWeapon: function(){
     this.playerEquipment.weapon = this.equipmentList.weapons[0];
+    this.playerEquipment.shield = this.equipmentList.shields[0];
   },
 
   renderEquipment: function() {
@@ -113,7 +118,7 @@ game.equipment = {
 
   renderWeapon: function() {
     if(this.weapon){
-      this.playerEquipment.weapon.destroy
+      this.playerEquipment.weapon.destroy;
     };
     this.weapon = this.equipmentPanel.addChild(game.add.sprite(-115, 0, this.playerEquipment.weapon.icon));
     this.weapon.scale.setTo(0.5);
@@ -124,6 +129,19 @@ game.equipment = {
     }, game.infoWindow);
     this.weapon.events.onInputOut.add(game.infoWindow.close, this);
 
+  },
+
+  renderShield: function() {
+    if(this.shield){
+      this.playerEquipment.shield.destroy;
+    };
+    this.shield = this.equipmentPanel.addChild(game.add.sprite(45, 0, this.playerEquipment.shield.icon));
+    this.shield.scale.setTo(0.5);
+    this.shield.inputEnabled = true;
+    this.shield.events.onInputOver.add(function(){
+      game.infoWindow.render(game.equipment.playerEquipment.shield.name);
+    }, game.infoWindow);
+    this.shield.events.onInputOut.add(game.infoWindow.close, this);
   },
 
   create: function(){
