@@ -129,9 +129,22 @@ var cityState = {
         createItems(items){
           self = this;
           this[items] = this.modal.modalSprite.addChild(game.add.group());
+          this[items].arrowLeft = this[items].create(23,32, "arrow");
+          this[items].arrowRight = this[items].create(75 ,0, "arrow");
+          this[items].arrowLeft.angle = 180;
+          this[items].text = this[items].addChild(game.add.text(26, 5, items, {
+              font: "19px 'Jim Nightshade', cursive",
+              fill: "black"}));
+          this[items].arrowRight.inputEnabled = true;
+          this[items].arrowLeft.inputEnabled = true;
+          //this[items].arrowRight.events.onInputDown.add(function(){
+            //this.createItems("shields");
+            //this.removeItems();
+          //}, this);
+          //this.arrows.scale.setTo(0.1);
           [].forEach.call(game.equipment.equipmentList[items], function(data, index){
-            let item = self[items].create(0, 0 + (40 * index), data.icon);
-            let text = self[items].addChild(game.add.text(40, 0 + (40 * index), "cost: "+ data.cost + "\nlevel: " + data.level, {
+            let item = self[items].create(0, 40 + (40 * index), data.icon);
+            let text = self[items].addChild(game.add.text(40, 40 + (40 * index), "cost: "+ data.cost + "\nlevel: " + data.level, {
                 font: "21px 'Jim Nightshade'",
                 fill: "black"}));
             text.lineSpacing = -10;
@@ -143,6 +156,10 @@ var cityState = {
             item.events.onInputOut.add(game.infoWindow.close, this);
             item.events.onInputDown.add(self.updateItem, data);
           });
+        }
+
+        removeItems(){
+          //this.modal.modalSprite.destroy();
         }
 
         updateItem(item){
