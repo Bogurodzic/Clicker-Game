@@ -125,28 +125,27 @@ var cityState = {
       }
 
       class Merchant extends Npc {
-        createWeapons(){
+
+        createItems(items){
           self = this;
-          this.weapons = this.modal.modalSprite.addChild(game.add.group());
-          [].forEach.call(game.equipment.equipmentList.weapons, function(data, index){
-            let weapon = self.weapons.create(0, 0 + (40 * index), data.icon);
-            let text = self.weapons.addChild(game.add.text(40, 0 + (40 * index), "cost: "+ data.cost + "\nlevel: " + data.level, {
+          this[items] = this.modal.modalSprite.addChild(game.add.group());
+          [].forEach.call(game.equipment.equipmentList[items], function(data, index){
+            let item = self[items].create(0, 0 + (40 * index), data.icon);
+            let text = self[items].addChild(game.add.text(40, 0 + (40 * index), "cost: "+ data.cost + "\nlevel: " + data.level, {
                 font: "21px 'Jim Nightshade'",
                 fill: "black"}));
             text.lineSpacing = -10;
-            weapon.scale.setTo(0.3);
-            weapon.inputEnabled = true;
-            weapon.events.onInputOver.add(function(){
+            item.scale.setTo(0.3);
+            item.inputEnabled = true;
+            item.events.onInputOver.add(function(){
               game.infoWindow.render(data.name);
             }, game.infoWindow);
-            weapon.events.onInputOut.add(game.infoWindow.close, this);
-            weapon.events.onInputDown.add(self.updateWeapon, data);
+            item.events.onInputOut.add(game.infoWindow.close, this);
+            item.events.onInputDown.add(self.updateItem, data);
           });
-
-
         }
 
-        updateWeapon(weapon){
+        updateItem(item){
           if((game.player.gold - this.cost) >= 0 ){
             game.player.gold -= this.cost;
             game.ui.updateGold();
@@ -168,7 +167,7 @@ var cityState = {
       this.merchant = new Merchant(450, 250, "merchant");
       this.merchant.create();
       this.merchant.addModal(525, 200, 100, 100);
-      this.merchant.createWeapons();
+      this.merchant.createItems("weapons");
 
       this.king = new Npc(200, 250, "king");
       this.king.create();
