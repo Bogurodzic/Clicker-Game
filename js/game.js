@@ -87,7 +87,6 @@ game.inventory = {
 game.equipment = {
   equipmentPanel: undefined,
 
-
   equipmentList: {
     weapons: [
       {name: "sword", icon: "icon-sword", level: 1, cost: 10, isBought: false},

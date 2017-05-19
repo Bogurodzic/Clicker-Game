@@ -126,8 +126,33 @@ var cityState = {
 
       class Merchant extends Npc {
 
+      nextItem(item){
+        switch(item) {
+          case "weapons":
+              return "shields"
+              break;
+          case "shields":
+              return "armors";
+              break;
+          case "armors":
+              return "helmets";
+              break;
+          case "helmets":
+              return "boots";
+              break;
+          case "boots":
+              return "weapons";
+              break;
+            }
+        }
+
         createItems(items){
           self = this;
+
+          if(!this.modal){
+            this.addModal(525, 200, 100, game.equipment.equipmentList[items].length*65);
+          }
+
           this[items] = this.modal.modalSprite.addChild(game.add.group());
           this[items].arrowLeft = this[items].create(23,32, "arrow");
           this[items].arrowRight = this[items].create(75 ,0, "arrow");
@@ -137,14 +162,17 @@ var cityState = {
               fill: "black"}));
           this[items].arrowRight.inputEnabled = true;
           this[items].arrowLeft.inputEnabled = true;
-          //this[items].arrowRight.events.onInputDown.add(function(){
-            //this.createItems("shields");
-            //this.removeItems();
-          //}, this);
+          this[items].arrowRight.events.onInputDown.add(function(){
+            console.log(this.modal.modalSprite);
+            this.removeItems();
+            this.addModal(525, 200, 100, (game.equipment.equipmentList[this.nextItem(items)].length*65));
+            this.modal.toggle();
+            this.createItems(this.nextItem(items));
+          }, this);
           //this.arrows.scale.setTo(0.1);
           [].forEach.call(game.equipment.equipmentList[items], function(data, index){
-            let item = self[items].create(0, 40 + (40 * index), data.icon);
-            let text = self[items].addChild(game.add.text(40, 40 + (40 * index), "cost: "+ data.cost + "\nlevel: " + data.level, {
+            let item = self[items].create(0, 28 + (40 * index), data.icon);
+            let text = self[items].addChild(game.add.text(40, 28 + (40 * index), "cost: "+ data.cost + "\nlevel: " + data.level, {
                 font: "21px 'Jim Nightshade'",
                 fill: "black"}));
             text.lineSpacing = -10;
@@ -159,7 +187,7 @@ var cityState = {
         }
 
         removeItems(){
-          //this.modal.modalSprite.destroy();
+          this.modal.modalSprite.destroy();
         }
 
         updateItem(item){
@@ -183,7 +211,7 @@ var cityState = {
 
       this.merchant = new Merchant(450, 250, "merchant");
       this.merchant.create();
-      this.merchant.addModal(525, 200, 100, 100);
+      //this.merchant.addModal(525, 200, 100, 100);
       this.merchant.createItems("weapons");
 
       this.king = new Npc(200, 250, "king");
