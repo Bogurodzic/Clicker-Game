@@ -146,6 +146,33 @@ var cityState = {
             }
         }
 
+        prevItem(item){
+          switch(item) {
+            case "shields":
+                return "weapons"
+                break;
+            case "armors":
+                return "shields";
+                break;
+            case "helmets":
+                return "armors";
+                break;
+            case "boots":
+                return "helmets";
+                break;
+            case "weapons":
+                return "boots";
+                break;
+              }
+          }
+
+        switchTab(items){
+          this.removeItems();
+          this.addModal(525, 200, 100, (game.equipment.equipmentList[items].length*65));
+          this.modal.toggle();
+          this.createItems(items);
+        }
+
         createItems(items){
           self = this;
 
@@ -163,11 +190,11 @@ var cityState = {
           this[items].arrowRight.inputEnabled = true;
           this[items].arrowLeft.inputEnabled = true;
           this[items].arrowRight.events.onInputDown.add(function(){
-            console.log(this.modal.modalSprite);
-            this.removeItems();
-            this.addModal(525, 200, 100, (game.equipment.equipmentList[this.nextItem(items)].length*65));
-            this.modal.toggle();
-            this.createItems(this.nextItem(items));
+            this.switchTab(this.nextItem(items));
+          }, this);
+
+          this[items].arrowLeft.events.onInputDown.add(function(){
+            this.switchTab(this.prevItem(items));
           }, this);
           //this.arrows.scale.setTo(0.1);
           [].forEach.call(game.equipment.equipmentList[items], function(data, index){
