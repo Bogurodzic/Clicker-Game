@@ -121,7 +121,24 @@ game.equipment = {
   },
 
   renderEquipment: function() {
-    renderWeapon();
+    if(this.playerEquipment.weapon){
+      game.equipment.renderItem("weapon", -115, 10);
+    }
+    if(this.playerEquipment.shield){
+      game.equipment.renderItem("shield", 45, 10);
+    }
+    if(this.playerEquipment.armor){
+      game.equipment.renderItem("armor", -35, 10);
+    }
+    if(this.playerEquipment.helmet){
+      game.equipment.renderItem("helmet", -35, -65);
+    }
+    if(this.playerEquipment.legs){
+
+    }
+    if(this.playerEquipment.boots){
+      game.equipment.renderItem("boots", -35, 85);
+    }
   },
 
 

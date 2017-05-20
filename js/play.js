@@ -182,11 +182,7 @@ var playState = {
         game.equipment.changeItem("armor", game.equipment.equipmentList.armors[0]);
         game.equipment.changeItem("helmet", game.equipment.equipmentList.helmets[0]);
         game.equipment.changeItem("boots", game.equipment.equipmentList.boots[0]);
-        game.equipment.renderItem("weapon", -115, 10);
-        game.equipment.renderItem("shield", 45, 10);
-        game.equipment.renderItem("armor", -35, 10);
-        game.equipment.renderItem("helmet", -35, -65);
-        game.equipment.renderItem("boots", -35, 85);
+        game.equipment.renderEquipment();
         game.runes.create();
         game.runes.renderRunes();
 
