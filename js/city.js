@@ -210,6 +210,9 @@ var cityState = {
             }, game.infoWindow);
             item.events.onInputOut.add(game.infoWindow.close, this);
             item.events.onInputDown.add(self.updateItem, data);
+            item.events.onInputDown.add(function(){
+              self.updateItemText(text, data);
+            }, data);
           });
         }
 
@@ -223,10 +226,13 @@ var cityState = {
             game.ui.updateGold();
             this.level++;
             this.cost = self.calculateUpgradeCost(this.cost, this.level);
-
           } else {
             console.log("you dont have enough money");
           }
+        }
+
+        updateItemText(text, item){
+          text.text = "cost: "+ Math.round(item.cost) + "\nlevel: " + item.level;
         }
 
         calculateUpgradeCost(cost, level){
