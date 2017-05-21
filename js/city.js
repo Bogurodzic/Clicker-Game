@@ -199,10 +199,19 @@ var cityState = {
           //this.arrows.scale.setTo(0.1);
           [].forEach.call(game.equipment.equipmentList[items], function(data, index){
             let item = self[items].create(0, 28 + (40 * index), data.icon);
-            let text = self[items].addChild(game.add.text(40, 28 + (40 * index), "cost: "+ data.cost + "\nlevel: " + data.level, {
-                font: "21px 'Jim Nightshade'",
-                fill: "black"}));
-            text.lineSpacing = -10;
+            let text;
+            
+            if(data.isBought){
+                  text = self[items].addChild(game.add.text(40, 28 + (40 * index), "cost: "+ data.cost + "\nlevel: " + data.level, {
+                  font: "21px 'Jim Nightshade'",
+                  fill: "black"}));
+            } else if (!data.isBought) {
+                  text = self[items].addChild(game.add.text(40, 28 + (40 * index), "Buy: " + "\ncost: "+ data.cost , {
+                  font: "21px 'Jim Nightshade'",
+                  fill: "black"}));
+                  text.lineSpacing = -10;
+            }
+
             item.scale.setTo(0.3);
             item.inputEnabled = true;
             item.events.onInputOver.add(function(){
