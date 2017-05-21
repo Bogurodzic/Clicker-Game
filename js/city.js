@@ -225,14 +225,14 @@ var cityState = {
             game.player.gold -= Math.round(this.cost);
             game.ui.updateGold();
             this.level++;
-            this.cost = self.calculateUpgradeCost(this.cost, this.level);
+            this.cost = Math.round(self.calculateUpgradeCost(this.cost, this.level));
           } else {
             console.log("you dont have enough money");
           }
         }
 
         updateItemText(text, item){
-          text.text = "cost: "+ Math.round(item.cost) + "\nlevel: " + item.level;
+          text.text = "cost: "+ item.cost + "\nlevel: " + item.level;
         }
 
         calculateUpgradeCost(cost, level){
