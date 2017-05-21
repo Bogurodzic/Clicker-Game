@@ -200,7 +200,7 @@ var cityState = {
           [].forEach.call(game.equipment.equipmentList[items], function(data, index){
             let item = self[items].create(0, 28 + (40 * index), data.icon);
             let text;
-            
+
             if(data.isBought){
                   text = self[items].addChild(game.add.text(40, 28 + (40 * index), "cost: "+ data.cost + "\nlevel: " + data.level, {
                   font: "21px 'Jim Nightshade'",
@@ -235,8 +235,17 @@ var cityState = {
             game.ui.updateGold();
             this.level++;
             this.cost = Math.round(self.calculateUpgradeCost(this.cost, this.level));
+            self.isNew(this);
           } else {
             console.log("you dont have enough money");
+          }
+
+        }
+
+        isNew(item){
+          if(!item.isBought){
+            item.isBought = true;
+            game.equipment.changeItem(item.type, item);
           }
         }
 

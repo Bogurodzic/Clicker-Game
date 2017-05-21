@@ -75,6 +75,7 @@ game.inventory = {
         this.inventoryPanel.x = game.world.centerX;
         this.inventoryPanel.y = game.world.centerY;
         this.inventoryVisibility = true;
+        game.equipment.renderEquipment();
     } else if (this.inventoryVisibility === true){
         this.inventoryPanel.x = -1000;
         this.inventoryPanel.y = -1000;
@@ -89,21 +90,21 @@ game.equipment = {
 
   equipmentList: {
     weapons: [
-      {name: "sword", icon: "icon-sword", level: 1, cost: 10, isBought: false},
-      {name: "hammer", icon: "icon-hammer", level: 1, cost: 100, isBought: false}
+      {name: "sword", icon: "icon-sword", level: 1, cost: 10, isBought: false, type: "weapon"},
+      {name: "hammer", icon: "icon-hammer", level: 1, cost: 100, isBought: false, type: "weapon"}
     ],
     shields: [
-      {name: "wooden shield", icon: "icon-shield-wooden", level: 1, cost: 10, isBought: false},
-      {name: "common shiled", icon: "icon-shield-common", level: 1, cost: 10, isBought: false}
+      {name: "wooden shield", icon: "icon-shield-wooden", level: 1, cost: 10, isBought: false, type: "shield"},
+      {name: "common shiled", icon: "icon-shield-common", level: 1, cost: 10, isBought: false, type: "shield"}
     ],
     armors: [
-      {name: "armor", icon: "icon-armor", level: 1, cost: 10, isBought: false}
+      {name: "armor", icon: "icon-armor", level: 1, cost: 10, isBought: false, type: "armor"}
     ],
     helmets: [
-      {name: "helmet", icon: "icon-helmet", level: 1, cost: 10, isBought: false}
+      {name: "helmet", icon: "icon-helmet", level: 1, cost: 10, isBought: false, type: "helmet"}
     ],
     boots: [
-      {name: "boots", icon: "icon-boots", level: 1, cost: 10, isBought: false}
+      {name: "boots", icon: "icon-boots", level: 1, cost: 10, isBought: false, type: "boots"}
     ]
   },
 
