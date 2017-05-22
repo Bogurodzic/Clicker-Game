@@ -108,8 +108,35 @@ game.equipment = {
     ]
   },
 
+  nextItem: function(item, name){
+    if(item[item.length-1] !== "s"){
+      item += "s";
+    }
+
+    let isFound = false;
+    game.equipment.equipmentList[item].forEach(function(data, index) {
+      if(data.name === name){
+
+        let count = index;
+        count++
+        if(game.equipment.equipmentList[item][count]){
+          game.equipment.changeItem(data.type, game.equipment.equipmentList[item][count]);
+          game.equipment.renderEquipment();
+          console.log(1);
+        } else {
+          game.equipment.changeItem(data.type, game.equipment.equipmentList[item][0]);
+          game.equipment.renderEquipment();
+          console.log(0);
+        }
+
+      }
+
+    })
+
+  },
+
   playerEquipment: {
-    weapon: undefined,
+    weapon: {name: "hammer", icon: "icon-hammer", level: 1, cost: 100, isBought: false, type: "weapon"},
     shield: undefined,
     armor: undefined,
     helmet: undefined,
@@ -151,23 +178,15 @@ game.equipment = {
     this[item] = this.equipmentPanel.addChild(game.add.sprite(x, y, this.playerEquipment[item].icon));
     this[item].scale.setTo(0.5);
     this[item].inputEnabled = true;
+    let currentItem = game.equipment.playerEquipment[item]
     this[item].events.onInputOver.add(function(){
-      game.infoWindow.render(game.equipment.playerEquipment[item].name);
+      game.infoWindow.render(currentItem.name);
     }, game.infoWindow);
     this[item].events.onInputOut.add(game.infoWindow.close, this);
-  },
-
-  renderShield: function() {
-    if(this.shield){
-      this.playerEquipment.shield.destroy;
-    };
-    this.shield = this.equipmentPanel.addChild(game.add.sprite(45, 0, this.playerEquipment.shield.icon));
-    this.shield.scale.setTo(0.5);
-    this.shield.inputEnabled = true;
-    this.shield.events.onInputOver.add(function(){
-      game.infoWindow.render(game.equipment.playerEquipment.shield.name);
-    }, game.infoWindow);
-    this.shield.events.onInputOut.add(game.infoWindow.close, this);
+    this[item].events.onInputDown.add(function(){
+      game.equipment.nextItem(currentItem.type, currentItem.name);
+      //game.equipment.renderEquipment();
+    }, game.equipment);
   },
 
   create: function(){
