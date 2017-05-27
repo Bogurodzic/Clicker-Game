@@ -72,7 +72,7 @@ var playState = {
           },
 
           onClick: function(){
-            this.monster.isCritical(this.monster.currentMonster, game.player.clickDamage);
+            this.monster.isCritical(this.monster.currentMonster, game.player.clickDamage + game.equipment.playerEquipment.weapon.damage);
             this.monster.renderMonsterHealth();
           },
 

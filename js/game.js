@@ -8,7 +8,11 @@ game.player = {
     clickDamage: 1,
     dps: 5,
     criticalChance: 0.7,
-    gold: 50
+    gold: 50,
+
+    calculateDmg: function() {
+      console.log(this);
+    }
 };
 
 game.level = {
@@ -90,8 +94,8 @@ game.equipment = {
 
   equipmentList: {
     weapons: [
-      {name: "sword", icon: "icon-sword", level: 1, cost: 10, isBought: true, type: "weapon"},
-      {name: "hammer", icon: "icon-hammer", level: 1, cost: 100, isBought: true, type: "weapon"}
+      {name: "sword", icon: "icon-sword", level: 1, cost: 10, damage:1, isBought: true, type: "weapon"},
+      {name: "hammer", icon: "icon-hammer", level: 1, cost: 100, damage:10, isBought: true, type: "weapon"}
     ],
     shields: [
       {name: "wooden shield", icon: "icon-shield-wooden", level: 1, cost: 10, isBought: false, type: "shield"},
