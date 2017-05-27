@@ -190,6 +190,7 @@ game.equipment = {
       game.equipment.nextItem(currentItem.type, currentItem.name);
       //game.equipment.renderEquipment();
     }, game.equipment);
+    this[item].events.onInputDown.add(game.infoWindow.close, this);
   },
 
   create: function(){
