@@ -90,8 +90,8 @@ game.equipment = {
 
   equipmentList: {
     weapons: [
-      {name: "sword", icon: "icon-sword", level: 1, cost: 10, isBought: false, type: "weapon"},
-      {name: "hammer", icon: "icon-hammer", level: 1, cost: 100, isBought: false, type: "weapon"}
+      {name: "sword", icon: "icon-sword", level: 1, cost: 10, isBought: true, type: "weapon"},
+      {name: "hammer", icon: "icon-hammer", level: 1, cost: 100, isBought: true, type: "weapon"}
     ],
     shields: [
       {name: "wooden shield", icon: "icon-shield-wooden", level: 1, cost: 10, isBought: false, type: "shield"},
@@ -116,23 +116,26 @@ game.equipment = {
     let isFound = false;
     game.equipment.equipmentList[item].forEach(function(data, index) {
       if(data.name === name){
-
-        let count = index;
-        count++
-        if(game.equipment.equipmentList[item][count]){
-          game.equipment.changeItem(data.type, game.equipment.equipmentList[item][count]);
-          game.equipment.renderEquipment();
-          console.log(1);
-        } else {
-          game.equipment.changeItem(data.type, game.equipment.equipmentList[item][0]);
-          game.equipment.renderEquipment();
-          console.log(0);
-        }
-
+        let itemList = game.equipment.equipmentList[item];
+        console.log(itemList[index]);
+        game.equipment.isNextBought(itemList, index);
       }
 
     })
 
+  },
+
+
+  isNextBought: function(list, index){
+    if(list[index+1] && list[index+1].isBought){
+      game.equipment.changeItem(list[index+1].type, list[index+1]);
+      game.equipment.renderEquipment();
+    } else if(list[index+1] && !list[index+1].isBought) {
+      game.equipment.isNextBought(list, index+1)
+    } else {
+      game.equipment.changeItem(list[0].type, list[0]);
+      game.equipment.renderEquipment();
+    }
   },
 
   playerEquipment: {
