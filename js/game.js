@@ -447,6 +447,7 @@ game.localStorage = {
 
     //save objects
     localStorage.equipmentList = JSON.stringify(game.equipment.equipmentList);
+    localStorage.playerEquipment = JSON.stringify(game.equipment.playerEquipment);
 
 
     console.log("Saved");
@@ -467,6 +468,8 @@ game.localStorage = {
 
     //load objects
     game.equipment.equipmentList = JSON.parse(localStorage.getItem("equipmentList"));
+    game.equipment.playerEquipment = JSON.parse(localStorage.getItem("playerEquipment"));
+
     console.log("Loaded");
   },
 }
