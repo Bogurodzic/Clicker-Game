@@ -105,7 +105,7 @@ var playState = {
 
           countMonster: function(){
             //update monster counter
-            game.level.currentMonster += 1;
+            game.level.addMonster();
             game.ui.monsterCounterUpdate();
           },
 
