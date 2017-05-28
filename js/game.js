@@ -6,12 +6,17 @@ game.player = {
     maxHp: 100,
     currentHp: 100,
     clickDamage: 1,
+    //idle damage
     dps: 5,
     criticalChance: 0.7,
     gold: 500,
 
     calculateDmg: function() {
-      
+      if(game.equipment.playerEquipment.weapon){
+        return this.clickDamage + game.equipment.playerEquipment.weapon.clickDamage;
+      } else {
+        return this.clickDamage;
+      }
     }
 };
 
@@ -94,8 +99,8 @@ game.equipment = {
 
   equipmentList: {
     weapons: [
-      {name: "sword", icon: "icon-sword", level: 1, cost: 10, damage:1, isBought: false, type: "weapon"},
-      {name: "hammer", icon: "icon-hammer", level: 1, cost: 100, damage:10, isBought: false, type: "weapon"}
+      {name: "sword", icon: "icon-sword", level: 1, cost: 10, clickDamage:1, idleDamage:1, isBought: false, type: "weapon"},
+      {name: "hammer", icon: "icon-hammer", level: 1, cost: 100, clickDamage:10, idleDamage:10, isBought: false, type: "weapon"}
     ],
     shields: [
       {name: "wooden shield", icon: "icon-shield-wooden", level: 1, cost: 10, isBought: false, type: "shield"},
