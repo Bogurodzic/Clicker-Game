@@ -445,6 +445,10 @@ game.localStorage = {
     localStorage.dps = game.player.dps;
     localStorage.gold = game.player.gold;
 
+    //save objects
+    localStorage.equipmentList = JSON.stringify(game.equipment.equipmentList);
+
+
     console.log("Saved");
   },
 
@@ -461,6 +465,8 @@ game.localStorage = {
     game.player.dps = localStorage.getItem("dps");
     game.player.gold = localStorage.getItem("gold");
 
+    //load objects
+    game.equipment.equipmentList = JSON.parse(localStorage.getItem("equipmentList"));
     console.log("Loaded");
   },
 }
