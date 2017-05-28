@@ -35,7 +35,7 @@ game.level = {
   nextLevel: function(){
     this.currentLevel++;
     this.currentMonster = 0;
-    game.ui.level();
+    game.ui.updateLevel();
   },
 
 }
@@ -69,6 +69,10 @@ game.ui = {
       fill: "#fff"});
     game.levelText.anchor.setTo(0.5);
 
+  },
+
+  updateLevel:function(){
+    game.levelText.text = "Level: " + game.level.currentLevel;
   },
 
   gold: function(){
