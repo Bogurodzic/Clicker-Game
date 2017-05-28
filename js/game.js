@@ -455,21 +455,40 @@ game.localStorage = {
 
   load: function() {
     //load world info
-    game.level.currentLevel = localStorage.getItem("level");
-    game.level.currentMonster = localStorage.getItem("killedMonsters");
-    game.level.requiredKilledMonsters = localStorage.getItem("requiredKilledMonsters");
+    if(localStorage.getItem("level")){
+      game.level.currentLevel = localStorage.getItem("level");
+    }
+    if(localStorage.getItem("killedMonsters")){
+      game.level.currentMonster = localStorage.getItem("killedMonsters");
+    }
+    if(localStorage.getItem("requiredKilledMonsters")){
+      game.level.requiredKilledMonsters = localStorage.getItem("requiredKilledMonsters");
+    }
 
     //load basic player stats
-    game.player.maxHp = localStorage.getItem("maxHp");
-    game.player.currentHp = localStorage.getItem("currentHp");
-    game.player.clickDamage = localStorage.getItem("clickDamage");
-    game.player.dps = localStorage.getItem("dps");
-    game.player.gold = localStorage.getItem("gold");
+    if(localStorage.getItem("maxHp")){
+      game.player.maxHp = localStorage.getItem("maxHp");
+    }
+    if(localStorage.getItem("currentHp")){
+      game.player.currentHp = localStorage.getItem("currentHp");
+    }
+    if(localStorage.getItem("clickDamage")){
+      game.player.clickDamage = localStorage.getItem("clickDamage");
+    }
+    if(localStorage.getItem("dps")){
+      game.player.dps = localStorage.getItem("dps");
+    }
+    if(localStorage.getItem("gold")){
+      game.player.gold = localStorage.getItem("gold");
+    }
 
     //load objects
-    game.equipment.equipmentList = JSON.parse(localStorage.getItem("equipmentList"));
-    game.equipment.playerEquipment = JSON.parse(localStorage.getItem("playerEquipment"));
-
+    if(localStorage.getItem("equipmentList")){
+      game.equipment.equipmentList = JSON.parse(localStorage.getItem("equipmentList"));
+    }
+    if(localStorage.getItem("playerEquipment")){
+      game.equipment.playerEquipment = JSON.parse(localStorage.getItem("playerEquipment"));
+    }
     console.log("Loaded");
   },
 }
@@ -523,7 +542,7 @@ game.times = {
   calculateGainedGold: function(monstersKilled){
     console.log(monstersKilled + " monsters were killed.");
     console.log((monstersKilled * game.level.currentLevel) + " gold earned");
-    game.player.gold += monstersKilled * game.level.currentLevel;
+    game.player.gold =+ monstersKilled * game.level.currentLevel;
     game.ui.updateGold();
   },
 
