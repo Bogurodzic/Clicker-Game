@@ -181,13 +181,11 @@ var playState = {
         game.runes.renderRunes();
 
         game.times.checkTime();
-        game.times.getTime();
-        game.times.timePassed();
+        game.times.compareTime();
 
         //idle module
         game.time.events.loop(1000, function(){
-          game.times.getTime();
-          console.log(game.times.timePassed() + " sek minelo");
+          game.times.compareTime();
         }, this);
 
         function goToCity() {

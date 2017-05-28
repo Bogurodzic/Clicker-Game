@@ -483,7 +483,24 @@ game.times = {
 
   timePassed: function(){
     return Math.round((this.timeNow - this.timePast)/1000);
-  }
+  },
+
+  compareTime: function(){
+    this.getTime();
+    console.log(this.timePassed());
+    if(this.timePassed >= 3){
+      this.calculateKilledMonsters;
+      this.calculateGainedGold;
+    }
+  },
+
+  calculateKilledMonsters: function(){
+
+  },
+
+  calculateGainedGold: function(){
+
+  },
 
 }
 
