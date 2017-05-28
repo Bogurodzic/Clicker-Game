@@ -454,7 +454,28 @@ game.localStorage = {
     game.player.gold = localStorage.getItem("gold");
 
     console.log("Loaded");
+  },
+}
+
+game.time = {
+  timePassed: 0,
+  timeNow: 0,
+  timePast: 0,
+
+  checkTime: function(){
+    if (localStorage.getItem("timeNow") && localStorage.getItem("timePast")){
+      this.timePast = localStorage.getItem("timePast");
+      this.timeNow = localStorage.getItem("timeNow");
+    } else {
+      this.timeNow;
+      this.timePassed;
+    }
+  },
+
+  getTime: function(){
+    this.timePast = this.timeNow
   }
+
 }
 
 game.state.add("load", loadState);

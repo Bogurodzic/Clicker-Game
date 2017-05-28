@@ -183,25 +183,8 @@ var playState = {
 
 
         function goToCity() {
-          //saveToLocalStorage();
           game.state.start("city");
         };
-
-        /*
-        function loadFromLocalStorage() {
-          //load world info
-          state.level.currentLevel = localStorage.getItem("level");
-          state.level.currentMonster = localStorage.getItem("killedMonsters");
-
-          //load basic player stats
-          game.player.maxHp = localStorage.getItem("maxHp");
-          game.player.currentHp = localStorage.getItem("currentHp");
-          game.player.clickDamage = localStorage.getItem("clickDamage");
-          game.player.dps = localStorage.getItem("dps");
-          game.player.gold = localStorage.getItem("gold");
-
-          console.log("loaded");
-        } */
 
         this.dpsTimer =this.game.time.events.loop(100, this.monster.onDps, this);
     },
