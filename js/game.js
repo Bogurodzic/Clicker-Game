@@ -457,8 +457,7 @@ game.localStorage = {
   },
 }
 
-game.time = {
-  timePassed: 0,
+game.times = {
   timeNow: 0,
   timePast: 0,
 
@@ -466,14 +465,24 @@ game.time = {
     if (localStorage.getItem("timeNow") && localStorage.getItem("timePast")){
       this.timePast = localStorage.getItem("timePast");
       this.timeNow = localStorage.getItem("timeNow");
+      console.log("local time existed");
     } else {
       this.timeNow;
       this.timePassed;
+      console.log("created local time");
     }
   },
 
   getTime: function(){
-    this.timePast = this.timeNow
+    this.timePast = this.timeNow;
+    localStorage.timePast = this.timePast;
+    this.timeNow = new Date().getTime();
+    localStorage.timeNow =  this.timeNow;
+    console.log("saved time");
+  },
+
+  timePassed: function(){
+    return Math.round((this.timeNow - this.timePast)/1000);
   }
 
 }

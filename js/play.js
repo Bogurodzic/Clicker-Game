@@ -160,7 +160,6 @@ var playState = {
           }
         }
 
-
         //icons
         this.iconInventory = this.game.add.sprite(30,210,"icon-inventory");
         this.iconInventory.scale.setTo(0.3);
@@ -181,10 +180,21 @@ var playState = {
         game.runes.create();
         game.runes.renderRunes();
 
+        game.times.checkTime();
+        game.times.getTime();
+        game.times.timePassed();
+
+        //idle module
+        game.time.events.loop(1000, function(){
+          game.times.getTime();
+          console.log(game.times.timePassed() + " sek minelo");
+        }, this);
 
         function goToCity() {
           game.state.start("city");
         };
+
+
 
         this.dpsTimer =this.game.time.events.loop(100, this.monster.onDps, this);
     },
