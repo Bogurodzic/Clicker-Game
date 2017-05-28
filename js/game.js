@@ -8,10 +8,10 @@ game.player = {
     clickDamage: 1,
     dps: 5,
     criticalChance: 0.7,
-    gold: 50,
+    gold: 500,
 
     calculateDmg: function() {
-      console.log(this);
+      
     }
 };
 
@@ -94,12 +94,12 @@ game.equipment = {
 
   equipmentList: {
     weapons: [
-      {name: "sword", icon: "icon-sword", level: 1, cost: 10, damage:1, isBought: true, type: "weapon"},
-      {name: "hammer", icon: "icon-hammer", level: 1, cost: 100, damage:10, isBought: true, type: "weapon"}
+      {name: "sword", icon: "icon-sword", level: 1, cost: 10, damage:1, isBought: false, type: "weapon"},
+      {name: "hammer", icon: "icon-hammer", level: 1, cost: 100, damage:10, isBought: false, type: "weapon"}
     ],
     shields: [
       {name: "wooden shield", icon: "icon-shield-wooden", level: 1, cost: 10, isBought: false, type: "shield"},
-      {name: "common shiled", icon: "icon-shield-common", level: 1, cost: 10, isBought: false, type: "shield"}
+      {name: "common shiled", icon: "icon-shield-common", level: 1, cost: 100, isBought: false, type: "shield"}
     ],
     armors: [
       {name: "armor", icon: "icon-armor", level: 1, cost: 10, isBought: false, type: "armor"}
@@ -137,7 +137,7 @@ game.equipment = {
     } else if(list[index+1] && !list[index+1].isBought) {
       game.equipment.isNextBought(list, index+1);
     } else {
-      game.equipment.isNextBought(list, 0);
+      game.equipment.isNextBought(list, -1);
     }
   },
 

@@ -262,7 +262,6 @@ var cityState = {
 
       this.merchant = new Merchant(450, 250, "merchant");
       this.merchant.create();
-      //this.merchant.addModal(525, 200, 100, 100);
       this.merchant.createItems("weapons");
 
       this.king = new Npc(200, 250, "king");
