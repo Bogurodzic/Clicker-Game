@@ -423,6 +423,27 @@ game.infoWindow = {
   }
 }
 
+game.localStorage = {
+  save: function(){
+    //save world info
+    localStorage.level = game.level.currentLevel;
+    localStorage.killedMonsters = game.level.currentMonster;
+    localStorage.requiredKilledMonsters = game.level.requiredKilledMonsters;
+
+    //save basic player stats
+    localStorage.maxHp = game.player.maxHp;
+    localStorage.currentHp = game.player.currentHp;
+    localStorage.clickDamage = game.player.clickDamage;
+    localStorage.dps = game.player.dps;
+    localStorage.gold = game.player.gold;
+
+    console.log("Saved");
+  },
+
+  load: function() {
+
+  }
+}
 
 game.state.add("load", loadState);
 game.state.add("menu", menuState);

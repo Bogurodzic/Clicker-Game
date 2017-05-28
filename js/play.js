@@ -188,21 +188,6 @@ var playState = {
         };
 
         /*
-        function saveToLocalStorage() {
-          //save world info
-          localStorage.level = state.level.currentLevel;
-          localStorage.killedMonsters = state.level.currentMonster;
-
-          //save basic player stats
-          localStorage.maxHp = game.player.maxHp;
-          localStorage.currentHp = game.player.currentHp;
-          localStorage.clickDamage = game.player.clickDamage;
-          localStorage.dps = game.player.dps
-          localStorage.gold = game.player.gold;
-
-          console.log("Saved");
-        };
-
         function loadFromLocalStorage() {
           //load world info
           state.level.currentLevel = localStorage.getItem("level");
