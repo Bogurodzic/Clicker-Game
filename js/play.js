@@ -171,17 +171,10 @@ var playState = {
         this.iconCity.inputEnabled = true;
         this.iconCity.events.onInputDown.add(goToCity, this);
 
-        game.ui.renderAll();
-        this.monster.placeMonster();
-        this.gold.create();
-        game.inventory.create();
-        game.equipment.create();
-        game.equipment.renderEquipment();
-        game.runes.create();
-        game.runes.renderRunes();
+        startGame();
 
-        game.times.checkTime();
-        game.times.compareTime();
+        //idle dps
+        this.dpsTimer =this.game.time.events.loop(100, this.monster.onDps, this);
 
         //idle module
         game.time.events.loop(1000, function(){
@@ -192,9 +185,18 @@ var playState = {
           game.state.start("city");
         };
 
-
-
-        this.dpsTimer =this.game.time.events.loop(100, this.monster.onDps, this);
+        function startGame() {
+          game.ui.renderAll();
+          state.monster.placeMonster();
+          state.gold.create();
+          game.inventory.create();
+          game.equipment.create();
+          game.equipment.renderEquipment();
+          game.runes.create();
+          game.runes.renderRunes();
+          game.times.checkTime();
+          game.times.compareTime();
+        }
     },
 
     update: function() {
