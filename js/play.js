@@ -106,7 +106,7 @@ var playState = {
           countMonster: function(){
             //update monster counter
             game.level.currentMonster += 1;
-            game.monsterCounter.text = game.level.currentMonster;
+            game.ui.monsterCounterUpdate();
           },
 
           getNewMonster: function(){
@@ -177,11 +177,6 @@ var playState = {
         this.gold.create();
         game.inventory.create();
         game.equipment.create();
-      //  game.equipment.changeItem("weapon", game.equipment.equipmentList.weapons[0]);
-      //  game.equipment.changeItem("shield", game.equipment.equipmentList.shields[0]);
-      //  game.equipment.changeItem("armor", game.equipment.equipmentList.armors[0]);
-      //  game.equipment.changeItem("helmet", game.equipment.equipmentList.helmets[0]);
-        //game.equipment.changeItem("boots", game.equipment.equipmentList.boots[0]);
         game.equipment.renderEquipment();
         game.runes.create();
         game.runes.renderRunes();

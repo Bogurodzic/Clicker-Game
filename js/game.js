@@ -23,7 +23,20 @@ game.player = {
 game.level = {
   currentLevel: 1,
   currentMonster: 0,
-  requiredKilledMonsters: 10
+  requiredKilledMonsters: 10,
+
+  addMonster: function(){
+    this.currentMonster++;
+    if (this.currentMonster >= this.requiredKilledMonsters){
+      this.nextLevel();
+    }
+  },
+
+  nextLevel: function(){
+    this.currentLevel++;
+    this.currentMonster = 0;
+  },
+
 }
 
 
@@ -60,10 +73,14 @@ game.ui = {
   },
 
   monsterCounter: function(){
-    game.monsterCounter = game.add.text(465, 23, game.level.currentMonster, {
+    game.monsterCounter = game.add.text(465, 23, game.level.currentMonster +"/"+game.level.requiredKilledMonsters, {
             font: "25px 'Jim Nightshade', cursive",
             fill: "#fff"});
     game.monsterCounter.anchor.setTo(0.5);
+  },
+
+  monsterCounterUpdate: function(){
+    game.monsterCounter.text = game.level.currentMonster +"/"+game.level.requiredKilledMonsters;
   },
 }
 
