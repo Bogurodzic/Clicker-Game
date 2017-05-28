@@ -35,6 +35,7 @@ game.level = {
   nextLevel: function(){
     this.currentLevel++;
     this.currentMonster = 0;
+    game.ui.level();
   },
 
 }
@@ -47,6 +48,7 @@ game.ui = {
     this.frame();
     this.hp();
     this.gold();
+    this.level();
     this.monsterCounter();
   },
 
@@ -59,6 +61,14 @@ game.ui = {
       game.hpText = game.add.text(36, 38, game.player.currentHp, {
         font: "15px 'Jim Nightshade', cursive",
         fill: "#fff"});
+  },
+
+  level: function(){
+    game.levelText = game.add.text(game.world.centerX, 25, "Level: " + game.level.currentLevel, {
+      font: "24px 'Jim Nightshade', cursive",
+      fill: "#fff"});
+    game.levelText.anchor.setTo(0.5);
+
   },
 
   gold: function(){
