@@ -165,6 +165,9 @@ var playState = {
 
         startGame();
 
+        //saving to local storage
+        this.saving = this.game.time.events.loop(1000, game.localStorage.save, this);
+
         //idle dps
         this.dpsTimer =this.game.time.events.loop(100, this.monster.onDps, this);
 
@@ -186,6 +189,7 @@ var playState = {
           game.equipment.renderEquipment();
           game.runes.create();
           game.runes.renderRunes();
+          game.localStorage.load();
           game.times.checkTime();
           game.times.compareTime();
         }

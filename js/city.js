@@ -272,6 +272,9 @@ var cityState = {
       game.ui.renderAll();
       game.inventory.create();
 
+      //saving to local storage
+      this.saving = this.game.time.events.loop(1000, game.localStorage.save, this);
+
       function goToFight() {
         game.state.start("play");
       };
