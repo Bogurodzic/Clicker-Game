@@ -495,22 +495,27 @@ game.times = {
 
   compareTime: function(){
     this.getTime();
-    console.log(this.timePassed());
+    console.log(this.timePassed() + " second passed.");
     if(this.timePassed() >= 3){
-      this.calculateKilledMonsters();
+      this.calculateKilledMonsters(this.timePassed());
     }
   },
 
-  calculateKilledMonsters: function(){
+  calculateKilledMonsters: function(timePassed){
     //calculate the average hp of the monster
     let average = game.monstersList.reduce(function(a, b, index, arr){
       return a + (b.maxHp/arr.length);
     }, 0);
-    console.log(average);
+
+    //calculate how many monsters were killed
+    this.calculateGainedGold((timePassed*game.player.dps)/average);
   },
 
-  calculateGainedGold: function(){
-
+  calculateGainedGold: function(monstersKilled){
+    console.log(monstersKilled + " monsters were killed.");
+    console.log((monstersKilled * game.level.currentLevel) + " gold earned");
+    game.player.gold += monstersKilled * game.level.currentLevel;
+    game.ui.updateGold();
   },
 
 }
