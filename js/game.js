@@ -441,7 +441,19 @@ game.localStorage = {
   },
 
   load: function() {
+    //load world info
+    game.level.currentLevel = localStorage.getItem("level");
+    game.level.currentMonster = localStorage.getItem("killedMonsters");
+    game.level.requiredKilledMonsters = localStorage.getItem("requiredKilledMonsters");
 
+    //load basic player stats
+    game.player.maxHp = localStorage.getItem("maxHp");
+    game.player.currentHp = localStorage.getItem("currentHp");
+    game.player.clickDamage = localStorage.getItem("clickDamage");
+    game.player.dps = localStorage.getItem("dps");
+    game.player.gold = localStorage.getItem("gold");
+
+    console.log("Loaded");
   }
 }
 
