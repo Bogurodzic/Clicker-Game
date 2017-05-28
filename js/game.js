@@ -126,7 +126,6 @@ game.equipment = {
     game.equipment.equipmentList[item].forEach(function(data, index) {
       if(data.name === name){
         let itemList = game.equipment.equipmentList[item];
-        console.log(itemList[index]);
         game.equipment.isNextBought(itemList, index);
       }
 
@@ -231,6 +230,7 @@ game.runes = {
       rune.inputEnabled = true;
 
       rune.events.onInputDown.add(game.runes.runeToggle, rune);
+      rune.events.onInputDown.add(game.infoWindow.close, this);
       rune.events.onInputOver.add(function(){
         game.infoWindow.render(data.description);
       }, game.infoWindow);

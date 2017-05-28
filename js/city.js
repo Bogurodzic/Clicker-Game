@@ -6,8 +6,7 @@ var cityState = {
 
       this.background = this.game.add.tileSprite(0, 0, 708, 511, "background-day");
 
-      game.ui.renderAll();
-      game.inventory.create();
+
 
 
 
@@ -238,7 +237,6 @@ var cityState = {
             this.cost = Math.round(self.calculateUpgradeCost(this.cost, this.level));
             self.isNew(this);
             item.details.update.call(item.details);
-            console.log(item);
           } else {
             console.log("you dont have enough money");
           }
@@ -271,7 +269,8 @@ var cityState = {
       this.king.create();
       this.king.addModal(300, 300, 100, 100);
 
-
+      game.ui.renderAll();
+      game.inventory.create();
 
       function goToFight() {
         game.state.start("play");
