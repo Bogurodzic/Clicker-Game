@@ -40,7 +40,15 @@ game.level = {
 
 }
 
-
+game.monstersList = [
+    {monsterName: "Skeleton", monsterKey: "bone", maxHp: 10},
+    {monsterName: "Orc", monsterKey: "orc", maxHp: 10},
+    {monsterName: "Fire Dragon", monsterKey: "dragon", maxHp: 10},
+    {monsterName: "Air Dragon", monsterKey: "dragon-air", maxHp: 10},
+    {monsterName: "Dark Dragon", monsterKey: "dragon-dark", maxHp: 10},
+    {monsterName: "Rock Dragon", monsterKey: "dragon-rock", maxHp: 10},
+    {monsterName: "Sapphire Dragon", monsterKey: "dragon-sapphire", maxHp: 10},
+];
 
 
 game.ui = {
@@ -488,14 +496,17 @@ game.times = {
   compareTime: function(){
     this.getTime();
     console.log(this.timePassed());
-    if(this.timePassed >= 3){
-      this.calculateKilledMonsters;
-      this.calculateGainedGold;
+    if(this.timePassed() >= 3){
+      this.calculateKilledMonsters();
     }
   },
 
   calculateKilledMonsters: function(){
-
+    //calculate the average hp of the monster
+    let average = game.monstersList.reduce(function(a, b, index, arr){
+      return a + (b.maxHp/arr.length);
+    }, 0);
+    console.log(average);
   },
 
   calculateGainedGold: function(){
