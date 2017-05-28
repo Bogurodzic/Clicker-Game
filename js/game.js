@@ -135,15 +135,14 @@ game.equipment = {
       game.equipment.changeItem(list[index+1].type, list[index+1]);
       game.equipment.renderEquipment();
     } else if(list[index+1] && !list[index+1].isBought) {
-      game.equipment.isNextBought(list, index+1)
+      game.equipment.isNextBought(list, index+1);
     } else {
-      game.equipment.changeItem(list[0].type, list[0]);
-      game.equipment.renderEquipment();
+      game.equipment.isNextBought(list, 0);
     }
   },
 
   playerEquipment: {
-    weapon: {name: "hammer", icon: "icon-hammer", level: 1, cost: 100, isBought: false, type: "weapon"},
+    weapon: undefined,
     shield: undefined,
     armor: undefined,
     helmet: undefined,
