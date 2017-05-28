@@ -199,6 +199,7 @@ var cityState = {
           //this.arrows.scale.setTo(0.1);
           [].forEach.call(game.equipment.equipmentList[items], function(data, index){
             let item = self[items].create(0, 28 + (40 * index), data.icon);
+            item.details = data;
             let text;
 
             if(data.isBought){
@@ -236,6 +237,8 @@ var cityState = {
             this.level++;
             this.cost = Math.round(self.calculateUpgradeCost(this.cost, this.level));
             self.isNew(this);
+            item.details.update.call(item.details);
+            console.log(item);
           } else {
             console.log("you dont have enough money");
           }
