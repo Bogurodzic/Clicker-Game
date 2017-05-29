@@ -10,6 +10,7 @@ game.player = {
     dps: 5,
     criticalChance: 0.7,
     gold: 500,
+    armor: 0,
 
     calculateDmg: function() {
       if(game.equipment.playerEquipment.weapon){
@@ -123,6 +124,7 @@ game.inventory = {
     this.inventoryPanel = game.add.sprite(-1000, -1000, "inventory");
     this.inventoryPanel.anchor.setTo(0.5);
     this.inventoryPanel.scale.setTo(0.95);
+    game.stats.createAll();
   },
 
   toggleInventory: function(){
@@ -138,6 +140,32 @@ game.inventory = {
     };
   }
 
+}
+
+game.stats = {
+  createAll:function(){
+    this.createDps();
+    this.createClickDmg();
+    this.createArmor();
+  },
+
+  createDps: function(){
+    game.inventory.inventoryPanel.addChild(game.add.text(-150, -103, "Dps: " + game.player.dps, {
+        font: "20px 'Jim Nightshade', cursive",
+        fill: "white"}));
+  },
+
+  createClickDmg: function() {
+    game.inventory.inventoryPanel.addChild(game.add.text(-55, -103, "Click: " + game.player.clickDamage + "DMG", {
+        font: "20px 'Jim Nightshade', cursive",
+        fill: "white"}));
+  },
+
+  createArmor: function() {
+    game.inventory.inventoryPanel.addChild(game.add.text(70, -103, "Armor: " + game.player.armor, {
+        font: "20px 'Jim Nightshade', cursive",
+        fill: "white"}));
+  }
 }
 
 game.equipment = {
