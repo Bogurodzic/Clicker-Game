@@ -36,7 +36,13 @@ game.level = {
     this.currentLevel++;
     this.currentMonster = 0;
     game.ui.updateLevel();
+    this.raiseRequiredMonsters(this.requiredKilledMonsters);
+    game.ui.monsterCounterUpdate();
   },
+
+  raiseRequiredMonsters: function(monstersAmount){
+    this.requiredKilledMonsters = monstersAmount + (Math.round(Math.random() * 10));
+  }
 
 }
 
