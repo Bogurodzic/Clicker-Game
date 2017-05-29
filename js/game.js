@@ -57,6 +57,7 @@ game.ui = {
     this.hp();
     this.gold();
     this.level();
+    this.updateLevel();
     this.monsterCounter();
   },
 

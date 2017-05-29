@@ -180,6 +180,7 @@ var playState = {
         };
 
         function startGame() {
+          game.localStorage.load();
           game.ui.renderAll();
           state.monster.placeMonster();
           state.gold.create();
@@ -188,7 +189,6 @@ var playState = {
           game.equipment.renderEquipment();
           game.runes.create();
           game.runes.renderRunes();
-          game.localStorage.load();
           game.times.checkTime();
           game.times.compareTime();
         }
