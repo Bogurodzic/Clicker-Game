@@ -236,8 +236,8 @@ var cityState = {
             this.level++;
             this.cost = Math.round(self.calculateUpgradeCost(this.cost, this.level));
             self.isNew(this);
-            item.details.update.call(item.details);
             console.log(item.details)
+            item.details.updateEffect.call(item.details);
           } else {
             console.log("you dont have enough money");
           }

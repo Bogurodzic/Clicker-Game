@@ -192,8 +192,8 @@ game.equipment = {
 
   equipmentList: {
     weapons: [
-      {name: "sword", icon: "icon-sword", level: 1, cost: 10, clickDamage:1, idleDamage:1, update: function(){this.clickDamage++; this.idleDamage++}, isBought: false, type: "weapon"},
-      {name: "hammer", icon: "icon-hammer", level: 1, cost: 100, clickDamage:10, idleDamage:10, update: function(){this.clickDamage += 5; this.idleDamage += 5}, isBought: false, type: "weapon"}
+      {name: "sword", icon: "icon-sword", level: 1, cost: 10, clickDamage:1, idleDamage:1, updateEffect: function(){this.clickDamage++; this.idleDamage++}, isBought: false, type: "weapon"},
+      {name: "hammer", icon: "icon-hammer", level: 1, cost: 100, clickDamage:10, idleDamage:10, updateEffect: function(){this.clickDamage += 5; this.idleDamage += 5}, isBought: false, type: "weapon"}
     ],
     shields: [
       {name: "wooden shield", icon: "icon-shield-wooden", level: 1, cost: 10, isBought: false, type: "shield"},
