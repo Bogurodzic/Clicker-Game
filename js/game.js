@@ -537,8 +537,9 @@ game.times = {
       this.timePast = localStorage.getItem("timePast");
       this.timeNow = localStorage.getItem("timeNow");
       console.log("local time existed");
+      this.compareTime();
     } else {
-      this.timeNow;
+      this.timeNow = new Date().getTime();
       this.timePassed;
       console.log("created local time");
     }
@@ -558,7 +559,7 @@ game.times = {
 
   compareTime: function(){
     this.getTime();
-    console.log(this.timePassed() + " second passed.");
+    //console.log(this.timePassed() + " second passed.");
     if(this.timePassed() >= 3){
       this.calculateKilledMonsters(this.timePassed());
     }

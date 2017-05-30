@@ -190,7 +190,6 @@ var playState = {
           game.runes.create();
           game.runes.renderRunes();
           game.times.checkTime();
-          game.times.compareTime();
         }
     },
 
