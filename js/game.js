@@ -597,7 +597,9 @@ game.times = {
   calculateGainedGold: function(monstersKilled){
     console.log(monstersKilled + " monsters were killed.");
     console.log((monstersKilled * game.level.currentLevel) + " gold earned");
-    game.player.gold =+ monstersKilled * game.level.currentLevel;
+    var earned = Number((monstersKilled * game.level.currentLevel)) + Number(game.player.gold);
+    console.log(earned);
+    game.player.gold = earned;
     game.ui.updateGold();
   },
 

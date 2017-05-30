@@ -137,7 +137,7 @@ var playState = {
               }
 
               gold.kill();
-              game.player.gold += 1;
+              game.player.gold++;
               game.ui.updateGold();
           },
 
