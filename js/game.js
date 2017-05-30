@@ -133,6 +133,7 @@ game.inventory = {
         this.inventoryPanel.y = game.world.centerY;
         this.inventoryVisibility = true;
         game.equipment.renderEquipment();
+        game.stats.updateAll();
     } else if (this.inventoryVisibility === true){
         this.inventoryPanel.x = -1000;
         this.inventoryPanel.y = -1000;
@@ -149,22 +150,40 @@ game.stats = {
     this.createArmor();
   },
 
+  updateAll: function(){
+    this.updateDps();
+    this.updateClickDmg();
+    this.updateArmor();
+  },
+
   createDps: function(){
-    game.inventory.inventoryPanel.addChild(game.add.text(-150, -103, "Dps: " + game.player.dps, {
+    this.dps = game.inventory.inventoryPanel.addChild(game.add.text(-150, -103, "Dps: " + game.player.dps, {
         font: "20px 'Jim Nightshade', cursive",
         fill: "white"}));
+  },
+
+  updateDps: function(){
+    this.dps.text = "Dps: " + game.player.dps;
   },
 
   createClickDmg: function() {
-    game.inventory.inventoryPanel.addChild(game.add.text(-55, -103, "Click: " + game.player.clickDamage + "DMG", {
+    this.clickDmg = game.inventory.inventoryPanel.addChild(game.add.text(-55, -103, "Click: " + game.player.clickDamage + "DMG", {
         font: "20px 'Jim Nightshade', cursive",
         fill: "white"}));
   },
 
+  updateClickDmg: function(){
+    this.clickDmg.text = "Click: " + game.player.clickDamage + "DMG";
+  },
+
   createArmor: function() {
-    game.inventory.inventoryPanel.addChild(game.add.text(70, -103, "Armor: " + game.player.armor, {
+    this.armor = game.inventory.inventoryPanel.addChild(game.add.text(70, -103, "Armor: " + game.player.armor, {
         font: "20px 'Jim Nightshade', cursive",
         fill: "white"}));
+  },
+
+  updateArmor: function() {
+    this.armor.text = "Armor: " + game.player.armor;
   }
 }
 
