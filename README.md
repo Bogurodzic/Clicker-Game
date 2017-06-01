@@ -18,3 +18,4 @@ When my Phaser knowledge will be good enough I will make right version of this g
 ##Resources
 * Phaser [[link]](http://phaser.io/)
 * Sprites [[link]] (https://graphicriver.net/item/game-of-kings-big-game-kit-in-relief-flat-style/9118793?s_rank=34)
+* Assets
