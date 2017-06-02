@@ -116,6 +116,12 @@ var playState = {
 
         }
 
+        this.boss = {
+          self: state.boss,
+
+          bossList = game.bossList;
+        }
+
         this.gold = {
           golds: undefined,
 

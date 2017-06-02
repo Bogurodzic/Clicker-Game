@@ -57,6 +57,10 @@ game.monstersList = [
     {monsterName: "Sapphire Dragon", monsterKey: "dragon-sapphire", maxHp: 10},
 ];
 
+game.bossList = [
+  {bossName: "Skeleton", bossKey: "bone", maxHp: 10},
+]
+
 
 game.ui = {
   renderAll: function(){
