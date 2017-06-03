@@ -120,6 +120,32 @@ var playState = {
           self: state.boss,
 
           bossList = game.bossList;
+          bosses: game.add.group();
+
+          createBoss: function(){
+            for(var i = 0; i < this.bossList.length; i++) {
+                boss = this.bosses.create(1000, 310, this.bossList[i].bossKey);
+                boss.anchor.setTo(0.5);
+                boss.details = this.bossList[i];
+                boss.health = boss.maxHealth = this.bossList[i].maxHp;
+
+                boss.healthText = game.add.text(1000, 420, boss.maxHealth, {
+                    font: "35px 'Jim Nightshade', cursive",
+                    fill: "red"});
+                boss.healthText.anchor.setTo(0.5);
+                boss.nameText = game.add.text(1000, 220, boss.details.monsterName, {
+                    font: "35px 'Jim Nightshade', cursive",
+                    fill: "red"});
+                boss.nameText.anchor.setTo(0.5);
+
+
+                //enable input, so we can click it
+                boss.inputEnabled = true;
+                //boss.events.onInputDown.add(this.onClick, state);
+                //boss.events.onKilled.add(this.onKilledMonster, state);
+                //boss.events.onRevived.add(this.onRevivedMonster, state);
+            }
+          },
         }
 
         this.gold = {
