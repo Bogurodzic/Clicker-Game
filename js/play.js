@@ -119,8 +119,9 @@ var playState = {
         this.boss = {
           self: state.boss,
 
-          bossList = game.bossList;
-          bosses: game.add.group();
+          bossList: game.bossList,
+          bosses: game.add.group(),
+          currentBoss: null,
 
           createBoss: function(){
             for(var i = 0; i < this.bossList.length; i++) {
@@ -146,6 +147,71 @@ var playState = {
                 //boss.events.onRevived.add(this.onRevivedMonster, state);
             }
           },
+
+          setCurrentBoss: function(){
+            this.currentBoss = this.bosses.getRandom();
+            this.currentBoss.position.setTo(450, 315);
+            this.currentBoss.healthText.x = 450;
+            this.ccurrentBoss.nameText.x = 445;
+          },
+
+          onDps: function(){
+            this.boss.isCritical(this.boss.currentBoss, game.player.clickDamage/10);
+            this.boss.renderBossHealth();
+          },
+
+          /*onClick: function(){
+            this.monster.isCritical(this.monster.currentMonster, game.player.calculateDmg());
+            this.monster.renderMonsterHealth();
+          },
+
+          isCritical: function(monster, damage){
+            var chance = game.rnd.integerInRange(0, 100);
+            if(chance > game.player.criticalChance * 100){
+              monster.damage(damage * 3);
+            } else {
+              monster.damage(damage);
+            }
+          },
+
+          onKilledMonster: function(monster) {
+              state.monster.moveOutMonster(monster);
+              state.monster.countMonster();
+              state.monster.getNewMonster();
+              state.gold.dropCoin();
+          },
+
+          renderMonsterHealth: function(){
+            this.currentMonster.healthText.text = Math.round(this.currentMonster.health);
+          },
+
+          moveOutMonster: function(monster){
+            //after being killed move sprite and text outside
+            monster.position.setTo(1000, 375);
+            monster.healthText.position.x = 1000;
+            monster.nameText.position.x = 1000;
+          },
+
+          countMonster: function(){
+            //update monster counter
+            game.level.addMonster();
+            game.ui.monsterCounterUpdate();
+          },
+
+          getNewMonster: function(){
+            this.currentMonster = state.monster.monsters.getRandom();
+            //place text once again on proper place and revive monster
+            this.currentMonster.healthText.x = 450;
+            this.currentMonster.nameText.x = 445;
+            this.currentMonster.revive(state.monster.currentMonster.maxHealth);
+          },
+
+          onRevivedMonster: function(monster) {
+              //set position in game
+              monster.position.setTo(450, 315);
+          },
+          */
+
         }
 
         this.gold = {
