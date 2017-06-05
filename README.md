@@ -3,6 +3,9 @@ Finally, I have started my work on proper version of the game, previous version 
 
 Live version: [[link]](http://www.kamiljarzab.pl/Projekty/Viking%20Clicker/)
 
+##To do:
+* Add bosses
+* Convert gold quantity to bigger numbers(milions)
 
 # Clicker Game - Old Version
 Live version: [[link]](http://www.kamiljarzab.pl/Projekty/Clicker-Game/)

@@ -160,11 +160,11 @@ var playState = {
             this.boss.renderBossHealth();
           },
 
-          /*onClick: function(){
-            this.monster.isCritical(this.monster.currentMonster, game.player.calculateDmg());
-            this.monster.renderMonsterHealth();
+          onClick: function(){
+            this.boss.isCritical(this.boss.currentBoss, game.player.calculateDmg());
+            this.boss.renderBossHealth();
           },
-
+/*
           isCritical: function(monster, damage){
             var chance = game.rnd.integerInRange(0, 100);
             if(chance > game.player.criticalChance * 100){
