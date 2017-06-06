@@ -123,6 +123,11 @@ var playState = {
           bosses: game.add.group(),
           currentBoss: null,
 
+          placeBoss: function(){
+            this.createBoss();
+            this.setCurrentBoss();
+          },
+
           createBoss: function(){
             for(var i = 0; i < this.bossList.length; i++) {
                 boss = this.bosses.create(1000, 310, this.bossList[i].bossKey);
@@ -152,7 +157,7 @@ var playState = {
             this.currentBoss = this.bosses.getRandom();
             this.currentBoss.position.setTo(450, 315);
             this.currentBoss.healthText.x = 450;
-            this.ccurrentBoss.nameText.x = 445;
+            this.currentBoss.nameText.x = 445;
           },
 
           onDps: function(){
@@ -164,33 +169,34 @@ var playState = {
             this.boss.isCritical(this.boss.currentBoss, game.player.calculateDmg());
             this.boss.renderBossHealth();
           },
-/*
-          isCritical: function(monster, damage){
+
+          renderBossHealth: function(){
+            this.currentBoss.healthText.text = Math.round(this.currentBoss.health);
+          },
+
+          isCritical: function(boss, damage){
             var chance = game.rnd.integerInRange(0, 100);
             if(chance > game.player.criticalChance * 100){
-              monster.damage(damage * 3);
+              boss.damage(damage * 3);
             } else {
-              monster.damage(damage);
+              boss.damage(damage);
             }
           },
 
-          onKilledMonster: function(monster) {
-              state.monster.moveOutMonster(monster);
-              state.monster.countMonster();
-              state.monster.getNewMonster();
+          onKilledBoss: function(boss) {
+              state.boss.moveOutBoss(boss);
+              state.boss.getNewBoss();
               state.gold.dropCoin();
           },
 
-          renderMonsterHealth: function(){
-            this.currentMonster.healthText.text = Math.round(this.currentMonster.health);
-          },
-
-          moveOutMonster: function(monster){
+          moveOutBoss: function(boss){
             //after being killed move sprite and text outside
-            monster.position.setTo(1000, 375);
-            monster.healthText.position.x = 1000;
-            monster.nameText.position.x = 1000;
+            boss.position.setTo(1000, 375);
+            boss.healthText.position.x = 1000;
+            boss.nameText.position.x = 1000;
           },
+/*
+
 
           countMonster: function(){
             //update monster counter
