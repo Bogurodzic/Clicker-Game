@@ -147,9 +147,9 @@ var playState = {
 
                 //enable input, so we can click it
                 boss.inputEnabled = true;
-                //boss.events.onInputDown.add(this.onClick, state);
-                //boss.events.onKilled.add(this.onKilledMonster, state);
-                //boss.events.onRevived.add(this.onRevivedMonster, state);
+                boss.events.onInputDown.add(this.onClick, state);
+                boss.events.onKilled.add(this.onKilledBoss, state);
+                boss.events.onRevived.add(this.onRevivedBoss, state);
             }
           },
 
@@ -195,29 +195,19 @@ var playState = {
             boss.healthText.position.x = 1000;
             boss.nameText.position.x = 1000;
           },
-/*
 
-
-          countMonster: function(){
-            //update monster counter
-            game.level.addMonster();
-            game.ui.monsterCounterUpdate();
-          },
-
-          getNewMonster: function(){
-            this.currentMonster = state.monster.monsters.getRandom();
+          getNewBoss: function(){
+            this.currentBoss = state.boss.bosses.getRandom();
             //place text once again on proper place and revive monster
-            this.currentMonster.healthText.x = 450;
-            this.currentMonster.nameText.x = 445;
-            this.currentMonster.revive(state.monster.currentMonster.maxHealth);
+            this.currentBoss.healthText.x = 450;
+            this.curretBoss.nameText.x = 445;
+            this.currentBoss.revive(state.boss.currentBoss.maxHealth);
           },
 
-          onRevivedMonster: function(monster) {
+          onRevivedBoss: function(monster) {
               //set position in game
               monster.position.setTo(450, 315);
           },
-          */
-
         }
 
         this.gold = {
@@ -272,7 +262,7 @@ var playState = {
         this.saving = this.game.time.events.loop(1000, game.localStorage.save, this);
 
         //idle dps
-        this.dpsTimer =this.game.time.events.loop(100, this.monster.onDps, this);
+        //this.dpsTimer =this.game.time.events.loop(100, this.monster.onDps, this);
 
         //idle module
         game.time.events.loop(1000, function(){
@@ -286,7 +276,8 @@ var playState = {
         function startGame() {
           game.localStorage.load();
           game.ui.renderAll();
-          state.monster.placeMonster();
+          //state.monster.placeMonster();
+          state.boss.placeBoss();
           state.gold.create();
           game.inventory.create();
           game.equipment.create();
