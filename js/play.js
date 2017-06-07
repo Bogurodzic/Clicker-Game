@@ -126,6 +126,7 @@ var playState = {
           placeBoss: function(){
             this.createBoss();
             this.setCurrentBoss();
+            console.log("current bosss: " + this.currentBoss);
           },
 
           createBoss: function(){
@@ -139,7 +140,7 @@ var playState = {
                     font: "35px 'Jim Nightshade', cursive",
                     fill: "red"});
                 boss.healthText.anchor.setTo(0.5);
-                boss.nameText = game.add.text(1000, 220, boss.details.monsterName, {
+                boss.nameText = game.add.text(1000, 220, boss.details.bossName, {
                     font: "35px 'Jim Nightshade', cursive",
                     fill: "red"});
                 boss.nameText.anchor.setTo(0.5);
@@ -155,6 +156,7 @@ var playState = {
 
           setCurrentBoss: function(){
             this.currentBoss = this.bosses.getRandom();
+
             this.currentBoss.position.setTo(450, 315);
             this.currentBoss.healthText.x = 450;
             this.currentBoss.nameText.x = 445;
@@ -197,11 +199,12 @@ var playState = {
           },
 
           getNewBoss: function(){
-            this.currentBoss = state.boss.bosses.getRandom();
+            state.boss.currentBoss = state.boss.bosses.getRandom();
+            console.log("JP: " + this.currentBoss);
             //place text once again on proper place and revive monster
-            this.currentBoss.healthText.x = 450;
-            this.curretBoss.nameText.x = 445;
-            this.currentBoss.revive(state.boss.currentBoss.maxHealth);
+            state.boss.currentBoss.healthText.x = 450;
+            //state.boss.curretBoss.nameText.x = 445;
+            state.boss.currentBoss.revive(state.boss.currentBoss.maxHealth);
           },
 
           onRevivedBoss: function(monster) {
