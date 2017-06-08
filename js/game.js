@@ -58,7 +58,8 @@ game.monstersList = [
 ];
 
 game.bossList = [
-  {bossName: "Skeleton", bossKey: "bone", maxHp: 10},
+  {bossName: "Tom", bossKey: "bone", maxHp: 10},
+  {bossName: "Adam", bossKey: "bone", maxHp: 10},
     {bossName: "Rom", bossKey: "bone", maxHp: 10}
 ]
 

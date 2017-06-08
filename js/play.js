@@ -156,7 +156,7 @@ var playState = {
 
           setCurrentBoss: function(){
             this.currentBoss = this.bosses.getRandom();
-
+            console.log(this.currentBoss);
             this.currentBoss.position.setTo(450, 315);
             this.currentBoss.healthText.x = 450;
             this.currentBoss.nameText.x = 445;
@@ -202,8 +202,9 @@ var playState = {
             state.boss.currentBoss = state.boss.bosses.getRandom();
             console.log("JP: " + this.currentBoss);
             //place text once again on proper place and revive monster
-            state.boss.currentBoss.healthText.x = 450;
-            //state.boss.curretBoss.nameText.x = 445;
+            this.currentBoss.healthText.x = 450;
+            this.currentBoss.nameText.x = 445;
+            //this.curretBoss.nameText.x = 445;
             state.boss.currentBoss.revive(state.boss.currentBoss.maxHealth);
           },
 
