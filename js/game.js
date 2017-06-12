@@ -29,8 +29,18 @@ game.level = {
   addMonster: function(){
     this.currentMonster++;
     if (this.currentMonster >= this.requiredKilledMonsters){
-      this.nextLevel();
+      this.unlockBossOption();
     }
+  },
+
+  unlockBossOption(){
+    let bossOption = game.add.text(36, 38, "FACE BOSS", {
+      font: "15px 'Jim Nightshade', cursive",
+      fill: "#fff"});
+  },
+
+  spawnBoss: function(){
+
   },
 
   nextLevel: function(){
