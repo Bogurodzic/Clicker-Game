@@ -25,18 +25,33 @@ game.level = {
   currentLevel: 1,
   currentMonster: 0,
   requiredKilledMonsters: 10,
+  bossFlag: false,
 
   addMonster: function(){
     this.currentMonster++;
-    if (this.currentMonster >= this.requiredKilledMonsters){
+    if (this.currentMonster >= this.requiredKilledMonsters && this.bossFlag === false){
       this.unlockBossOption();
+      this.changeBossFlag(true);
     }
   },
 
+  checkBossFlag: function(){
+
+    if(this.bossFlag){
+      this.unlockBossOption();
+    }
+
+  },
+
+  changeBossFlag: function(flag){
+    this.bossFlag === flag;
+  },
+
   unlockBossOption(){
-    let bossOption = game.add.text(36, 38, "FACE BOSS", {
-      font: "15px 'Jim Nightshade', cursive",
-      fill: "#fff"});
+    let bossOption = game.add.text(game.world.centerX, 60, "FACE BOSS", {
+      font: "24px 'Jim Nightshade', cursive",
+      fill: "red"});
+      bossOption.anchor.setTo(0.5);
   },
 
   spawnBoss: function(){
@@ -507,6 +522,7 @@ game.localStorage = {
     localStorage.level = game.level.currentLevel;
     localStorage.killedMonsters = game.level.currentMonster;
     localStorage.requiredKilledMonsters = game.level.requiredKilledMonsters;
+    localStorage.bossFlag = game.level.bossFlag;
 
     //save basic player stats
     localStorage.maxHp = game.player.maxHp;
@@ -519,8 +535,6 @@ game.localStorage = {
     localStorage.equipmentList = JSON.stringify(game.equipment.equipmentList);
     localStorage.playerEquipment = JSON.stringify(game.equipment.playerEquipment);
 
-
-    console.log("Saved");
   },
 
   load: function() {
@@ -533,6 +547,9 @@ game.localStorage = {
     }
     if(localStorage.getItem("requiredKilledMonsters")){
       game.level.requiredKilledMonsters = localStorage.getItem("requiredKilledMonsters");
+    }
+    if(localStorage.getItem("bossFlag")){
+      game.level.bossFlag = localStorage.getItem("bossFlag");
     }
 
     //load basic player stats
@@ -559,7 +576,7 @@ game.localStorage = {
     if(localStorage.getItem("playerEquipment")){
       game.equipment.playerEquipment = JSON.parse(localStorage.getItem("playerEquipment"));
     }
-    console.log("Loaded");
+
   },
 }
 

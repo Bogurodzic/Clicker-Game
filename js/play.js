@@ -266,7 +266,7 @@ var playState = {
         this.saving = this.game.time.events.loop(1000, game.localStorage.save, this);
 
         //idle dps
-        //this.dpsTimer =this.game.time.events.loop(100, this.monster.onDps, this);
+        this.dpsTimer =this.game.time.events.loop(100, this.monster.onDps, this);
 
         //idle module
         game.time.events.loop(1000, function(){
@@ -280,8 +280,8 @@ var playState = {
         function startGame() {
           game.localStorage.load();
           game.ui.renderAll();
-          //state.monster.placeMonster();
-          state.boss.placeBoss();
+          state.monster.placeMonster();
+          //state.boss.placeBoss();
           state.gold.create();
           game.inventory.create();
           game.equipment.create();
@@ -289,6 +289,7 @@ var playState = {
           game.runes.create();
           game.runes.renderRunes();
           game.times.checkTime();
+          game.level.checkBossFlag();
         }
     },
 
