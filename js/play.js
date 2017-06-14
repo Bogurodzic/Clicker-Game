@@ -197,8 +197,11 @@ var playState = {
 
           onKilledBoss: function(boss) {
               state.boss.moveOutBoss(boss);
-              state.boss.getNewBoss();
+              //state.boss.getNewBoss();
               state.gold.dropCoin();
+              game.level.changeBossFlag(false);
+              game.level.nextLevel();
+              state.monster.placeMonster();
           },
 
           moveOutBoss: function(boss){
