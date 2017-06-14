@@ -129,6 +129,7 @@ var playState = {
           bossList: game.bossList,
           bosses: game.add.group(),
           currentBoss: null,
+          onDpsFlag: false,
 
           placeBoss: function(){
             this.createBoss();
@@ -170,8 +171,10 @@ var playState = {
           },
 
           onDps: function(){
-            this.boss.isCritical(this.boss.currentBoss, game.player.clickDamage/10);
-            this.boss.renderBossHealth();
+            if(state.boss.onDpsFlag){
+              this.boss.isCritical(this.boss.currentBoss, game.player.clickDamage/10);
+              this.boss.renderBossHealth();
+            }
           },
 
           onClick: function(){
@@ -273,7 +276,8 @@ var playState = {
         this.saving = this.game.time.events.loop(1000, game.localStorage.save, this);
 
         //idle dps
-        this.dpsTimer =this.game.time.events.loop(100, this.monster.onDps, this);
+        this.dpsTimer = this.game.time.events.loop(100, this.monster.onDps, this);
+        this.dpsBossTimer = this.game.time.events.loop(100, this.boss.onDps, this);
 
         //idle module
         game.time.events.loop(1000, function(){

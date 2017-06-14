@@ -63,6 +63,7 @@ game.level = {
     playState.monster.hideMonster();
     playState.monster.onDpsFlag = false;
     playState.boss.placeBoss();
+    playState.boss.onDpsFlag = true;
   },
 
   nextLevel: function(){
