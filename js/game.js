@@ -52,10 +52,15 @@ game.level = {
       font: "24px 'Jim Nightshade', cursive",
       fill: "red"});
       bossOption.anchor.setTo(0.5);
+      bossOption.inputEnabled = true;
+      bossOption.events.onInputDown.add(this.spawnBoss, this);
+      bossOption.events.onInputDown.add(function(){
+        bossOption.destroy();
+      }, this);
   },
 
   spawnBoss: function(){
-
+    
   },
 
   nextLevel: function(){
