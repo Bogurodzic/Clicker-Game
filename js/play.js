@@ -22,6 +22,10 @@ var playState = {
             this.setCurrentMonster();
           },
 
+          hideMonster: function(){
+            this.moveOutMonster(this.currentMonster);
+          },
+
           monstersList: game.monstersList,
 
           monsters: game.add.group(),
