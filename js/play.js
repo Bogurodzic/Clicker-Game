@@ -16,6 +16,7 @@ var playState = {
 
           monster: null,
           currentMonster: null,
+          onDps: true,
 
           placeMonster: function(){
             this.createMonsters();
@@ -63,8 +64,10 @@ var playState = {
           },
 
           onDps: function(){
-            this.monster.isCritical(this.monster.currentMonster, game.player.clickDamage/10);
-            this.monster.renderMonsterHealth();
+            if(state.monster.onDps){
+              this.monster.isCritical(this.monster.currentMonster, game.player.clickDamage/10);
+              this.monster.renderMonsterHealth();
+            }
           },
 
           onClick: function(){

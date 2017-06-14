@@ -60,7 +60,7 @@ game.level = {
   },
 
   spawnBoss: function(){
-    
+    playState.monster.hideMonster();
   },
 
   nextLevel: function(){
