@@ -75,7 +75,7 @@ game.level = {
   },
 
   raiseRequiredMonsters: function(monstersAmount){
-    this.requiredKilledMonsters = monstersAmount + (Math.round(Math.random() * 10));
+    this.requiredKilledMonsters = Number(monstersAmount + (Math.round(Math.random() * 10)));
   }
 
 }
