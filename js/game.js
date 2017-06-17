@@ -43,8 +43,8 @@ game.level = {
 
   },
 
-  changeBossFlag: function(flag){
-    this.bossFlag === flag;
+  changeBossFlag: function(newFlag){
+    game.level.bossFlag = newFlag;
   },
 
   unlockBossOption(){
@@ -75,7 +75,7 @@ game.level = {
   },
 
   raiseRequiredMonsters: function(monstersAmount){
-    this.requiredKilledMonsters = Number(monstersAmount + (Math.round(Math.random() * 10)));
+    this.requiredKilledMonsters = Number(monstersAmount + (Math.round(Math.random() * 3)));
   }
 
 }

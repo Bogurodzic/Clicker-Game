@@ -6,6 +6,7 @@ Live version: [[link]](http://www.kamiljarzab.pl/Projekty/Viking%20Clicker/)
 ##To do:
 * Add bosses
 * Convert gold quantity to bigger numbers(milions)
+* Fix bug with boss spawn and displaying required monsters to kill
 
 # Clicker Game - Old Version
 Live version: [[link]](http://www.kamiljarzab.pl/Projekty/Clicker-Game/)
