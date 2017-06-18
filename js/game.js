@@ -92,8 +92,8 @@ game.monstersList = [
 
 game.bossList = [
   {bossName: "Tom", bossKey: "bone", maxHp: 10},
-  {bossName: "Adam", bossKey: "bone", maxHp: 10},
-    {bossName: "Rom", bossKey: "bone", maxHp: 10}
+  {bossName: "Adam", bossKey: "dragon-air", maxHp: 100},
+    {bossName: "Rom", bossKey: "dragon-rock", maxHp: 1000}
 ]
 
 
