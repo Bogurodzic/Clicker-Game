@@ -63,6 +63,7 @@ game.level = {
     playState.monster.hideMonster();
     playState.monster.onDpsFlag = false;
     playState.boss.placeBoss();
+    playState.boss.currentBoss.revive(playState.boss.currentBoss.details.maxHp);
     playState.boss.onDpsFlag = true;
   },
 

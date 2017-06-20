@@ -102,6 +102,12 @@ var playState = {
             monster.nameText.position.x = 1000;
           },
 
+          moveInMonster: function(monster){
+            this.currentMonster.position.setTo(450, 315);
+            this.currentMonster.healthText.x = 450;
+            this.currentMonster.nameText.x = 445;
+          },
+
           countMonster: function(){
             //update monster counter
             game.level.addMonster();
@@ -201,7 +207,7 @@ var playState = {
               state.gold.dropCoin();
               game.level.changeBossFlag(false);
               game.level.nextLevel();
-              state.monster.placeMonster();
+              state.monster.moveInMonster(state.monster.currentMonster);
           },
 
           moveOutBoss: function(boss){
@@ -217,8 +223,7 @@ var playState = {
             //place text once again on proper place and revive monster
             this.currentBoss.healthText.x = 450;
             this.currentBoss.nameText.x = 445;
-            //this.curretBoss.nameText.x = 445;
-            state.boss.currentBoss.revive(state.boss.currentBoss.maxHealth);
+            state.boss.currentBoss.revive(state.boss.currentBoss.details.maxHealth);
           },
 
           onRevivedBoss: function(monster) {
