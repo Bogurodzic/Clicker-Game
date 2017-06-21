@@ -28,7 +28,9 @@ game.level = {
   bossFlag: false,
 
   addMonster: function(){
-    this.currentMonster++;
+    if (this.currentMonster < this.requiredKilledMonsters){
+      this.currentMonster++;
+    }    
     if (this.currentMonster >= this.requiredKilledMonsters && this.bossFlag === false){
       this.unlockBossOption();
       this.changeBossFlag(true);
