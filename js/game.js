@@ -37,7 +37,7 @@ game.level = {
 
   checkBossFlag: function(){
 
-    if(this.bossFlag){
+    if(this.bossFlag === true){
       this.unlockBossOption();
     }
 
@@ -559,7 +559,12 @@ game.localStorage = {
       game.level.requiredKilledMonsters = localStorage.getItem("requiredKilledMonsters");
     }
     if(localStorage.getItem("bossFlag")){
-      game.level.bossFlag = localStorage.getItem("bossFlag");
+      let flag = localStorage.getItem("bossFlag")
+        if(flag==="false"){
+          game.level.bossFlag = false;
+        } else if (flag==="true"){
+          game.level.bossFlag = true;
+        }
     }
 
     //load basic player stats
