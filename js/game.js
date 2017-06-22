@@ -30,7 +30,7 @@ game.level = {
   addMonster: function(){
     if (this.currentMonster < this.requiredKilledMonsters){
       this.currentMonster++;
-    }    
+    }
     if (this.currentMonster >= this.requiredKilledMonsters && this.bossFlag === false){
       this.unlockBossOption();
       this.changeBossFlag(true);
@@ -142,7 +142,35 @@ game.ui = {
   },
 
   updateGold: function(){
-    game.goldText.text = game.player.gold;
+    game.goldText.text = game.ui.goldConverter(game.player.gold);
+    //game.ui.goldConverter(game.player.gold);
+  },
+
+
+  goldConverter: function(amount){
+    amount = Math.round(amount);
+    let pow = amount.toString().split("").length;
+    switch(pow) {
+    case 5:
+    case 6:
+        amount = amount/100;
+        amount = amount.toString().slice(0, 4);
+        amount = Number(amount);
+        amount = amount/10;
+        return amount + " k";
+        break;
+    case 7:
+    case 8:
+    case 9:
+        amount = amount/10000;
+        amount = amount.toString().slice(0, 5);
+        amount = Number(amount);
+        amount = amount/100;
+        return amount + " mln";
+        break;
+    default:
+        console.log(amount.toString().split("").length)
+    }
   },
 
   monsterCounter: function(){
