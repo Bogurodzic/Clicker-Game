@@ -135,7 +135,7 @@ game.ui = {
   },
 
   gold: function(){
-    game.goldText = game.add.text(207, 23, game.player.gold, {
+    game.goldText = game.add.text(207, 23, game.ui.goldConverter(game.player.gold), {
             font: "25px 'Jim Nightshade', cursive",
             fill: "white"});
     game.goldText.anchor.setTo(0.5);
