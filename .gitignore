@@ -1,1 +1,4 @@
 *.png
+assets/
+.DS_Store
+.bash-profile
