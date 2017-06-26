@@ -4,7 +4,12 @@ Finally, I have started my work on proper version of the game, previous version 
 Live version: [[link]](http://www.kamiljarzab.pl/Projekty/Viking%20Clicker/)
 
 ##To do:
-* Add bosses
+* More Bosses
+* More monsters
+* Quests
+
+##New features:
+* Bosses
 * Convert gold quantity to bigger numbers(milions)
 * Fix bug with boss spawn and displaying required monsters to kill
 
