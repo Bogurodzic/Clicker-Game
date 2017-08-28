@@ -143,18 +143,19 @@ game.ui = {
 
   updateGold: function(){
     game.goldText.text = game.ui.goldConverter(game.player.gold);
-    //game.ui.goldConverter(game.player.gold);
   },
 
 
   goldConverter: function(amount){
     amount = Math.round(amount);
-    let pow = amount.toString().split("").length;
+    let pow = String(amount).split("").length;
+    console.log("przeszlo1");
     switch(pow) {
     case 5:
     case 6:
         amount = amount/100;
-        amount = amount.toString().slice(0, 4);
+        amount = String(amount).slice(0, 4);
+            console.log("przeszlo2");
         amount = Number(amount);
         amount = amount/10;
         return amount + " k";
@@ -163,13 +164,14 @@ game.ui = {
     case 8:
     case 9:
         amount = amount/10000;
-        amount = amount.toString().slice(0, 5);
+        amount = String(amount).slice(0, 5);
+            console.log("przeszlo3");
         amount = Number(amount);
         amount = amount/100;
         return amount + " mln";
         break;
     default:
-        console.log(amount.toString().split("").length)
+        return game.player.gold;
     }
   },
 
