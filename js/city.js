@@ -2,7 +2,11 @@ var cityState = {
     create: function() {
 
       var state = this;
-
+      quests = [
+        {"name": "test1", "description":"test1 description", "gold":"20", "exp":"20"},
+        {"name": "test2", "description":"test2 description", "gold":"40", "exp":"40"},
+        {"name": "test3", "description":"test3 description", "gold":"60", "exp":"60"}
+      ]
 
       this.background = this.game.add.tileSprite(0, 0, 708, 511, "background-day");
 
@@ -255,6 +259,27 @@ var cityState = {
 
       class King extends Npc {
 
+        showQuests(){
+          self = this;
+
+          if(!this.modal){
+            this.king.addModal(270, 270, 100, 150);
+          }
+          this.newQuest = getRandomQuest();
+          this.menu = this.modal.modalSprite.addChild(game.add.group());
+          this.quest = this.menu.addChild(game.add.group());
+          this.quest.name = this.quest.addChild(game.add.text(15, 55, this.newQuest.name, {
+            font: "19px 'Jim Nightshade', cursive",
+            fill: "black"}))
+
+          this.quest.description = this.quest.addChild(game.add.text(15, 70, this.newQuest.description, {
+            font: "19px 'Jim Nightshade', cursive",
+            fill: "black"}))
+
+          this.quest.stats = this.quest.addChild(game.add.text(15, 85, this.newQuest.gold + " gold, " + this.newQuest.exp + " exp", {
+            font: "19px 'Jim Nightshade', cursive",
+            fill: "black"}))
+        }
       }
 
 
@@ -265,6 +290,7 @@ var cityState = {
       this.king = new King(200, 250, "king");
       this.king.create();
       this.king.addModal(270, 270, 100, 150);
+      this.king.showQuests();
 
       game.ui.renderAll();
       game.inventory.create();
@@ -275,6 +301,10 @@ var cityState = {
       function goToFight() {
         game.state.start("play");
       };
+
+      function getRandomQuest(){
+        return quests[Math.floor(Math.random() * quests.length)]
+      }
 
     }
 };
