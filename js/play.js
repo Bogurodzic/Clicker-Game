@@ -27,7 +27,7 @@ var playState = {
             this.moveOutMonster(this.currentMonster);
           },
 
-          monstersList: game.monstersList,
+          monstersList: game.monsters.getMonstersList(),
 
           monsters: game.add.group(),
 

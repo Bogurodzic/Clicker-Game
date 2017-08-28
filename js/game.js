@@ -83,7 +83,7 @@ game.level = {
 
 }
 
-game.monstersList = [
+var monsters = [
     {monsterName: "Skeleton", monsterKey: "bone", maxHp: 10},
     {monsterName: "Orc", monsterKey: "orc", maxHp: 10},
     {monsterName: "Fire Dragon", monsterKey: "dragon", maxHp: 10},
@@ -92,6 +92,12 @@ game.monstersList = [
     {monsterName: "Rock Dragon", monsterKey: "dragon-rock", maxHp: 10},
     {monsterName: "Sapphire Dragon", monsterKey: "dragon-sapphire", maxHp: 10},
 ];
+
+game.monsters = {
+  getMonstersList: function(){
+    return monsters
+  }
+}
 
 game.bossList = [
   {bossName: "Tom", bossKey: "bone", maxHp: 10},
@@ -658,7 +664,7 @@ game.times = {
 
   calculateKilledMonsters: function(timePassed){
     //calculate the average hp of the monster
-    let average = game.monstersList.reduce(function(a, b, index, arr){
+    let average = game.monsters.getMonstersList().reduce(function(a, b, index, arr){
       return a + (b.maxHp/arr.length);
     }, 0);
 
