@@ -7,15 +7,31 @@ var cityState = {
       this.background = this.game.add.tileSprite(0, 0, 708, 511, "background-day");
 
       //icons
-      this.iconInventory = this.game.add.sprite(30,210,"icon-inventory");
-      this.iconInventory.scale.setTo(0.3);
-      this.iconInventory.inputEnabled = true;
-      this.iconInventory.events.onInputDown.add(game.inventory.toggleInventory, game.inventory);
 
-      this.iconCity = this.game.add.sprite(30, 150, "icon-sword");
-      this.iconCity.scale.setTo(0.3);
-      this.iconCity.inputEnabled = true;
-      this.iconCity.events.onInputDown.add(goToFight, this);
+      this.createInventoryIcon = () => {
+        this.iconInventory = this.game.add.sprite(30,210,"icon-inventory");
+        this.iconInventory.scale.setTo(0.3);
+        this.iconInventory.inputEnabled = true;
+        this.iconInventory.events.onInputDown.add(game.inventory.toggleInventory, game.inventory);
+      }
+
+      this.createCityIcon = () => {
+        this.iconCity = this.game.add.sprite(30, 150, "icon-sword");
+        this.iconCity.scale.setTo(0.3);
+        this.iconCity.inputEnabled = true;
+        this.iconCity.events.onInputDown.add(goToFight, this);
+      }
+
+      this.createAllIcons = () => {
+        this.createInventoryIcon();
+        this.createCityIcon();
+      }
+
+      this.createAllIcons();
+
+
+
+
 
       class Modal {
         constructor(x, y, width, height){
