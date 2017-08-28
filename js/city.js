@@ -229,7 +229,6 @@ var cityState = {
             this.level++;
             this.cost = Math.round(self.calculateUpgradeCost(this.cost, this.level));
             self.isNew(this);
-            console.log(item.details)
             item.details.updateEffect.call(item.details);
           } else {
             console.log("you dont have enough money");
@@ -254,14 +253,18 @@ var cityState = {
 
       }
 
+      class King extends Npc {
+
+      }
+
 
       this.merchant = new Merchant(450, 250, "merchant");
       this.merchant.create();
       this.merchant.createItems("weapons");
 
-      this.king = new Npc(200, 250, "king");
+      this.king = new King(200, 250, "king");
       this.king.create();
-      this.king.addModal(300, 300, 100, 100);
+      this.king.addModal(270, 270, 100, 150);
 
       game.ui.renderAll();
       game.inventory.create();

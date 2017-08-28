@@ -79,7 +79,6 @@ game.level = {
 
   raiseRequiredMonsters: function(monstersAmount){
     this.requiredKilledMonsters =  Math.round(monstersAmount * ( 1 + (Math.random()*3)));
-    console.log(this.requiredKilledMonsters);
   }
 
 }
@@ -149,13 +148,11 @@ game.ui = {
   goldConverter: function(amount){
     amount = Math.round(amount);
     let pow = String(amount).split("").length;
-    console.log("przeszlo1");
     switch(pow) {
     case 5:
     case 6:
         amount = amount/100;
         amount = String(amount).slice(0, 4);
-            console.log("przeszlo2");
         amount = Number(amount);
         amount = amount/10;
         return amount + " k";
@@ -165,7 +162,6 @@ game.ui = {
     case 9:
         amount = amount/10000;
         amount = String(amount).slice(0, 5);
-            console.log("przeszlo3");
         amount = Number(amount);
         amount = amount/100;
         return amount + " mln";
@@ -635,12 +631,10 @@ game.times = {
     if (localStorage.getItem("timeNow") && localStorage.getItem("timePast")){
       this.timePast = localStorage.getItem("timePast");
       this.timeNow = localStorage.getItem("timeNow");
-      console.log("local time existed");
       this.compareTime();
     } else {
       this.timeNow = new Date().getTime();
       this.timePassed;
-      console.log("created local time");
     }
   },
 
@@ -649,7 +643,6 @@ game.times = {
     localStorage.timePast = this.timePast;
     this.timeNow = new Date().getTime();
     localStorage.timeNow =  this.timeNow;
-    console.log("saved time");
   },
 
   timePassed: function(){
@@ -658,7 +651,6 @@ game.times = {
 
   compareTime: function(){
     this.getTime();
-    //console.log(this.timePassed() + " second passed.");
     if(this.timePassed() >= 3){
       this.calculateKilledMonsters(this.timePassed());
     }
@@ -675,10 +667,7 @@ game.times = {
   },
 
   calculateGainedGold: function(monstersKilled){
-    console.log(monstersKilled + " monsters were killed.");
-    console.log((monstersKilled * game.level.currentLevel) + " gold earned");
     var earned = Number((monstersKilled * game.level.currentLevel)) + Number(game.player.gold);
-    console.log(earned);
     game.player.gold = earned;
     game.ui.updateGold();
   },
