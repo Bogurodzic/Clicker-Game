@@ -6,10 +6,6 @@ var cityState = {
 
       this.background = this.game.add.tileSprite(0, 0, 708, 511, "background-day");
 
-
-
-
-
       //icons
       this.iconInventory = this.game.add.sprite(30,210,"icon-inventory");
       this.iconInventory.scale.setTo(0.3);
@@ -21,24 +17,6 @@ var cityState = {
       this.iconCity.inputEnabled = true;
       this.iconCity.events.onInputDown.add(goToFight, this);
 
-      /*this.merchant = {
-
-        create: function(){
-            this.createSprite();
-            this.createPanel();
-        },
-
-        createSprite: function(){
-          this.merchantSprite = game.add.sprite(450, 250, "merchant");
-        },
-
-        createPanel: function(){
-          this.merchantPanel = game.add.sprite(0, 0, "panel");
-          this.merchantPanel.anchor.setTo(0.5);
-          this.merchantPanel.x = game.world.centerX;
-          this.merchantPanel.y = game.world.centerY;
-        }
-      }*/
       class Modal {
         constructor(x, y, width, height){
           this.x = x;
@@ -50,11 +28,10 @@ var cityState = {
         }
 
         createBitmap(){
-          var bitmap = game.add.bitmapData(this.width, this.height);
+          var bitmap = game.add.bitmapData(this.width+10, this.height);
           bitmap.ctx.beginPath();
           bitmap.ctx.rect(0, 0, this.width, this.height);
-          bitmap.ctx.fillStyle = "brown";
-          bitmap.ctx.fill();
+          bitmap.fill(195,131,76, 0.80);
           return bitmap;
         }
 
@@ -180,10 +157,10 @@ var cityState = {
           }
 
           this[items] = this.modal.modalSprite.addChild(game.add.group());
-          this[items].arrowLeft = this[items].create(23,32, "arrow");
-          this[items].arrowRight = this[items].create(75 ,0, "arrow");
+          this[items].arrowLeft = this[items].create(23+5,32, "arrow");
+          this[items].arrowRight = this[items].create(75+5 ,0, "arrow");
           this[items].arrowLeft.angle = 180;
-          this[items].text = this[items].addChild(game.add.text(26, 5, items, {
+          this[items].text = this[items].addChild(game.add.text(26+5, 5, items, {
               font: "19px 'Jim Nightshade', cursive",
               fill: "black"}));
           this[items].arrowRight.inputEnabled = true;
@@ -197,16 +174,16 @@ var cityState = {
           }, this);
           //this.arrows.scale.setTo(0.1);
           [].forEach.call(game.equipment.equipmentList[items], function(data, index){
-            let item = self[items].create(0, 28 + (40 * index), data.icon);
+            let item = self[items].create(0+5, 28 + (40 * index), data.icon);
             item.details = data;
             let text;
 
             if(data.isBought){
-                  text = self[items].addChild(game.add.text(40, 28 + (40 * index), "cost: "+ data.cost + "\nlevel: " + data.level, {
+                  text = self[items].addChild(game.add.text(40+5, 28 + (40 * index), "cost: "+ data.cost + "\nlevel: " + data.level, {
                   font: "21px 'Jim Nightshade'",
                   fill: "black"}));
             } else if (!data.isBought) {
-                  text = self[items].addChild(game.add.text(40, 28 + (40 * index), "Buy: " + "\ncost: "+ data.cost , {
+                  text = self[items].addChild(game.add.text(40+5, 28 + (40 * index), "Buy: " + "\ncost: "+ data.cost , {
                   font: "21px 'Jim Nightshade'",
                   fill: "black"}));
                   text.lineSpacing = -10;
